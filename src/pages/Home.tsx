@@ -31,7 +31,7 @@ const Home = () => {
                 alt="" 
               />
               <div>
-                
+              
               </div>
             </div>
           </div>
