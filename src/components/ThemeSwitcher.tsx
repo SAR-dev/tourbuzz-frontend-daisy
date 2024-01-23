@@ -1,11 +1,7 @@
-import { CheckIcon, SwatchIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
-import Modal from './Modal';
+import { CheckIcon } from '@heroicons/react/24/solid';
 import { ThemeName, useThemeStore } from '@src/stores/themeStore';
 
 function ThemeSwitcher(): JSX.Element {
-    const [show, setShow] = useState(false)
-    const toogleShow = () => setShow(!show);
     const { theme, setTheme } = useThemeStore();
 
     return (
