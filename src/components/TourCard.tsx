@@ -23,15 +23,11 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                         alt=""
                     />
                     <div className="flex flex-col justify-between">
-                        <div className={classNames({
-                            "flex gap-5 items-start justify-between": true,
-                            "pl-10": !reversed,
-                            "pr-10": reversed
-                        })}>
+                        <div className="px-10 flex gap-5 items-start justify-between">
                             <div>
                                 <div className="title text-2xl font-semibold">Hong Kong Disneyland Park Tickets</div>
-                                <div className="my-2">😎 Organized By: Qrio</div>
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-1 mt-2">
+                                    <div>😎 Organized By: Qrio</div>
                                     <div>🤝 Every group will be consisted of 100 persons</div>
                                     <div>🚩 It will be a 5 day jouney, starting at 5 March, 2024</div>
                                     <div>⌛ Our journey will end on 25 March,2024</div>
@@ -60,7 +56,7 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                                 <div>
                                     <div className="mb-1">💯Free Cancellation😉</div>
                                     <button className="btn btn-primary w-full">
-                                        Book Now
+                                        Book Now 🐱
                                     </button>
                                 </div>
                             </div>
