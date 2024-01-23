@@ -11,7 +11,7 @@ const ThemeSwitcher = () => {
                 <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box">
                     {Object.keys(ThemeName).map((key, i) => (
                         <li key={i}>
-                            <button onClick={() => setTheme(ThemeName[key as keyof typeof ThemeName])}>
+                            <button className='theme-controller' onClick={() => setTheme(ThemeName[key as keyof typeof ThemeName])}>
                                 {key}
                                 {theme === ThemeName[key as keyof typeof ThemeName] && (
                                     <CheckIcon className='h-5 w-5 ml-auto' />

@@ -10,7 +10,7 @@ const Home = () => {
           TourBuzz : Your Gateway to Unforgettable Journeys 😎
         </div>
         <div className="bg-blue-100 p-5">
-          <div className="mx-auto flex flex-col gap-3">
+          <div className="mx-auto flex flex-col gap-5">
             <div className="flex w-full justify-between">
               <div className="flex gap-3 font-semibold">
                 <div>🌋</div>
