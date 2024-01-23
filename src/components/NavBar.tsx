@@ -10,7 +10,7 @@ const NavBar = () => {
                 </button>
                 <div className="text-xl font-semibold ml-1">TourBuzz</div>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-center flex">
                 <ul className="menu menu-horizontal px-1">
                     <li><a>Item 1</a></li>
                     <li><a>Item 3</a></li>
