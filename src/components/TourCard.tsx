@@ -23,7 +23,11 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                         alt=""
                     />
                     <div className="flex flex-col justify-between">
-                        <div className="pl-10 flex gap-5 items-start justify-between">
+                        <div className={classNames({
+                            "flex gap-5 items-start justify-between": true,
+                            "pl-10": !reversed,
+                            "pr-10": reversed
+                        })}>
                             <div>
                                 <div className="title text-2xl font-semibold">Hong Kong Disneyland Park Tickets</div>
                                 <div className="my-2">😎 Organized By: Qrio</div>
