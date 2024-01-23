@@ -24,7 +24,7 @@ const Home = () => {
     <section>
       <NavBar />
       <div className="grid grid-cols-1">
-        <div className="p-5 text-center bg-orange-100 text-black">
+        <div className="p-5 text-center bg-primary/10 text-black">
           TourBuzz : Your Gateway to Unforgettable Journeys 😎
         </div>
         <div className="w-full">
@@ -54,7 +54,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="bg-blue-100">
+
+        <div className="title text-2xl font-semibold p-5">💨 Upcoming Tour</div>
+
+        <div className="bg-primary/10">
           <div className="container mx-auto p-5 flex flex-col gap-5">
             <div className="grid grid-cols-2">
               <img
@@ -67,6 +70,11 @@ const Home = () => {
                   <div>
                     <div className="title text-2xl font-semibold">Hong Kong Disneyland Park Tickets</div>
                     <div className="my-2">😎 Organized By: Qrio</div>
+                    <div className="flex flex-col gap-1">
+                      <div>🤝 Every group will be consisted of 100 persons</div>
+                      <div>🚩 It will be a 5 day jouney, starting at 5 March, 2024</div>
+                      <div>⌛ Our journey will end on 25 March,2024</div>
+                    </div>
                   </div>
                   <div className="flex items-center font-semibold">
                     <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
