@@ -1,4 +1,4 @@
-import { BookmarkIcon } from "@heroicons/react/24/outline"
+import { BookmarkIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline"
 import NavBar from "@src/components/NavBar"
 
 const Home = () => {
@@ -17,11 +17,16 @@ const Home = () => {
                 <div>Upcoming Tour</div>
               </div>
 
-              <div className="flex items-center gap-3 font-semibold">
-                <div>
+              <div className="flex items-center font-semibold">
+                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
                   <BookmarkIcon className="h-5 w-5" />
-                </div>
-                <div>Save</div>
+                </button>
+                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                  <StarIcon className="h-5 w-5" />
+                </button>
+                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                  <QuestionMarkCircleIcon className="h-5 w-5" />
+                </button>
               </div>
             </div>
             <div className="grid grid-cols-2">
