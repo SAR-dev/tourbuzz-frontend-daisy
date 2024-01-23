@@ -1,7 +1,7 @@
 import { CheckIcon } from '@heroicons/react/24/solid';
 import { ThemeName, useThemeStore } from '@src/stores/themeStore';
 
-function ThemeSwitcher(): JSX.Element {
+const ThemeSwitcher = () => {
     const { theme, setTheme } = useThemeStore();
 
     return (
