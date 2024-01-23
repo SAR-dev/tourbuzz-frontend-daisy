@@ -18,25 +18,31 @@ const Home = () => {
               </div>
 
               <div className="flex items-center font-semibold">
-                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                  <BookmarkIcon className="h-5 w-5" />
-                </button>
-                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                  <StarIcon className="h-5 w-5" />
-                </button>
-                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                  <QuestionMarkCircleIcon className="h-5 w-5" />
-                </button>
+                <div className="tooltip" data-tip="Save for later">
+                  <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                    <BookmarkIcon className="h-5 w-5" />
+                  </button>
+                </div>
+                <div className="tooltip" data-tip="Give a 🌟">
+                  <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                    <StarIcon className="h-5 w-5" />
+                  </button>
+                </div>
+                <div className="tooltip" data-tip="Ask question">
+                  <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                    <QuestionMarkCircleIcon className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
             </div>
             <div className="grid grid-cols-2">
-              <img 
-                src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8=" 
+              <img
+                src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
                 className="h-96 w-full object-cover card"
-                alt="" 
+                alt=""
               />
               <div>
-              
+
               </div>
             </div>
           </div>
