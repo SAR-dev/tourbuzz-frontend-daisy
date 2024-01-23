@@ -1,4 +1,5 @@
 import { Bars3CenterLeftIcon } from "@heroicons/react/24/solid"
+import ThemeSwitcher from "./ThemeSwitcher";
 
 const NavBar = () => {
     return (
@@ -19,7 +20,7 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <button className="btn btn-ghost">Sign In</button>
+                <ThemeSwitcher />
                 <a className="btn">Sign In</a>
             </div>
         </nav>
