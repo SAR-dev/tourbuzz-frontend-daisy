@@ -6,7 +6,7 @@ export enum TourCardType {
     SECONDARY
 }
 
-const TourCard = ({ type }: { type: TourCardType }) => {
+const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }) => {
     return (
         <div className={classNames({
             "bg-primary/10": type === TourCardType.PRIMARY,
@@ -16,7 +16,10 @@ const TourCard = ({ type }: { type: TourCardType }) => {
                 <div className="grid grid-cols-2">
                     <img
                         src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
-                        className="h-96 w-full object-cover"
+                        className={classNames({
+                            "h-96 w-full object-cover": true,
+                            "order-last": reversed
+                        })}
                         alt=""
                     />
                     <div className="flex flex-col justify-between">

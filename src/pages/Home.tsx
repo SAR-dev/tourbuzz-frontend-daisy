@@ -58,7 +58,7 @@ const Home = () => {
         <div className="title text-2xl font-semibold p-5">💨 Upcoming Tours</div>
 
         <TourCard type={TourCardType.PRIMARY} />
-        <TourCard type={TourCardType.SECONDARY} />
+        <TourCard type={TourCardType.SECONDARY} reversed />
 
       </div>
     </section>
