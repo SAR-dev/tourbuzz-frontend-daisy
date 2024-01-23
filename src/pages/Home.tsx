@@ -55,7 +55,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="title text-2xl font-semibold p-5">💨 Upcoming Tour</div>
+        <div className="title text-2xl font-semibold p-5">💨 Upcoming Tours</div>
 
         <div className="bg-primary/10">
           <div className="container mx-auto p-5 flex flex-col gap-5">
