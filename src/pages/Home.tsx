@@ -60,7 +60,8 @@ const Home = () => {
       </div>
       <div className="container mx-auto px-5 py-10">
         <div className="text-3xl font-semibold title mb-10">Where to next 🥳 ?</div>
-        <div className="grid grid-cols-5 gap-5">
+        <div className="grid grid-cols-6 gap-8">
+          <PlaceCard />
           <PlaceCard />
           <PlaceCard />
           <PlaceCard />
