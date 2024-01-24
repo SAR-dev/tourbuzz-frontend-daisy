@@ -57,6 +57,31 @@ const Home = () => {
         <TourCard type={TourCardType.PRIMARY} />
         <TourCard type={TourCardType.SECONDARY} reversed />
       </div>
+      <div className="container mx-auto px-5 py-10">
+        <div className="text-2xl font-semibold title mb-5">🤔 Why choose Us ?</div>
+        <div className="grid grid-cols-4 gap-5">
+          <PromotionPoint
+            icon="💰"
+            title="Secure Transaction"
+            subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+          />
+          <PromotionPoint
+            icon="🤗"
+            title="Secure Transaction"
+            subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+          />
+          <PromotionPoint
+            icon="💪"
+            title="Secure Transaction"
+            subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+          />
+          <PromotionPoint
+            icon="🚀"
+            title="Secure Transaction"
+            subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+          />
+        </div>
+      </div>
     </section>
   )
 }
