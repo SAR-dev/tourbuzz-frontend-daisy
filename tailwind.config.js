@@ -11,7 +11,9 @@ export default {
       "light", 
       "dark", 
       "corporate", 
-      "retro"
+      "retro",
+      "cupcake",
+      "luxury"
     ],
   },
 }

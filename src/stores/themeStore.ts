@@ -5,7 +5,9 @@ export enum ThemeName {
     Light = "light",
     Dark = "dark",
     Corporate = "corporate",
-    Retro = "retro"
+    Retro = "retro",
+    Cupcake = "cupcake",
+    Luxury = "luxury"
 }
 
 const themeKey = "theme"

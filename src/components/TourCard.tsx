@@ -12,7 +12,7 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
             "bg-primary/10": type === TourCardType.PRIMARY,
             "bg-secondary/10": type === TourCardType.SECONDARY,
         })}>
-            <div className="container mx-auto px-5 flex flex-col gap-5">
+            <div className="container mx-auto p-5 flex flex-col gap-5">
                 <div className="grid grid-cols-2">
                     <img
                         src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
@@ -23,7 +23,7 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                         alt=""
                     />
                     <div className="flex flex-col justify-between">
-                        <div className="px-10 pt-5 flex gap-5 items-start justify-between">
+                        <div className="px-10 flex gap-5 items-start justify-between">
                             <div>
                                 <div className="title text-2xl font-semibold">Hong Kong Disneyland Park Tickets</div>
                                 <div className="flex flex-col gap-1 mt-2">
