@@ -51,6 +51,10 @@ const Home = () => {
                 subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
               />
             </div>
+            <div className="mt-5 grid grid-cols-4 gap-5">
+              <input type="text" placeholder="Email" className="input input-bordered w-full border-2 placeholder:opacity-25" />
+              <button className="btn">Get Invitation Link</button>
+            </div>
           </section>
 
           <section>
