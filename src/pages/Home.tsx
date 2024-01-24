@@ -29,7 +29,7 @@ const Home = () => {
         </div>
         <div className="w-full">
           <div className="container mx-auto px-5 py-10">
-            <div className="text-2xl font-semibold title mb-5">Why choose Us ?</div>
+            <div className="text-2xl font-semibold title mb-5">🤔 Why choose Us ?</div>
             <div className="grid grid-cols-4 gap-5">
               <PromotionPoint
                 icon="💰"
@@ -54,9 +54,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        <div className="title text-2xl font-semibold p-5">💨 Upcoming Tours</div>
-
+        <div className="container mx-auto p-5">
+          <div className="title text-2xl font-semibold">💨 Upcoming Tours</div>
+        </div>
         <TourCard type={TourCardType.PRIMARY} />
         <TourCard type={TourCardType.SECONDARY} reversed />
 
