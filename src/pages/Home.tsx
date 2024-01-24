@@ -24,7 +24,7 @@ const Home = () => {
     <section>
       <NavBar />
       <div className="grid grid-cols-1">
-        <div className="p-5 text-center bg-primary/10 text-black">
+        <div className="p-5 text-center bg-primary/10">
           TourBuzz : Your Gateway to Unforgettable Journeys 😎
         </div>
         <div className="w-full">
