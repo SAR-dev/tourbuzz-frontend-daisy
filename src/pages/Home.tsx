@@ -25,7 +25,7 @@ const Home = () => {
     <section>
       <NavBar />
       <div className="container mx-auto px-5">
-        <div className="grid grid-cols-1 pt-10 pb-16 gap-16">
+        <div className="grid grid-cols-1 pt-5 pb-16 gap-16">
           
           <section>
             <div className="grid grid-cols-3 gap-5">
