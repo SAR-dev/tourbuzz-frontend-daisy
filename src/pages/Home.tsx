@@ -54,12 +54,13 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="grid grid-cols-1">
         <div className="container mx-auto p-5">
           <div className="title text-2xl font-semibold">💨 Upcoming Tours</div>
         </div>
         <TourCard type={TourCardType.PRIMARY} />
         <TourCard type={TourCardType.SECONDARY} reversed />
-
       </div>
     </section>
   )
