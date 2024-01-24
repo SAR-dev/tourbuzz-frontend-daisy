@@ -14,14 +14,23 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
         })}>
             <div className="container mx-auto p-5 flex flex-col gap-5">
                 <div className="grid grid-cols-2">
-                    <img
-                        src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
-                        className={classNames({
-                            "h-96 w-full object-cover": true,
-                            "order-last": reversed
-                        })}
-                        alt=""
-                    />
+                    <div className="relative">
+                        <img
+                            src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
+                            className={classNames({
+                                "h-96 w-full object-cover": true,
+                                "order-last": reversed
+                            })}
+                            alt=""
+                        />
+                        <div className="absolute top-0 left-0 m-2">
+                            <div className="bg-primary-content card">
+                                <div className="text-sm font-medium px-2.5 py-0.5 rounded bg-primary/10 text-primary card">
+                                    Upcoming Tour
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="flex flex-col justify-between">
                         <div className="px-10 flex gap-5 items-start justify-between">
                             <div>
