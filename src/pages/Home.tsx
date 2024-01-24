@@ -52,7 +52,7 @@ const Home = () => {
               />
             </div>
             <div className="mt-5 grid grid-cols-4 gap-5">
-              <input type="text" placeholder="Email" className="input input-bordered w-full border-2 placeholder:opacity-25" />
+              <input type="text" placeholder="Email" className="input input-bordered w-full border-2 placeholder:opacity-50" />
               <button className="btn">Get Invitation Link</button>
             </div>
           </section>
