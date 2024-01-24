@@ -23,52 +23,59 @@ const PromotionPoint = ({
 const Home = () => {
   return (
     <section>
-      <div className="font-semibold p-5 text-center bg-primary/10">
-        TourBuzz : Your Gateway to Unforgettable Journeys 😎
-      </div>
       <NavBar />
-      <div className="grid grid-cols-1">
-        <div className="container mx-auto px-5 py-10">
-          <div className="text-3xl font-semibold title mb-10">Why choose Us 🤔 ?</div>
-          <div className="grid grid-cols-4 gap-5">
-            <PromotionPoint
-              icon="💰"
-              title="Secure Transaction"
-              subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
-            />
-            <PromotionPoint
-              icon="🤗"
-              title="Secure Transaction"
-              subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
-            />
-            <PromotionPoint
-              icon="💪"
-              title="Secure Transaction"
-              subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
-            />
-            <PromotionPoint
-              icon="🚀"
-              title="Secure Transaction"
-              subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
-            />
-          </div>
+      <div className="container mx-auto px-5">
+        <div className="grid grid-cols-1 py-16 gap-16">
+
+          <section>
+            <div className="text-3xl font-semibold title mb-10">Why choose Us 🤔 ?</div>
+            <div className="grid grid-cols-4 gap-5">
+              <PromotionPoint
+                icon="💰"
+                title="Secure Transaction"
+                subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+              />
+              <PromotionPoint
+                icon="🤗"
+                title="Secure Transaction"
+                subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+              />
+              <PromotionPoint
+                icon="💪"
+                title="Secure Transaction"
+                subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+              />
+              <PromotionPoint
+                icon="🚀"
+                title="Secure Transaction"
+                subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
+              />
+            </div>
+          </section>
+
+          <section>
+            <div className="text-3xl font-semibold title mb-10">Upcoming Tours ✈️</div>
+            <div className="grid grid-cols-1 gap-5">
+              <TourCard type={TourCardType.PRIMARY} />
+              <TourCard type={TourCardType.SECONDARY} reversed />
+            </div>
+          </section>
+
+          <section>
+            <div className="text-3xl font-semibold title mb-10">Where to next 🥳 ?</div>
+            <div className="grid grid-cols-6 gap-8">
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+            </div>
+          </section>
+
         </div>
       </div>
-      <div className="grid grid-cols-1">
-        <TourCard type={TourCardType.PRIMARY} />
-        <TourCard type={TourCardType.SECONDARY} reversed />
-      </div>
-      <div className="container mx-auto px-5 py-10">
-        <div className="text-3xl font-semibold title mb-10">Where to next 🥳 ?</div>
-        <div className="grid grid-cols-6 gap-8">
-          <PlaceCard />
-          <PlaceCard />
-          <PlaceCard />
-          <PlaceCard />
-          <PlaceCard />
-          <PlaceCard />
-        </div>
-      </div>
+
     </section>
   )
 }

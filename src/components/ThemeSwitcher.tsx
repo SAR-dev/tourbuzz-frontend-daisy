@@ -1,4 +1,4 @@
-import { CheckIcon } from '@heroicons/react/24/solid';
+import { CheckIcon, SwatchIcon } from '@heroicons/react/24/solid';
 import { ThemeName, useThemeStore } from '@src/stores/themeStore';
 
 const ThemeSwitcher = () => {
@@ -7,7 +7,9 @@ const ThemeSwitcher = () => {
     return (
         <div>
             <details className="dropdown">
-                <summary className="btn btn-ghost">Theme</summary>
+                <summary className="btn btn-ghost">
+                    <SwatchIcon className='h-5 w-5' />
+                </summary>
                 <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box">
                     {Object.keys(ThemeName).map((key, i) => (
                         <li key={i}>

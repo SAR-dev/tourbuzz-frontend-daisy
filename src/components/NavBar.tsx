@@ -10,14 +10,16 @@ const NavBar = () => {
                     </div>
                     <div className="navbar-center flex">
                         <ul className="menu menu-horizontal px-1">
-                            <li><a>Item 1</a></li>
-                            <li><a>Item 3</a></li>
-                            <li><a>Item 3</a></li>
+                            <li><a>Tours</a></li>
+                            <li><a>Organizers</a></li>
+                            <li><a>Hotels</a></li>
+                            <li><a>Places</a></li>
+                            <li><a>Articles</a></li>
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <ThemeSwitcher />
                         <a className="btn">Sign In</a>
+                        <ThemeSwitcher />
                     </div>
                 </nav>
             </div>
