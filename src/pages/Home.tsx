@@ -25,7 +25,37 @@ const Home = () => {
     <section>
       <NavBar />
       <div className="container mx-auto px-5">
-        <div className="grid grid-cols-1 py-16 gap-16">
+        <div className="grid grid-cols-1 pt-10 pb-16 gap-16">
+          
+          <section>
+            <div className="grid grid-cols-3 gap-5">
+              <div className="col-span-2">
+                <img
+                  src="https://images.unsplash.com/photo-1599173704879-2e407aa34cde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8amFwYW4lMjB0cmFpbnxlbnwwfHwwfHx8MA%3D%3D"
+                  alt=""
+                  className="h-[35rem] w-full object-cover"
+                />
+              </div>
+              <div className="col-span-1">
+                <div className="grid grid-cols-1 gap-5">
+                  <div>
+                    <img
+                      src="https://png.pngtree.com/background/20230519/original/pngtree-japanese-train-on-the-tracks-in-autumn-picture-image_2658809.jpg"
+                      alt=""
+                      className="h-[17rem] w-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src="https://wallpapercave.com/wp/wp8368404.jpg"
+                      alt=""
+                      className="h-[17rem] w-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
           <section>
             <div className="text-3xl font-semibold title mb-10">Why choose Us 🤔 ?</div>
