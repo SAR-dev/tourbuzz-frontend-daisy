@@ -9,11 +9,11 @@ export enum TourCardType {
 const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }) => {
     return (
         <div className={classNames({
-            "card": true,
+            "card p-5": true,
             "bg-primary/10": type === TourCardType.PRIMARY,
             "bg-secondary/10": type === TourCardType.SECONDARY,
         })}>
-            <div className="p-5 flex flex-col gap-5">
+            <div className="flex flex-col gap-5">
                 <div className="grid grid-cols-2">
                     <div className="relative">
                         <img

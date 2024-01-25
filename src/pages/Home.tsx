@@ -1,3 +1,5 @@
+import { CalendarDaysIcon, UserCircleIcon } from "@heroicons/react/24/outline"
+import ArticleCard from "@src/components/ArticleCard"
 import NavBar from "@src/components/NavBar"
 import PlaceCard from "@src/components/PlaceCard"
 import TourCard, { TourCardType } from "@src/components/TourCard"
@@ -26,7 +28,7 @@ const Home = () => {
       <NavBar />
       <div className="container mx-auto px-5">
         <div className="grid grid-cols-1 pt-5 pb-16 gap-16">
-          
+
           <section>
             <div className="grid grid-cols-3 gap-5">
               <div className="col-span-2">
@@ -104,6 +106,15 @@ const Home = () => {
               <PlaceCard />
               <PlaceCard />
               <PlaceCard />
+            </div>
+          </section>
+
+          <section>
+            <div className="text-3xl font-semibold title mb-10">Fresh ideas for fun 🤯</div>
+            <div className="grid grid-cols-3 gap-8">
+              <ArticleCard />
+              <ArticleCard />
+              <ArticleCard />
             </div>
           </section>
 
