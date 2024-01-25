@@ -15,19 +15,16 @@ const ArticleCard = () => {
                                 Sayed Rafi
                             </div>
                         </div>
-
-                        <div className="bg-base-300 card">
-                            <div className="text-sm font-medium px-2.5 py-0.5 rounded bg-base-300/10 base-content card">
-                                24 July 2024
-                            </div>
-                        </div>
                     </div>
                 </div>
+            </div>
+            <div className="text-info italic">
+                Tour Suggestion, Adventure
             </div>
             <div className="font-semibold text-xl title line-clamp-2">
                 Japan Winter Adventures: Your Guide to Winter in Japan This 2023
             </div>
-            <div className="line-clamp-4 text-base-content/70">
+            <div className="line-clamp-4">
                 From winter delicacies like shabu-shabu (hot pot) to serene hot springs,
                 and the famous snowcapped , there really is no question about  being a
                 consistent top winter destination to visit, so we get why you’re here

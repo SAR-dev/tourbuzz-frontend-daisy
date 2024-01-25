@@ -18,8 +18,8 @@ const NavBar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <a className="btn">Sign In</a>
                         <ThemeSwitcher />
+                        <a className="btn">Sign In</a>
                     </div>
                 </nav>
             </div>
