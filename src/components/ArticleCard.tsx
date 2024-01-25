@@ -1,5 +1,3 @@
-import { CalendarDaysIcon, UserCircleIcon } from "@heroicons/react/24/outline"
-
 const ArticleCard = () => {
     return (
         <div className="card bg-primary/10 p-5">
@@ -22,11 +20,11 @@ const ArticleCard = () => {
                 </div>
                 <div className="flex justify-between">
                     <div className="flex items-center gap-1">
-                        <CalendarDaysIcon className="h-5 w-5" />
+                        <span>🕒</span>
                         25 July 2024
                     </div>
                     <div className="flex items-center gap-1">
-                        <UserCircleIcon className="h-5 w-5" />
+                        <span>🧑🏻</span>
                         Sayed Rafi
                     </div>
                 </div>
