@@ -19,7 +19,7 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                         <img
                             src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
                             className={classNames({
-                                "h-96 w-full object-cover": true,
+                                "h-96 w-full object-cover card rounded-r-none": true,
                                 "order-last": reversed
                             })}
                             alt=""
@@ -55,7 +55,7 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                                 </button>
                             </div>
                         </div>
-                        <div className="bg-orange-200 text-black p-10">
+                        <div className="bg-orange-200 text-black p-10 card rounded-l-none rounded-t-none">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
                                     <div>💰 From <b>10000TK</b></div>
