@@ -1,6 +1,5 @@
 const ArticleCard = () => {
     return (
-        // <div className="card border p-5">
         <div className="flex flex-col gap-3">
             <div className="h-64 w-full relative">
                 <img
@@ -31,7 +30,6 @@ const ArticleCard = () => {
                 in this very page right now! 😉
             </div>
         </div>
-        // </div>
     )
 }
 

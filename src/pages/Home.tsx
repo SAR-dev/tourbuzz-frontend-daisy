@@ -1,3 +1,4 @@
+import { ArrowUpRightIcon, LinkIcon } from "@heroicons/react/24/solid"
 import ArticleCard from "@src/components/ArticleCard"
 import NavBar from "@src/components/NavBar"
 import PlaceCard from "@src/components/PlaceCard"
@@ -31,27 +32,41 @@ const Home = () => {
           <section>
             <div className="grid grid-cols-3 gap-5">
               <div className="col-span-2">
-                <img
-                  src="https://images.unsplash.com/photo-1599173704879-2e407aa34cde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8amFwYW4lMjB0cmFpbnxlbnwwfHwwfHx8MA%3D%3D"
-                  alt=""
-                  className="h-[35rem] w-full object-cover"
-                />
+                <div className="card overflow-hidden relative">
+                  <img
+                    src="https://images.unsplash.com/photo-1599173704879-2e407aa34cde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8amFwYW4lMjB0cmFpbnxlbnwwfHwwfHx8MA%3D%3D"
+                    alt=""
+                    className="h-[35.5rem] w-full object-cover"
+                  />
+                  <a href="#" className="absolute bottom-0 left-0 bg-secondary/50 text-secondary-content w-full p-3 flex gap-1 items-center group">
+                    <div>Tour to Japan on 22nd Saturday</div>
+                    <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
+                  </a>
+                </div>
               </div>
               <div className="col-span-1">
                 <div className="grid grid-cols-1 gap-5">
-                  <div>
+                  <div className="card overflow-hidden relative">
                     <img
                       src="https://png.pngtree.com/background/20230519/original/pngtree-japanese-train-on-the-tracks-in-autumn-picture-image_2658809.jpg"
                       alt=""
                       className="h-[17rem] w-full object-cover"
                     />
+                    <a href="#" className="absolute bottom-0 left-0 bg-secondary/50 text-secondary-content w-full p-3 flex gap-1 items-center group">
+                      <div>Tour to Japan on 22nd Saturday</div>
+                      <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
+                    </a>
                   </div>
-                  <div>
+                  <div className="card overflow-hidden relative">
                     <img
                       src="https://wallpapercave.com/wp/wp8368404.jpg"
                       alt=""
                       className="h-[17rem] w-full object-cover"
                     />
+                    <a href="#" className="absolute bottom-0 left-0 bg-secondary/50 text-secondary-content w-full p-3 flex gap-1 items-center group">
+                      <div>Tour to Japan on 22nd Saturday</div>
+                      <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
+                    </a>
                   </div>
                 </div>
               </div>
