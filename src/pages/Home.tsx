@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <section>
       <NavBar />
-      <div className="h-[30rem] -mt-[5rem]">
+      <div className="h-[30rem]">
         <img 
           src="https://www.japan-guide.com/g17/home_1712_fujisan.jpg" 
           alt="" 

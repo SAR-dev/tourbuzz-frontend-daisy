@@ -2,7 +2,7 @@ import ThemeSwitcher from "./ThemeSwitcher";
 
 const NavBar = () => {
     return (
-        <div className="bg-base-100/50 border-b border-base-300/50 sticky top-0 z-10">
+        <div className="bg-base-100 border-b border-base-300 sticky top-0 z-10">
             <div className="container mx-auto px-5">
                 <nav className="navbar">
                     <div className="navbar-start">
