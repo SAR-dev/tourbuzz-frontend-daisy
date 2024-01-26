@@ -40,6 +40,11 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <div className="absolute bottom-0 right-0 container w-full mx-auto px-10 py-5">
+          <div className="text-white text-right">
+            Mount Fuji
+          </div>
+        </div>
       </div>
       <div className="container mx-auto px-10">
         <div className="grid grid-cols-1 py-16 gap-16">
