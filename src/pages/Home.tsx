@@ -31,13 +31,27 @@ const Home = () => {
         <div className="grid grid-cols-1 pt-5 pb-16 gap-16">
 
           <section>
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-4 gap-5">
               <div className="col-span-2 h-[35rem]">
                 <AdImageCard
                   image="https://images.unsplash.com/photo-1546955934-ce7e40988709"
                   title="Japan railway visit during winter in Hokkaido"
                   link="https://images.unsplash.com/photo-1546955934-ce7e40988709"
                 />
+              </div>
+              <div className="col-span-1 h-[35rem]">
+                <div className="grid grid-cols-1 gap-5 h-fill">
+                  <AdImageCard
+                    image="https://images.unsplash.com/photo-1628929217603-c8c7bc553aeb"
+                    title="Japan railway visit during winter in Hokkaido"
+                    link="https://images.unsplash.com/photo-1546955934-ce7e40988709"
+                  />
+                  <AdImageCard
+                    image="https://images.unsplash.com/photo-1552750408-d9be356ceceb"
+                    title="Japan railway visit during winter in Hokkaido"
+                    link="https://images.unsplash.com/photo-1546955934-ce7e40988709"
+                  />
+                </div>
               </div>
               <div className="col-span-1 h-[35rem]">
                 <div className="grid grid-cols-1 gap-5 h-fill">
