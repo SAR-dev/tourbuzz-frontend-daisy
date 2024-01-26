@@ -7,17 +7,14 @@ const ArticleCard = () => {
                     alt=""
                     className="h-64 w-full object-cover card"
                 />
-                <div className="absolute bottom-0 left-0 w-full">
-                    <div className="w-full flex justify-between p-2">
-                        <div className="bg-base-300 card">
-                            <div className="text-sm font-medium px-2.5 py-0.5 rounded bg-base-300/10 base-content card">
-                                Sayed Rafi
-                            </div>
-                        </div>
+                <div className="absolute bottom-0 left-0 m-2">
+                    <div className="group flex items-center gap-2 rounded-full bg-slate-200 p-2">
+                        <img className="h-6 w-6 rounded-full" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="" />
+                        <div className="hidden w-0 -translate-x-20 pr-1 ease-in-out group-hover:block group-hover:w-auto group-hover:translate-x-0">Sayed Rafi</div>
                     </div>
                 </div>
             </div>
-            <div className="text-info italic">
+            <div className="text-secondary italic">
                 Tour Suggestion, Adventure
             </div>
             <div className="font-semibold text-xl title line-clamp-2">
