@@ -1,5 +1,6 @@
 import { LinkIcon } from "@heroicons/react/24/solid"
 import ArticleCard from "@src/components/ArticleCard"
+import Footer from "@src/components/Footer"
 import NavBar from "@src/components/NavBar"
 import PlaceCard from "@src/components/PlaceCard"
 import TourCard, { TourCardType } from "@src/components/TourCard"
@@ -140,6 +141,8 @@ const Home = () => {
 
         </div>
       </div>
+
+      <Footer />
 
     </section>
   )
