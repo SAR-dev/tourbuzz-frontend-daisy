@@ -27,16 +27,22 @@ const Home = () => {
     <section>
       <NavBar />
       <div className="h-[30rem]">
-        <img 
-          src="https://www.japan-guide.com/g17/home_1712_fujisan.jpg" 
-          alt="" 
-          className="h-[30rem] w-full object-cover object-center" 
+        <img
+          src="https://www.japan-guide.com/g17/home_1712_fujisan.jpg"
+          alt=""
+          className="h-[30rem] w-full object-cover object-center"
         />
       </div>
-      <div className="container mx-auto px-5">
+      <div className="container mx-auto px-10">
         <div className="grid grid-cols-1 py-16 gap-16">
           <section>
-            {/* <div className="text-3xl font-semibold title mb-10">Why choose Us 🤔 ?</div> */}
+            <div className="flex w-full justify-between mb-10">
+              <div className="text-3xl font-semibold title">Why choose Us 🤔 ?</div>
+              <div className="flex gap-5">
+                <input type="text" placeholder="Email" className="input input-bordered w-full border-2 placeholder:opacity-50 w-72" />
+                <button className="btn">Get Invitation Link</button>
+              </div>
+            </div>
             <div className="grid grid-cols-4 gap-5">
               <PromotionPoint
                 icon="💰"
@@ -58,10 +64,6 @@ const Home = () => {
                 title="Secure Transaction"
                 subtitle="With nearly half a million attractions, hotels & more, you're sure to find joy."
               />
-            </div>
-            <div className="mt-5 grid grid-cols-4 gap-5">
-              <input type="text" placeholder="Email" className="input input-bordered w-full border-2 placeholder:opacity-50" />
-              <button className="btn">Get Invitation Link</button>
             </div>
           </section>
 
