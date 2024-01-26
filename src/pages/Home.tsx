@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon, LinkIcon } from "@heroicons/react/24/solid"
+import { LinkIcon } from "@heroicons/react/24/solid"
 import ArticleCard from "@src/components/ArticleCard"
 import NavBar from "@src/components/NavBar"
 import PlaceCard from "@src/components/PlaceCard"
