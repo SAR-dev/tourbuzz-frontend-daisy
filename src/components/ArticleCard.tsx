@@ -8,9 +8,9 @@ const ArticleCard = () => {
                     className="h-64 w-full object-cover card"
                 />
                 <div className="absolute bottom-0 left-0 m-2">
-                    <div className="group flex items-center gap-2 rounded-full bg-slate-200 p-2">
+                    <div className="group flex items-center rounded-full bg-slate-200 p-2 overflow-hidden">
                         <img className="h-6 w-6 rounded-full" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="" />
-                        <div className="hidden w-0 -translate-x-20 pr-1 ease-in-out group-hover:block group-hover:w-auto group-hover:translate-x-0">Sayed Rafi</div>
+                        <div className="p-0 group-hover:px-2 font-semibold opacity-0 group-hover:opacity-100 w-0 h-0 group-hover:w-auto group-hover:h-6 translate-x-40 group-hover:translate-x-0 transition-all duration-100 ease-in-out">Sayed Rafi</div>
                     </div>
                 </div>
             </div>
