@@ -38,10 +38,12 @@ const Home = () => {
                     alt=""
                     className="h-[35.5rem] w-full object-cover"
                   />
-                  <a href="#" className="absolute bottom-0 left-0 bg-base-300 text-sm w-full p-3 flex gap-1 items-center group">
-                    <div>Tour to Japan on 22nd Saturday</div>
-                    <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
-                  </a>
+                  <div className="absolute bottom-0 left-0 w-full bg-base-100/75">
+                    <a href="#" className="bg-primary/10 text-sm font-semibold w-full px-5 py-3 flex gap-1 items-center group">
+                      <div>Tour to Japan on 22nd Saturday</div>
+                      <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
+                    </a>
+                  </div>
                 </div>
               </div>
               <div className="col-span-1">
@@ -52,10 +54,12 @@ const Home = () => {
                       alt=""
                       className="h-[17rem] w-full object-cover"
                     />
-                    <a href="#" className="absolute bottom-0 left-0 bg-base-300 text-sm w-full p-3 flex gap-1 items-center group">
-                      <div>Tour to Japan on 22nd Saturday</div>
-                      <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
-                    </a>
+                    <div className="absolute bottom-0 left-0 w-full bg-base-100/75">
+                      <a href="#" className="bg-primary/10 text-sm font-semibold w-full px-5 py-3 flex gap-1 items-center group">
+                        <div>Tour to Japan on 22nd Saturday</div>
+                        <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
+                      </a>
+                    </div>
                   </div>
                   <div className="card overflow-hidden relative">
                     <img
@@ -63,10 +67,12 @@ const Home = () => {
                       alt=""
                       className="h-[17rem] w-full object-cover"
                     />
-                    <a href="#" className="absolute bottom-0 left-0 bg-base-300 text-sm w-full p-3 flex gap-1 items-center group">
-                      <div>Tour to Japan on 22nd Saturday</div>
-                      <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
-                    </a>
+                    <div className="absolute bottom-0 left-0 w-full bg-base-100/75">
+                      <a href="#" className="bg-primary/10 text-sm font-semibold w-full px-5 py-3 flex gap-1 items-center group">
+                        <div>Tour to Japan on 22nd Saturday</div>
+                        <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
