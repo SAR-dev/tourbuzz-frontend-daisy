@@ -1,4 +1,4 @@
-import { LinkIcon } from "@heroicons/react/24/solid"
+import AdImageCard from "@src/components/AdImageCard"
 import ArticleCard from "@src/components/ArticleCard"
 import Footer from "@src/components/Footer"
 import NavBar from "@src/components/NavBar"
@@ -32,49 +32,25 @@ const Home = () => {
 
           <section>
             <div className="grid grid-cols-3 gap-5">
-              <div className="col-span-2">
-                <div className="card overflow-hidden relative">
-                  <img
-                    src="https://images.unsplash.com/photo-1599173704879-2e407aa34cde?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8amFwYW4lMjB0cmFpbnxlbnwwfHwwfHx8MA%3D%3D"
-                    alt=""
-                    className="h-[35.5rem] w-full object-cover"
-                  />
-                  <div className="absolute bottom-0 left-0 w-full bg-base-100/75">
-                    <a href="#" className="bg-primary/10 text-sm font-semibold w-full px-5 py-3 flex gap-1 items-center group">
-                      <div>Tour to Japan on 22nd Saturday</div>
-                      <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
-                    </a>
-                  </div>
-                </div>
+              <div className="col-span-2 h-[35rem]">
+                <AdImageCard
+                  image="https://images.unsplash.com/photo-1546955934-ce7e40988709"
+                  title="Japan railway visit during winter in Hokkaido"
+                  link="https://images.unsplash.com/photo-1546955934-ce7e40988709"
+                />
               </div>
-              <div className="col-span-1">
-                <div className="grid grid-cols-1 gap-5">
-                  <div className="card overflow-hidden relative">
-                    <img
-                      src="https://png.pngtree.com/background/20230519/original/pngtree-japanese-train-on-the-tracks-in-autumn-picture-image_2658809.jpg"
-                      alt=""
-                      className="h-[17rem] w-full object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 w-full bg-base-100/75">
-                      <a href="#" className="bg-primary/10 text-sm font-semibold w-full px-5 py-3 flex gap-1 items-center group">
-                        <div>Tour to Japan on 22nd Saturday</div>
-                        <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="card overflow-hidden relative">
-                    <img
-                      src="https://wallpapercave.com/wp/wp8368404.jpg"
-                      alt=""
-                      className="h-[17rem] w-full object-cover"
-                    />
-                    <div className="absolute bottom-0 left-0 w-full bg-base-100/75">
-                      <a href="#" className="bg-primary/10 text-sm font-semibold w-full px-5 py-3 flex gap-1 items-center group">
-                        <div>Tour to Japan on 22nd Saturday</div>
-                        <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
-                      </a>
-                    </div>
-                  </div>
+              <div className="col-span-1 h-[35rem]">
+                <div className="grid grid-cols-1 gap-5 h-fill">
+                  <AdImageCard
+                    image="https://images.unsplash.com/photo-1628929217603-c8c7bc553aeb"
+                    title="Japan railway visit during winter in Hokkaido"
+                    link="https://images.unsplash.com/photo-1546955934-ce7e40988709"
+                  />
+                  <AdImageCard
+                    image="https://images.unsplash.com/photo-1552750408-d9be356ceceb"
+                    title="Japan railway visit during winter in Hokkaido"
+                    link="https://images.unsplash.com/photo-1546955934-ce7e40988709"
+                  />
                 </div>
               </div>
             </div>
@@ -143,7 +119,6 @@ const Home = () => {
       </div>
 
       <Footer />
-
     </section>
   )
 }
