@@ -38,7 +38,7 @@ const Home = () => {
                     alt=""
                     className="h-[35.5rem] w-full object-cover"
                   />
-                  <a href="#" className="absolute bottom-0 left-0 bg-secondary/50 text-secondary-content w-full p-3 flex gap-1 items-center group">
+                  <a href="#" className="absolute bottom-0 left-0 bg-secondary/75 text-sm text-secondary-content w-full p-3 flex gap-1 items-center group">
                     <div>Tour to Japan on 22nd Saturday</div>
                     <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
                   </a>
@@ -52,7 +52,7 @@ const Home = () => {
                       alt=""
                       className="h-[17rem] w-full object-cover"
                     />
-                    <a href="#" className="absolute bottom-0 left-0 bg-secondary/50 text-secondary-content w-full p-3 flex gap-1 items-center group">
+                    <a href="#" className="absolute bottom-0 left-0 bg-secondary/75 text-sm text-secondary-content w-full p-3 flex gap-1 items-center group">
                       <div>Tour to Japan on 22nd Saturday</div>
                       <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
                     </a>
@@ -63,7 +63,7 @@ const Home = () => {
                       alt=""
                       className="h-[17rem] w-full object-cover"
                     />
-                    <a href="#" className="absolute bottom-0 left-0 bg-secondary/50 text-secondary-content w-full p-3 flex gap-1 items-center group">
+                    <a href="#" className="absolute bottom-0 left-0 bg-secondary/75 text-sm text-secondary-content w-full p-3 flex gap-1 items-center group">
                       <div>Tour to Japan on 22nd Saturday</div>
                       <LinkIcon className="h-4 w-4 group-hover:translate-x-1 transition" />
                     </a>
