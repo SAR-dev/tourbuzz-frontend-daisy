@@ -1,0 +1,40 @@
+import { EnvelopeOpenIcon, LinkIcon, PhoneIcon } from "@heroicons/react/24/outline";
+
+const OrganizerCard = () => {
+    return (
+        <div className="card bg-primary/10 p-3 relative">
+            <div className="absolute top-0 left-0 -m-5">
+                <img
+                    src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+                    alt=""
+                    className="h-20 w-20 object-cover rounded-full"
+                />
+            </div>
+            <div className="pl-16">
+                <div className="title font-semibold text-xl leading-6">Qrio</div>
+                <div className="text-secondary">📢 Never Give Up On Yourself</div>
+            </div>
+            <div className="p-3 flex flex-col gap-2">
+                <div>🥇 Level 1 Verified</div>
+                <div className="line-clamp-4">
+                    ✒️ Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla reiciendis,
+                    officia sed vero ipsa suscipit? Asperiores voluptatum sequi minus! Voluptas voluptatum
+                    atque officiis deleniti voluptates, neque reprehenderit quam officia!
+                </div>
+                <div className="flex gap-2">
+                    <button className="btn btn-sm btn-square btn-secondary">
+                        <EnvelopeOpenIcon className="h-5 w-5" />
+                    </button>
+                    <button className="btn btn-sm btn-square btn-secondary">
+                        <PhoneIcon className="h-5 w-5" />
+                    </button>
+                    <button className="btn btn-sm btn-square btn-secondary">
+                        <LinkIcon className="h-5 w-5" />
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default OrganizerCard;

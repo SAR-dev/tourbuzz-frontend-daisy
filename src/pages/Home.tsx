@@ -1,6 +1,8 @@
+import { EnvelopeIcon, EnvelopeOpenIcon, LinkIcon, PhoneIcon } from "@heroicons/react/24/outline"
 import ArticleCard from "@src/components/ArticleCard"
 import Footer from "@src/components/Footer"
 import NavBar from "@src/components/NavBar"
+import OrganizerCard from "@src/components/OrganizerCard"
 import PlaceCard from "@src/components/PlaceCard"
 import TourCard, { TourCardType } from "@src/components/TourCard"
 
@@ -106,6 +108,18 @@ const Home = () => {
               <ArticleCard />
               <ArticleCard />
               <ArticleCard />
+            </div>
+          </section>
+
+          <section>
+            <div className="text-3xl font-semibold title mb-10">Tour Organizers 👨‍🚀</div>
+            <div className="grid grid-cols-3 gap-8">
+              <OrganizerCard />
+              <OrganizerCard />
+              <OrganizerCard />
+              <OrganizerCard />
+              <OrganizerCard />
+              <OrganizerCard />
             </div>
           </section>
 
