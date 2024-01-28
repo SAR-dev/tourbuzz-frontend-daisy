@@ -17,11 +17,11 @@ const OrganizerCard = () => {
             </div>
             <div className="pl-20">
                 <div className="title font-semibold text-xl leading-6">Qrio</div>
-                <div className="text-secondary">📢 Never Give Up On Yourself</div>
+                <div className="text-neutral/75">Never Give Up On Yourself</div>
             </div>
-            <div className="p-5 flex flex-col gap-2">
+            <div className="p-5 flex flex-col gap-4">
                 <div className="line-clamp-4">
-                    ✒️ Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla reiciendis,
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla reiciendis,
                     officia sed vero ipsa suscipit? Asperiores voluptatum sequi minus! Voluptas voluptatum
                     atque officiis deleniti voluptates, neque reprehenderit quam officia!
                 </div>
