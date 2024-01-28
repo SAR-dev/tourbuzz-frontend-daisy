@@ -1,4 +1,3 @@
-import { EnvelopeIcon, EnvelopeOpenIcon, LinkIcon, PhoneIcon } from "@heroicons/react/24/outline"
 import ArticleCard from "@src/components/ArticleCard"
 import Footer from "@src/components/Footer"
 import NavBar from "@src/components/NavBar"
