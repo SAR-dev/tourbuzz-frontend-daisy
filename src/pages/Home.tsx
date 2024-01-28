@@ -57,7 +57,7 @@ const Home = () => {
                 <button className="btn">Get Invitation Link</button>
               </div>
             </div>
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-4 gap-8">
               <PromotionPoint
                 icon="💰"
                 title="Secure Transaction"
@@ -83,7 +83,7 @@ const Home = () => {
 
           <section>
             <div className="text-3xl font-semibold title mb-10">Upcoming Tours ✈️</div>
-            <div className="grid grid-cols-1 gap-5">
+            <div className="grid grid-cols-1 gap-8">
               <TourCard type={TourCardType.PRIMARY} />
               <TourCard type={TourCardType.SECONDARY} reversed />
             </div>
