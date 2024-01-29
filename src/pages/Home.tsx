@@ -1,4 +1,5 @@
 import ArticleCard from "@src/components/ArticleCard"
+import ContactSvg from "@src/components/ContactSvg"
 import Footer from "@src/components/Footer"
 import HotelCard from "@src/components/HotelCard"
 import NavBar from "@src/components/NavBar"
@@ -140,7 +141,7 @@ const Home = () => {
               <TourCard type={TourCardType.SECONDARY} reversed />
             </div>
           </section>
-
+          
         </div>
       </div>
 
