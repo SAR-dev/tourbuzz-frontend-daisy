@@ -134,7 +134,7 @@ const Home = () => {
           </section>
 
           <section>
-            <div className="text-3xl font-semibold title mb-10">Recently Completed Tours ✈️</div>
+            <div className="text-3xl font-semibold title mb-10">Recently Completed Tours 🎫</div>
             <div className="grid grid-cols-1 gap-8">
               <TourCard type={TourCardType.PRIMARY} />
               <TourCard type={TourCardType.SECONDARY} reversed />
