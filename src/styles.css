@@ -5,3 +5,7 @@
 .h-fill {
     height: -webkit-fill-available;
 }
+
+.code-text {
+    font-family: 'Nanum Gothic Coding', monospace;
+}
