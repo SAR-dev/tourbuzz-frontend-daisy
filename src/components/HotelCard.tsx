@@ -9,8 +9,8 @@ const HotelCard = () => {
             <div className="flex flex-col gap-1 mt-3">
                 <div className="title text-xl font-semibold">Hotel Transylvania</div>
                 <div>🚩 Moulovibazar, Sylhet</div>
-                <div className="link link-hover">🚀 Google Map</div>
-                <div className="link link-hover">🔗 Website</div>
+                <div>🚀 <span className="link link-hover">Google Map</span></div>
+                <div>🔗 <span className="link link-hover">Website</span></div>
             </div>
         </div>
     )

@@ -35,8 +35,8 @@ const Home = () => {
           alt=""
           className="h-[30rem] w-full object-cover object-center"
         />
-        <div className="absolute top-0 left-0 h-fill container mx-auto px-10">
-          <div className="flex flex-col w-full h-fill justify-center">
+        <div className="absolute top-0 left-0 h-fill w-full">
+          <div className="container mx-auto px-10 flex flex-col w-full h-fill justify-center">
             <div className="text-white text-5xl title font-semibold">Welcome To Japan</div>
             <div className="text-2xl text-white mt-3">
               The city is most famous for its port, which has been relevant both domestic
