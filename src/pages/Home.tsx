@@ -91,6 +91,16 @@ const Home = () => {
           </section>
 
           <section>
+            <div className="text-3xl font-semibold title mb-10">Relaxation and Dining Destinations 🛏️</div>
+            <div className="grid grid-cols-4 gap-8">
+              <HotelCard />
+              <HotelCard />
+              <HotelCard />
+              <HotelCard />
+            </div>
+          </section>
+
+          <section>
             <div className="text-3xl font-semibold title mb-10">Where to next 🥳 ?</div>
             <div className="grid grid-cols-6 gap-8">
               <PlaceCard />
@@ -99,16 +109,6 @@ const Home = () => {
               <PlaceCard />
               <PlaceCard />
               <PlaceCard />
-            </div>
-          </section>
-
-          <section>
-            <div className="text-3xl font-semibold title mb-10">Relaxation and Dining Destinations 🛏️</div>
-            <div className="grid grid-cols-4 gap-8">
-              <HotelCard />
-              <HotelCard />
-              <HotelCard />
-              <HotelCard />
             </div>
           </section>
 
