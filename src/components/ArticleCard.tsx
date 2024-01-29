@@ -14,7 +14,7 @@ const ArticleCard = () => {
                     </div>
                 </div>
             </div>
-            <div className="text-secondary italic">
+            <div className="opacity-75 italic">
                 Tour Suggestion, Adventure
             </div>
             <div className="font-semibold text-xl title line-clamp-2">
