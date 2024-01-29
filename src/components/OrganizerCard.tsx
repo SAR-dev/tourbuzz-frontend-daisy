@@ -25,16 +25,16 @@ const OrganizerCard = () => {
                     officia sed vero ipsa suscipit? Asperiores voluptatum sequi minus! Voluptas voluptatum
                     atque officiis deleniti voluptates, neque reprehenderit quam officia!
                 </div>
-                <div className="join">
-                    <button className="join-item no-animation btn btn-xs btn-outline">
+                <div className="flex">
+                    <button className="btn btn-xs btn-ghost">
                         <EnvelopeOpenIcon className="h-4 w-4" />
                         Email
                     </button>
-                    <button className="join-item no-animation btn btn-xs btn-outline">
+                    <button className="btn btn-xs btn-ghost">
                         <PhoneIcon className="h-4 w-4" />
                         Phone
                     </button>
-                    <button className="join-item no-animation btn btn-xs btn-outline">
+                    <button className="btn btn-xs btn-ghost">
                         <LinkIcon className="h-4 w-4" />
                         Website
                     </button>
