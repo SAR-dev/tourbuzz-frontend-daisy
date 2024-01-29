@@ -143,7 +143,7 @@ const Home = () => {
           </section>
 
           <section>
-            <div className="text-3xl font-semibold title mb-10">Get In Touch with Us ✋😃</div>
+            <div className="text-3xl font-semibold title mb-10">Get In Touch with Us 😃</div>
             <div className="mockup-window border bg-orange-200 text-black">
               <div className="flex justify-between items-center px-5 pb-5 relative">
                 <div className="text-lg">
