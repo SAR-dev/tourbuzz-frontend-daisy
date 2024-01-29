@@ -102,6 +102,18 @@ const Home = () => {
           </section>
 
           <section>
+            <div className="text-3xl font-semibold title mb-10">Relaxation and Dining Destinations 🛏️</div>
+            <div className="grid grid-cols-6 gap-8">
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+            </div>
+          </section>
+
+          <section>
             <div className="text-3xl font-semibold title mb-10">Fresh ideas for fun 🤯</div>
             <div className="grid grid-cols-3 gap-8">
               <ArticleCard />
