@@ -1,5 +1,6 @@
 import ArticleCard from "@src/components/ArticleCard"
 import Footer from "@src/components/Footer"
+import HotelCard from "@src/components/HotelCard"
 import NavBar from "@src/components/NavBar"
 import OrganizerCard from "@src/components/OrganizerCard"
 import PlaceCard from "@src/components/PlaceCard"
@@ -103,13 +104,11 @@ const Home = () => {
 
           <section>
             <div className="text-3xl font-semibold title mb-10">Relaxation and Dining Destinations 🛏️</div>
-            <div className="grid grid-cols-6 gap-8">
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
+            <div className="grid grid-cols-4 gap-8">
+              <HotelCard />
+              <HotelCard />
+              <HotelCard />
+              <HotelCard />
             </div>
           </section>
 
