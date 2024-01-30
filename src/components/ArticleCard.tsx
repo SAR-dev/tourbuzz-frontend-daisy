@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const ArticleCard = () => {
     return (
         <div className="flex flex-col gap-3">
@@ -17,9 +19,9 @@ const ArticleCard = () => {
             <div className="opacity-75 italic">
                 Tour Suggestion, Adventure
             </div>
-            <div className="font-semibold text-xl title line-clamp-2">
+            <Link to="/articles/1" className="font-semibold text-xl title line-clamp-2 hover:text-info">
                 Japan Winter Adventures: Your Guide to Winter in Japan This 2023
-            </div>
+            </Link>
             <div className="line-clamp-4">
                 From winter delicacies like shabu-shabu (hot pot) to serene hot springs,
                 and the famous snowcapped , there really is no question about  being a
