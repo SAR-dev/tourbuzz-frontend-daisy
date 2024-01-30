@@ -1,5 +1,6 @@
 import { BookmarkIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline"
 import classNames from "classnames";
+import ImageLoader from "./ImageLoader";
 
 export enum TourCardType {
     PRIMARY,
@@ -16,17 +17,16 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
             <div className="flex flex-col gap-5">
                 <div className="grid grid-cols-2">
                     <div className="relative">
-                        <img
-                            src="https://media.istockphoto.com/id/546763388/photo/the-perfect-vantage-point.jpg?s=170667a&w=0&k=20&c=KcEe8bcUUAheYpdzIJ52Tk2N4ZY3OAtFRBjFCqI7Aq8="
+                        <ImageLoader
+                            src="https://wallpapercave.com/wp/wp11648188.jpg"
                             className={classNames({
                                 "h-96 w-full object-cover card rounded-r-none": true,
                                 "order-last": reversed
                             })}
-                            alt=""
                         />
                         <div className="absolute top-0 left-0 m-2">
                             <div className="bg-primary-content card">
-                                <div className="text-sm font-medium px-2.5 py-0.5 rounded bg-primary/10 text-primary card">
+                                <div className="text-sm font-medium px-2.5 py-0.5 bg-primary/10 text-primary card">
                                     Upcoming Tour
                                 </div>
                             </div>

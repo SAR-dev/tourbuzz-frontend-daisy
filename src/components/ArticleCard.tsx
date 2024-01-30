@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
+import ImageLoader from "./ImageLoader";
 
 const ArticleCard = () => {
     return (
         <div className="flex flex-col gap-3">
             <div className="h-64 w-full relative">
-                <img
+                <ImageLoader
                     src="https://www.jal.co.jp/in/en/guide-to-japan/destinations/articles/osaka/must-see-osaka-attractions/_jcr_content/root/responsivegrid/sectioncontainer/image_295720536.coreimg.jpeg/1697678488560.jpeg"
-                    alt=""
                     className="h-64 w-full object-cover card"
                 />
                 <div className="absolute bottom-0 left-0 m-2">
