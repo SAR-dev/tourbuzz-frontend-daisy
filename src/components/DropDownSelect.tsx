@@ -38,7 +38,7 @@ export default function DropdownSelect({...props}: DropDownSelectProps) {
                                 <button
                                     className={classNames({
                                         "card flex flex-row gap-2 items-center w-full p-2 text-sm my-px": true,
-                                        "bg-primary/20": active,
+                                        "bg-primary/80 text-primary-content": active,
                                         "bg-primary text-primary-content": props.selectedValue == option.value
                                     })}
                                     onClick={option.handleClick}
