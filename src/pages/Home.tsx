@@ -143,34 +143,24 @@ const Home = () => {
           </section>
 
           <section>
-            <div className="text-3xl font-semibold title mb-10">Get In Touch with Us 😃</div>
-            <div className="mockup-window border bg-orange-200 text-black">
-              <div className="flex justify-between items-center px-5 pb-5 relative">
-                <div className="text-lg code-text">
-                  Have a question ❓, suggestion 💡, or just want to chat 🗯️?
-                  <br />
-                  We're all ears 😎!
-                  <br />
-                  Drop us a message 👇 or reach out through our contact details.
-                  <br />
-                  We can't wait to hear from you! 📬👋😉
+            <div className="bg-info text-info-content p-10 card flex flex-row items-center gap-5">
+              <div className="text-8xl">🤗</div>
+              <div className="flex flex-col gap-1 flex-1">
+                <div className="title text-4xl font-semibold">Get In Touch with Us </div>
+                <div className="title text-xl">
+                  Feel free to ask questions, report issues or provide suggestions
                 </div>
-
-                <div className="flex gap-3">
-                  <button className="btn code-text">
+              </div>
+              <div className="flex gap-3">
+                  <button className="btn">
                     Chat with Us
                     <ChatBubbleLeftRightIcon className="h-5 w-5" />
                   </button>
-                  <button className="btn code-text">
+                  <button className="btn">
                     Send Email
                     <PaperAirplaneIcon className="h-5 w-5" />
                   </button>
                 </div>
-
-                <div className="absolute bottom-0 right-0 text-6xl">
-                🤗
-                </div>
-              </div>
             </div>
           </section>
         </div>
