@@ -25,10 +25,8 @@ const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }
                             })}
                         />
                         <div className="absolute top-0 left-0 m-2">
-                            <div className="bg-primary-content card">
-                                <div className="text-sm font-medium px-2.5 py-0.5 bg-primary/10 text-primary card">
-                                    Upcoming Tour
-                                </div>
+                            <div className="bg-primary-content card text-sm font-medium px-2.5 py-0.5 text-primary card">
+                                Upcoming Tour
                             </div>
                         </div>
                     </div>
