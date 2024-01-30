@@ -9,3 +9,10 @@
 .code-text {
     font-family: 'Nanum Gothic Coding', monospace;
 }
+
+.__react_modal_image__header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
