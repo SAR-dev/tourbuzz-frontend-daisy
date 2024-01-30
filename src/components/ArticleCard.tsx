@@ -19,7 +19,7 @@ const ArticleCard = () => {
             <div className="opacity-75 italic">
                 Tour Suggestion, Adventure
             </div>
-            <Link to="/articles/1" className="font-semibold text-xl title line-clamp-2 hover:text-accent">
+            <Link to="/articles/1" className="font-semibold text-xl title line-clamp-2 hover:text-accent translate-y-0 hover:-translate-y-1 duration-100">
                 Japan Winter Adventures: Your Guide to Winter in Japan This 2023
             </Link>
             <div className="line-clamp-4">
