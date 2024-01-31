@@ -90,7 +90,7 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 gap-8">
               <TourCard type={TourCardType.PRIMARY} />
-              <TourCard type={TourCardType.SECONDARY} reversed />
+              <TourCard type={TourCardType.SECONDARY} />
             </div>
           </section>
 
@@ -151,7 +151,7 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 gap-8">
               <TourCard type={TourCardType.PRIMARY} />
-              <TourCard type={TourCardType.SECONDARY} reversed />
+              <TourCard type={TourCardType.SECONDARY} />
             </div>
           </section>
 

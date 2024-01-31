@@ -3,23 +3,25 @@ import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Title = ({
-    children, 
+    children,
     to,
 }: {
-    children: ReactNode, 
+    children: ReactNode,
     to?: string
 }) => {
     const navigate = useNavigate()
 
     return (
-        <div 
-            className={classNames({
-                "text-3xl font-semibold title": true,
-                "hover:text-accent cursor-pointer translate-x-0 hover:translate-x-1 duration-100": !!to,      
-            })}
-            onClick={() => navigate(to ?? "#")}
-        >
-            {children}
+        <div className="w-full">
+            <div
+                className={classNames({
+                    "text-3xl font-semibold title inline-flex": true,
+                    "hover:text-accent cursor-pointer translate-x-0 hover:translate-x-1 duration-100": !!to,
+                })}
+                onClick={() => navigate(to ?? "#")}
+            >
+                {children}
+            </div>
         </div>
     )
 }

@@ -1,32 +1,54 @@
-import { BookmarkIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline"
+import { BookmarkIcon, FaceSmileIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline"
 import classNames from "classnames";
 import ImageLoader from "./ImageLoader";
+import EmojiSelect from "./EmojiSelect";
 
 export enum TourCardType {
     PRIMARY,
     SECONDARY
 }
 
-const TourCard = ({ type, reversed }: { type: TourCardType, reversed?: boolean }) => {
+const TourCard = ({ type }: { type: TourCardType }) => {
+    const handleEmojiSelect = (value: string) => {
+        console.log(value)
+    }
+
     return (
         <div className={classNames({
             "card p-5": true,
-            "bg-primary/10": type === TourCardType.PRIMARY,
-            "bg-secondary/10": type === TourCardType.SECONDARY,
+            "bg-primary/20": type === TourCardType.PRIMARY,
+            "bg-secondary/20": type === TourCardType.SECONDARY,
         })}>
             <div className="flex flex-col gap-5">
                 <div className="grid grid-cols-2">
                     <div className="relative">
                         <ImageLoader
                             src="https://wallpapercave.com/wp/wp11648188.jpg"
-                            className={classNames({
-                                "h-96 w-full object-cover card rounded-r-none": true,
-                                "order-last": reversed
-                            })}
+                            className="h-96 w-full object-cover card rounded-r-none"
                         />
                         <div className="absolute top-0 left-0 m-2">
                             <div className="bg-primary-content card text-sm font-medium px-2.5 py-0.5 text-primary card">
                                 Upcoming Tour
+                            </div>
+                        </div>
+                        <div className="absolute bottom-0 m-2">
+                            <div className="flex gap-1">
+                                <EmojiSelect
+                                    button={
+                                        <button className="reaction-badge w-7 p-0">
+                                            <FaceSmileIcon className="h-5 w-5" />
+                                        </button>
+                                    }
+                                    setEmoji={handleEmojiSelect}
+                                />
+                                <button className="reaction-badge">
+                                    <span>🚀</span>
+                                    <span>3</span>
+                                </button>
+                                <button className="reaction-badge">
+                                    <span>🤗</span>
+                                    <span>3</span>
+                                </button>
                             </div>
                         </div>
                     </div>

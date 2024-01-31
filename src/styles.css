@@ -14,5 +14,9 @@
     height: 40px;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
+}
+
+.epr-category-nav {
+    display: none;
 }
