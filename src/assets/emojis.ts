@@ -2109,8 +2109,7 @@ export const emojis: EmojiType[] = [
     category: "people",
     emoji: "🥰",
     key: "smiling_face_with_three_hearts",
-    keywords: "face,love,like,affection,valentines,infatuation,crush,hearts,adore",
-    default: true
+    keywords: "face,love,like,affection,valentines,infatuation,crush,hearts,adore"
   },
   {
     id: 1457,
@@ -8880,7 +8879,8 @@ export const emojis: EmojiType[] = [
     category: "travel_and_places",
     emoji: "🚀",
     key: "rocket",
-    keywords: "launch,ship,staffmode,NASA,outer space,outer_space,fly"
+    keywords: "launch,ship,staffmode,NASA,outer space,outer_space,fly",
+    default: true
   },
   {
     id: 1258,
