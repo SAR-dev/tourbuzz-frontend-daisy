@@ -10,8 +10,7 @@ const EmojiSelect = ({
   setEmoji: (props: string) => void
 }) => {
   const handleEmojiClick = (emojiData: EmojiClickData, close: () => void) => {
-    console.log(emojiData)
-    setEmoji(emojiData.emoji);
+    setEmoji(emojiData.unified);
     close()
   };
 
@@ -42,7 +41,7 @@ const EmojiSelect = ({
                       height={450}
                       previewConfig={{ showPreview: false }}
                       reactionsDefaultOpen={true}
-                      reactions={["1f600", "1f602", "1f970", "1f680", "1f44d", "1f44e", "2665-fe0f"]}
+                      reactions={["1f602", "1f600", "1f44d", "1f680", "2665-fe0f", "1f44e"]}
                     />
                   </div>
                 )}
