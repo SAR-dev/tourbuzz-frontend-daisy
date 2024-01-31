@@ -63,8 +63,8 @@ const EmojiSelect = ({
             >
               <Popover.Panel className="absolute top-0 left-0 z-[1]">
                 {({ close }) => (
-                  <div className="-translate-y-[520px] flex items-end">
-                    <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
+                  <div className="-translate-y-[31rem] flex items-end">
+                    <div className="w-96 h-[30rem] p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
                       <input type="text" placeholder="Type at least 3 characters here" className="input input input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
                       <div className="custom-scrollbar overflow-y-auto h-96">
                         {history.length > 0 && (
