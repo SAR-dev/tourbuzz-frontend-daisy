@@ -4,7 +4,8 @@ import { EmojiType, emojis } from "@src/assets/emojis";
 import Fuse from "fuse.js";
 import { findMostUsedStrings, slugToText } from "@src/functions/helpers";
 import useLocalStorageState from "use-local-storage-state";
-// import EmojiPicker, { EmojiClickData, EmojiStyle } from "emoji-picker-react";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useEmojiStore } from "@src/stores/emojiStore";
 
 const fuseOptions = {
   keys: ["emoji", "keywords", "key"],
@@ -23,6 +24,7 @@ const EmojiSelect = ({
   button: ReactNode;
   setEmoji: (props: string) => void;
 }) => {
+  const { expanded, setExpanded, defaultEmojis } = useEmojiStore()
   const [hovered, setHovered] = useState<EmojiType>(emojis[0])
   const [emojisList, setEmojiList] = useState<EmojiType[]>([...emojis])
   const [search, setSearch] = useState("")
@@ -63,45 +65,69 @@ const EmojiSelect = ({
             >
               <Popover.Panel className="absolute top-0 left-0 z-[1]">
                 {({ close }) => (
-                  <div className="-translate-y-[31rem] flex items-end">
-                    <div className="w-96 h-[30rem] p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
-                      <input type="text" placeholder="Type at least 3 characters here" className="input input input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
-                      <div className="custom-scrollbar overflow-y-auto h-96">
-                        {history.length > 0 && (
-                          <div className='mb-2'>
-                            <div className="font-semibold mb-2">Previously Selected</div>
-                            <div className="grid grid-cols-7 gap-2">
-                              {findMostUsedStrings(history, 7).map((e, i) => (
-                                <button
-                                  className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
-                                  onClick={() => handleEmojiClick(e, close)}
-                                  key={i}
-                                >
-                                  <p className="text-2xl">{e}</p>
-                                </button>
-                              ))}
+                  <div className="-translate-y-[31rem] h-[30rem] flex items-end">
+                    {expanded ? (
+                      <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
+                        <input type="text" placeholder="Type at least 3 characters here" className="input input input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
+                        <div className="custom-scrollbar overflow-y-auto h-96">
+                          {history.length > 0 && (
+                            <div className='mb-2'>
+                              <div className="font-semibold mb-2">Previously Selected</div>
+                              <div className="grid grid-cols-7 gap-2">
+                                {findMostUsedStrings(history, 7).map((e, i) => (
+                                  <button
+                                    className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
+                                    onClick={() => handleEmojiClick(e, close)}
+                                    key={i}
+                                  >
+                                    <p className="text-2xl">{e}</p>
+                                  </button>
+                                ))}
+                              </div>
                             </div>
+                          )}
+                          <div className="font-semibold mb-2">Available Emojis</div>
+                          <div className="grid grid-cols-7 gap-2">
+                            {emojisList.map((e, i) => (
+                              <button
+                                className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
+                                onClick={() => handleEmojiClick(e.emoji, close)}
+                                onMouseEnter={() => setHovered(e)}
+                                key={i}
+                              >
+                                <p className="text-2xl">{e.emoji}</p>
+                              </button>
+                            ))}
                           </div>
-                        )}
-                        <div className="font-semibold mb-2">Available Emojis</div>
-                        <div className="grid grid-cols-7 gap-2">
-                          {emojisList.map((e, i) => (
-                            <button
-                              className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
-                              onClick={() => handleEmojiClick(e.emoji, close)}
-                              onMouseEnter={() => setHovered(e)}
-                              key={i}
-                            >
-                              <p className="text-2xl">{e.emoji}</p>
-                            </button>
-                          ))}
+                        </div>
+                        <div className='bg-base-200 p-1 card flex flex-row gap-2 items-center'>
+                          <div className="text-4xl">{hovered.emoji}</div>
+                          <div className='font-semibold line-clamp-1'>{slugToText(hovered.key)}</div>
                         </div>
                       </div>
-                      <div className='bg-base-200 p-1 card flex flex-row gap-2 items-center'>
-                        <div className="text-4xl">{hovered.emoji}</div>
-                        <div className='font-semibold line-clamp-1'>{slugToText(hovered.key)}</div>
+                    ) : (
+                      <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
+                        <div className="grid grid-cols-7 gap-2">
+                          {defaultEmojis.map((e, i) => (
+                            <div className="tooltip" data-tip={slugToText(e.key)} key={i}>
+                              <button
+                                className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
+                                onClick={() => handleEmojiClick(e.emoji, close)}
+                                onMouseEnter={() => setHovered(e)}
+                              >
+                                <p className="text-2xl">{e.emoji}</p>
+                              </button>
+                            </div>
+                          ))}
+                          <button
+                            className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
+                            onClick={() => setExpanded(true)}
+                          >
+                            <PlusIcon className="h-6 w-6" />
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 )}
               </Popover.Panel>

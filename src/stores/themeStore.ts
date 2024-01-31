@@ -10,7 +10,7 @@ export enum ThemeName {
     Luxury = "luxury"
 }
 
-const themeKey = "theme"
+const themeStoreKey = "theme"
 
 type ThemeStore = {
     theme: ThemeName
@@ -26,7 +26,7 @@ export const useThemeStore = create<ThemeStore>()(
                 document.querySelector('html')?.setAttribute('data-theme', value)
             },
         }), {
-        name: themeKey,
+        name: themeStoreKey,
         storage: createJSONStorage(() => localStorage),
     })
 )
