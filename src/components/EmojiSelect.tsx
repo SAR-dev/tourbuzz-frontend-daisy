@@ -4,7 +4,7 @@ import { EmojiType, emojis } from "@src/assets/emojis";
 import Fuse from "fuse.js";
 import { findMostUsedStrings, slugToText } from "@src/functions/helpers";
 import useLocalStorageState from "use-local-storage-state";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useEmojiStore } from "@src/stores/emojiStore";
 
 const fuseOptions = {
@@ -68,7 +68,12 @@ const EmojiSelect = ({
                   <div className="-translate-y-[31rem] h-[30rem] flex items-end">
                     {expanded ? (
                       <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
-                        <input type="text" placeholder="Type at least 3 characters here" className="input input input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
+                        <div className="flex gap-3">
+                          <input type="text" placeholder="Type at least 3 characters here" className="input input input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
+                          <button className="btn btn-square btn-outline" onClick={() => setExpanded(false)}>
+                            <MinusIcon className="h-5 w-5" />
+                          </button>
+                        </div>
                         <div className="custom-scrollbar overflow-y-auto h-96">
                           {history.length > 0 && (
                             <div className='mb-2'>
@@ -101,7 +106,7 @@ const EmojiSelect = ({
                           </div>
                         </div>
                         <div className='bg-base-200 p-1 card flex flex-row gap-2 items-center'>
-                          <div className="text-4xl">{hovered.emoji}</div>
+                          <div className="text-4xl h-11">{hovered.emoji}</div>
                           <div className='font-semibold line-clamp-1'>{slugToText(hovered.key)}</div>
                         </div>
                       </div>
