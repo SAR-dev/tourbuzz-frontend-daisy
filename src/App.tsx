@@ -12,6 +12,7 @@ const App = () => {
         <Lightbox
           medium={url}
           large={url}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
           // @ts-expect-error
           onClose={closeModal}
         />
