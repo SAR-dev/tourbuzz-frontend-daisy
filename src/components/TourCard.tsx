@@ -8,7 +8,7 @@ const TourCard = () => {
     }
 
     return (
-        <div className="card p-5 bg-primary/10">
+        <div className="card border border-base-300">
             <div className="flex flex-col gap-5">
                 <div className="grid grid-cols-2">
                     <div className="relative">
@@ -42,7 +42,7 @@ const TourCard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between">
+                    <div className="flex flex-col justify-between pt-5">
                         <div className="px-10 flex gap-5 items-start justify-between">
                             <div>
                                 <div className="title text-2xl font-semibold">Hong Kong Disneyland Park Tickets</div>

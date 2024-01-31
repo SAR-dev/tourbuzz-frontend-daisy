@@ -16,7 +16,7 @@ const Title = ({
             <div
                 className={classNames({
                     "text-3xl font-semibold title inline-flex": true,
-                    "hover:text-accent cursor-pointer translate-x-0 hover:translate-x-1 duration-100": !!to,
+                    "hover:text-primary cursor-pointer translate-x-0 hover:translate-x-1 duration-100": !!to,
                 })}
                 onClick={() => navigate(to ?? "#")}
             >
