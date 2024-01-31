@@ -1,12 +1,59 @@
 import ImageLoader from "@src/components/ImageLoader";
-import NavBar from "@src/components/NavBar"
 import Title from "@src/components/Title";
+import MarkdownRenderer from "@src/components/MarkdownRenderer";
+import ArticleCard from "@src/components/ArticleCard";
+import NavLayout from "@src/layouts/NavLayout";
+
+const md_article = `
+# Mystic Falls - A Hidden Gem in Nature's Embrace 🌿🏞️
+
+![Mystic Falls](https://images.unsplash.com/photo-1542332213-9b5a5a3fad35)
+
+Welcome to Mystic Falls, a breathtaking oasis nestled deep within the heart of lush greenery and serene landscapes. This hidden gem offers a perfect escape from the hustle and bustle of city life, providing visitors with an unforgettable experience surrounded by nature's embrace.
+
+## Discover the Magic of Mystic Falls ✨
+
+As you embark on the journey to Mystic Falls, you'll find yourself mesmerized by the enchanting beauty that unfolds before your eyes. The falls, cascading gracefully from towering cliffs, create a symphony of soothing sounds that resonate through the air.
+
+![Waterfall](https://example.com/waterfall.jpg)
+
+Visitors can take a leisurely stroll along well-maintained trails that wind through the forest, leading to various vantage points where the splendor of Mystic Falls can be admired. The air is filled with the scent of wildflowers, and the vibrant colors of the flora add to the picturesque scenery.
+
+## Activities for Every Adventurer 🚶‍♂️🌳
+
+Mystic Falls caters to all types of travelers, offering a range of activities to suit every adventurer's taste. Whether you prefer a relaxing picnic by the water, an invigorating hike through the surrounding hills, or capturing the perfect photograph of the falls, this destination has it all.
+
+![Hiking Trail](https://example.com/hiking_trail.jpg)
+
+For those seeking a more daring experience, there are opportunities for rock climbing along the cliffs that frame Mystic Falls. The panoramic views from these elevated positions are nothing short of spectacular.
+
+## How to Reach Mystic Falls 🗺️
+
+Mystic Falls is conveniently located, making it accessible for tourists from various regions. Here are the basic directions:
+
+- **By Car:** Take the scenic route through winding roads, enjoying the beauty of the countryside. GPS coordinates: [Latitude, Longitude].
+
+- **By Public Transport:** 🚌 Regular buses run from the nearby town to Mystic Falls. Check the local schedule for timings.
+
+## Plan Your Visit 📅
+
+Before you embark on your journey, make sure to:
+
+- **Check Weather Conditions:** Mystic Falls is most enchanting during mild weather. Avoid visiting during extreme conditions.
+
+- **Pack Essentials:** Bring water, snacks, and a camera to capture the memories.
+
+![Panoramic View](https://example.com/panoramic_view.jpg)
+
+Mystic Falls is a haven for nature lovers and adventure seekers alike. Immerse yourself in the tranquility of this hidden paradise and create memories that will last a lifetime.
+
+**Note:** All images used in this article are for illustrative purposes only and are sourced from [Unsplash](https://unsplash.com).
+`;
 
 const Article = () => {
     return (
-        <section>
-            <NavBar />
-            <div className="container mx-auto px-10 py-5">
+        <NavLayout>
+            <div className="container mx-auto px-10 pt-5 pb-16">
                 <div className="grid grid-cols-3 gap-8">
                     <div className="col-span-2">
                         <div className="grid grid-cols-1 gap-5">
@@ -39,13 +86,15 @@ const Article = () => {
                                     </div>
                                 </div>
                             </div>
+
+                            <MarkdownRenderer md_text={md_article} />
                         </div>
 
                     </div>
                     <div className="col-span-1">
-                        <div className="flex flex-col gap-10">
+                        <div className="flex flex-col gap-10 sticky top-[5rem]">
                             <div>
-                                <div className="pb-5 mb-5 border-b border-base-300/50">
+                                <div className="pb-5 mb-5 border-b border-base-300">
                                     <Title>Summary</Title>
                                 </div>
                                 <div>
@@ -56,7 +105,7 @@ const Article = () => {
                             </div>
 
                             <div>
-                                <div className="pb-5 mb-5 border-b border-base-300/50">
+                                <div className="pb-5 mb-5 border-b border-base-300">
                                     <Title>Author Info</Title>
                                 </div>
                                 <div>
@@ -75,8 +124,33 @@ const Article = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="pt-10 mt-10 border-t border-base-300 w-full">
+                    <div className="grid grid-cols-1 gap-16">
+                        <div className="w-full">
+                            <div className="mb-10">
+                                <Title>Articles from Same Author</Title>
+                            </div>
+                            <div className="grid grid-cols-3 gap-8">
+                                <ArticleCard />
+                                <ArticleCard />
+                                <ArticleCard />
+                            </div>
+                        </div>
+                        <div className="w-full">
+                            <div className="mb-10">
+                                <Title>Similar Articles</Title>
+                            </div>
+                            <div className="grid grid-cols-3 gap-8">
+                                <ArticleCard />
+                                <ArticleCard />
+                                <ArticleCard />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </NavLayout>
     )
 }
 

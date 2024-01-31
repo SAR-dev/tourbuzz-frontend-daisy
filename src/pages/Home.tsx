@@ -1,12 +1,11 @@
 import { ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
 import ArticleCard from "@src/components/ArticleCard"
-import Footer from "@src/components/Footer"
 import HotelCard from "@src/components/HotelCard"
-import NavBar from "@src/components/NavBar"
 import OrganizerCard from "@src/components/OrganizerCard"
 import PlaceCard from "@src/components/PlaceCard"
 import Title from "@src/components/Title"
 import TourCard, { TourCardType } from "@src/components/TourCard"
+import NavLayout from "@src/layouts/NavLayout"
 
 const PromotionPoint = ({
   icon,
@@ -28,8 +27,7 @@ const PromotionPoint = ({
 
 const Home = () => {
   return (
-    <section>
-      <NavBar />
+    <NavLayout>
       <div className="h-[30rem] relative">
         <img
           src="https://www.japan-guide.com/g17/home_1712_fujisan.jpg"
@@ -178,9 +176,7 @@ const Home = () => {
           </section>
         </div>
       </div>
-
-      <Footer />
-    </section>
+    </NavLayout>
   )
 }
 
