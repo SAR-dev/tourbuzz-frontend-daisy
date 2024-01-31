@@ -4,7 +4,7 @@ import HotelCard from "@src/components/HotelCard"
 import OrganizerCard from "@src/components/OrganizerCard"
 import PlaceCard from "@src/components/PlaceCard"
 import Title from "@src/components/Title"
-import TourCard, { TourCardType } from "@src/components/TourCard"
+import TourCard from "@src/components/TourCard"
 import NavLayout from "@src/layouts/NavLayout"
 
 const PromotionPoint = ({
@@ -87,8 +87,8 @@ const Home = () => {
               <Title to="/tours">Upcoming Tours ✈️</Title>
             </div>
             <div className="grid grid-cols-1 gap-8">
-              <TourCard type={TourCardType.PRIMARY} />
-              <TourCard type={TourCardType.SECONDARY} />
+              <TourCard />
+              <TourCard />
             </div>
           </section>
 
@@ -148,8 +148,8 @@ const Home = () => {
               <Title to="/tours">Recently Completed Tours 🎫</Title>
             </div>
             <div className="grid grid-cols-1 gap-8">
-              <TourCard type={TourCardType.PRIMARY} />
-              <TourCard type={TourCardType.SECONDARY} />
+              <TourCard />
+              <TourCard />
             </div>
           </section>
 

@@ -1,24 +1,14 @@
-import { BookmarkIcon, FaceSmileIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline"
-import classNames from "classnames";
+import { BookmarkIcon, FaceSmileIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
 import ImageLoader from "./ImageLoader";
 import EmojiSelect from "./EmojiSelect";
 
-export enum TourCardType {
-    PRIMARY,
-    SECONDARY
-}
-
-const TourCard = ({ type }: { type: TourCardType }) => {
+const TourCard = () => {
     const handleEmojiSelect = (value: string) => {
         console.log(value)
     }
 
     return (
-        <div className={classNames({
-            "card p-5": true,
-            "bg-primary/20": type === TourCardType.PRIMARY,
-            "bg-secondary/20": type === TourCardType.SECONDARY,
-        })}>
+        <div className="card p-5 bg-primary/10">
             <div className="flex flex-col gap-5">
                 <div className="grid grid-cols-2">
                     <div className="relative">
