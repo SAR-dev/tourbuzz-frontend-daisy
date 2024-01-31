@@ -69,13 +69,13 @@ const EmojiSelect = ({
                     {expanded ? (
                       <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
                         <div className="flex gap-3">
-                          <input type="text" placeholder="Type at least 3 characters here" className="input input input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
-                          <button className="btn btn-square btn-outline" onClick={() => setExpanded(false)}>
+                          <input type="text" placeholder="Type at least 3 characters here" className="input input-sm input-bordered w-full" value={search} onChange={e => setSearch(e.target.value)} />
+                          <button className="btn btn-sm btn-square" onClick={() => setExpanded(false)}>
                             <MinusIcon className="h-5 w-5" />
                           </button>
                         </div>
                         <div className="custom-scrollbar overflow-y-auto h-96">
-                          {history.length > 0 && (
+                          {history.length > 0 && search.length < 2 && (
                             <div className='mb-2'>
                               <div className="font-semibold mb-2">Previously Selected</div>
                               <div className="grid grid-cols-7 gap-2">
