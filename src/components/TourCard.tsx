@@ -43,12 +43,12 @@ const TourCard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col justify-between pt-5">
-                        <div className="px-10 flex gap-5 items-start justify-between">
+                    <div className="flex flex-col justify-between">
+                        <Link to="/tours/1"  className="px-10 flex gap-5 pt-5 card flex-row rounded-l-none rounded-b-none h-fill items-start justify-between hover:bg-base-300">
                             <div>
-                                <Link to="/tours/1" className="title text-2xl font-semibold line-clamp-2 hover:text-primary translate-y-0 hover:translate-x-1 duration-100">
+                                <div className="title text-2xl font-semibold line-clamp-2">
                                     Hong Kong Disneyland Park Tickets
-                                </Link>
+                                </div>
                                 <div className="flex flex-col gap-1 mt-2">
                                     <div>😎 Organized By: Qrio</div>
                                     <div>🤝 Every group will be consisted of 100 persons</div>
@@ -67,7 +67,7 @@ const TourCard = () => {
                                     <QuestionMarkCircleIcon className="h-5 w-5" />
                                 </button>
                             </div>
-                        </div>
+                        </Link>
                         <div className="bg-orange-200 text-black p-10 card rounded-l-none rounded-t-none">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
