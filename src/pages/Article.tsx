@@ -56,7 +56,7 @@ const Article = () => {
             <div className="container mx-auto px-10 pt-5 pb-16">
                 <div className="grid grid-cols-3 gap-8">
                     <div className="col-span-2">
-                        <div className="grid grid-cols-1 gap-5">
+                        <div className="grid grid-cols-1 gap-8">
                             <div>
                                 <div className="bg-base-300 font-medium px-2.5 py-0.5 card inline-flex">
                                     Recommendation

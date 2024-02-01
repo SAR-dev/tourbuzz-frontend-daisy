@@ -1,6 +1,7 @@
 import { BookmarkIcon, FaceSmileIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
 import ImageLoader from "./ImageLoader";
 import EmojiSelect from "./EmojiSelect";
+import { Link } from "react-router-dom";
 
 const TourCard = () => {
     const handleEmojiSelect = (value: string) => {
@@ -45,7 +46,9 @@ const TourCard = () => {
                     <div className="flex flex-col justify-between pt-5">
                         <div className="px-10 flex gap-5 items-start justify-between">
                             <div>
-                                <div className="title text-2xl font-semibold">Hong Kong Disneyland Park Tickets</div>
+                                <Link to="/tours/1" className="title text-2xl font-semibold line-clamp-2 hover:text-primary translate-y-0 hover:translate-x-1 duration-100">
+                                    Hong Kong Disneyland Park Tickets
+                                </Link>
                                 <div className="flex flex-col gap-1 mt-2">
                                     <div>😎 Organized By: Qrio</div>
                                     <div>🤝 Every group will be consisted of 100 persons</div>

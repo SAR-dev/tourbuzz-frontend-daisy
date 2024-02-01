@@ -6,8 +6,8 @@
   height: -webkit-fill-available;
 }
 
-.code-text {
-  font-family: "Nanum Gothic Coding", monospace;
+.markdown :first-child {
+  margin-top: 0px;
 }
 
 .__react_modal_image__header {
@@ -15,8 +15,4 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
-
-.epr-category-nav {
-  display: none;
 }
