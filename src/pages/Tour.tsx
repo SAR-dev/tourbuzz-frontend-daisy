@@ -1,3 +1,4 @@
+import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import ArticleCard from "@src/components/ArticleCard"
 import ImageLoader from "@src/components/ImageLoader"
 import MarkdownRenderer from "@src/components/MarkdownRenderer"
@@ -105,6 +106,17 @@ const Tour = () => {
                                 <TourPlacecard />
                                 <TourPlacecard />
                             </div>
+                            <div className="bg-orange-200/20 card p-5">
+                                <div className="line-clamp-5 overflow-hidden">
+                                    <MarkdownRenderer md_text={md_highlights} />
+                                </div>
+                                <div className="mt-3">
+                                    <button className="btn btn-sm">
+                                        See Full Highlights
+                                        <ChevronRightIcon className="h-4 w-4" />
+                                    </button>
+                                </div>
+                            </div>
                             <div className="grid grid-cols-1 gap-5">
                                 <div className="col-span-5 title text-2xl font-semibold">
                                     🤔 What to Expect
@@ -121,19 +133,13 @@ const Tour = () => {
                                 <div className="pb-5 mb-5 border-b border-base-300">
                                     <Title>Summary</Title>
                                 </div>
-                                <div className="flex flex-col gap-1 mb-5">
+                                <div className="flex flex-col gap-1">
                                     <div>📅 Tour Start Date: March 15, 2024</div>
                                     <div>🎫 Last Ticket Sale Date: February 28, 2024</div>
                                     <div>🌐 Tour End Date: April 5, 2024</div>
                                     <div>👥 Group Size: Max 20 People per group</div>
                                     <div>🤝 Group Info: Diverse and Welcoming</div>
                                     <div>🚍 Transport: Modern air-conditioned coaches for a comfortable and scenic journey.</div>
-                                </div>
-                                <div>
-                                    <div className="h-64 overflow-hidden">
-                                        <MarkdownRenderer md_text={md_highlights} />
-                                    </div>
-                                    <button className="btn btn-sm w-full mt-1">See More</button>
                                 </div>
                             </div>
                             <div>
