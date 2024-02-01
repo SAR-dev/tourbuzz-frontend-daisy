@@ -134,13 +134,13 @@ const Tour = () => {
                                 <div className="pb-5 mb-5 border-b border-base-300">
                                     <Title>Summary</Title>
                                 </div>
-                                <div className="flex flex-col gap-1">
-                                    <div>📅 Tour Start Date: March 15, 2024</div>
-                                    <div>🎫 Last Ticket Sale Date: February 28, 2024</div>
-                                    <div>🌐 Tour End Date: April 5, 2024</div>
-                                    <div>👥 Group Size: Max 20 People per group</div>
-                                    <div>🤝 Group Info: Diverse and Welcoming</div>
-                                    <div>🚍 Transport: Modern air-conditioned coaches for a comfortable and scenic journey.</div>
+                                <div className="border border-base-300 card grid grid-cols-3 divide-y divide-base-300">
+                                    <div className="p-2 col-span-1 font-semibold border-r border-base-300">📅 Start Date</div><div className="p-2 col-span-2">March 15, 2024</div>
+                                    <div className="p-2 col-span-1 font-semibold border-r border-base-300">🎫 Ticket Sale End</div><div className="p-2 col-span-2">March 15, 2024</div>
+                                    <div className="p-2 col-span-1 font-semibold border-r border-base-300">🌐 End Date</div><div className="p-2 col-span-2">Max 20 People per group</div>
+                                    <div className="p-2 col-span-1 font-semibold border-r border-base-300">👥 Group Size</div><div className="p-2 col-span-2"> March 15, 2024</div>
+                                    <div className="p-2 col-span-1 font-semibold border-r border-base-300">🤝 Group Info</div><div className="p-2 col-span-2">Diverse and Welcoming</div>
+                                    <div className="p-2 col-span-1 font-semibold border-r border-base-300">🚍 Transport</div><div className="p-2 col-span-2">Modern air-conditioned coaches for a comfortable and scenic journey.</div>
                                 </div>
                             </div>
                             <div>
