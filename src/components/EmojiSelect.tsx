@@ -2,7 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import { EmojiType, emojis } from "@src/assets/emojis";
 import Fuse from "fuse.js";
-import { emojiToHex, findMostUsedStrings, hexToEmoji, slugToText } from "@src/functions/helpers";
+import { findMostUsedStrings, slugToText } from "@src/functions/helpers";
 import useLocalStorageState from "use-local-storage-state";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useEmojiStore } from "@src/stores/emojiStore";
@@ -40,8 +40,7 @@ const EmojiSelect = ({
     }
   }, [search])
 
-  const handleEmojiClick = async (emojiHex: string | null, close: () => void) => {
-    if(emojiHex == null) return;
+  const handleEmojiClick = async (emojiHex: string, close: () => void) => {
     setHistory([...history, emojiHex])
     setEmoji(emojiHex)
     close()
@@ -86,7 +85,7 @@ const EmojiSelect = ({
                                     onClick={() => handleEmojiClick(e, close)}
                                     key={i}
                                   >
-                                    <p className="text-2xl">{hexToEmoji(e)}</p>
+                                    <p className="text-2xl">{e}</p>
                                   </button>
                                 ))}
                               </div>
@@ -97,7 +96,7 @@ const EmojiSelect = ({
                             {emojisList.map((e, i) => (
                               <button
                                 className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
-                                onClick={() => handleEmojiClick(emojiToHex(e.emoji), close)}
+                                onClick={() => handleEmojiClick(e.emoji, close)}
                                 onMouseEnter={() => setHovered(e)}
                                 key={i}
                               >
@@ -115,10 +114,10 @@ const EmojiSelect = ({
                       <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
                         <div className="grid grid-cols-7 gap-2">
                           {defaultEmojis.map((e, i) => (
-                            <div className="tooltip tooltip-info" data-tip={slugToText(e.key)} key={i}>
+                            <div className="tooltip" data-tip={slugToText(e.key)} key={i}>
                               <button
                                 className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
-                                onClick={() => handleEmojiClick(emojiToHex(e.emoji), close)}
+                                onClick={() => handleEmojiClick(e.emoji, close)}
                                 onMouseEnter={() => setHovered(e)}
                               >
                                 <p className="text-2xl">{e.emoji}</p>
