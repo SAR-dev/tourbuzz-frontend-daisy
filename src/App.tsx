@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Article from "./pages/Article";
 import { useImageModalStore } from "./stores/imageModalStore";
 import { Lightbox } from "react-modal-image";
+import Tour from "./pages/Tour";
 
 const App = () => {
   const { url, closeModal } = useImageModalStore()
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: "/articles/:id",
     element: <Article />,
+  },
+  {
+    path: "/tours/:id",
+    element: <Tour />,
   },
 ]);
 

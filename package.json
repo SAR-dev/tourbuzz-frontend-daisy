@@ -28,6 +28,7 @@
     "remark-emoji": "^4.0.1",
     "remark-gfm": "^4.0.0",
     "remark-images": "^4.0.0",
+    "use-debounce": "^10.0.0",
     "use-local-storage-state": "^19.1.0",
     "zustand": "^4.5.0"
   },

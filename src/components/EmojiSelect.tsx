@@ -6,6 +6,7 @@ import { findMostUsedStrings, slugToText } from "@src/functions/helpers";
 import useLocalStorageState from "use-local-storage-state";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useEmojiStore } from "@src/stores/emojiStore";
+import { useDebounce } from "use-debounce";
 
 const fuseOptions = {
   keys: ["emoji", "keywords", "key"],
@@ -31,6 +32,7 @@ const EmojiSelect = ({
   const [history, setHistory] = useLocalStorageState<string[]>("emoji_history", {
     defaultValue: []
   })
+  const [recentEmojis] = useDebounce(findMostUsedStrings(history, 7), 1000);
 
   useEffect(() => {
     if (search.length >= 2) {
@@ -63,9 +65,9 @@ const EmojiSelect = ({
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute top-0 left-0 z-[1]">
+              <Popover.Panel className="absolute -top-[31rem] left-0 z-[1]">
                 {({ close }) => (
-                  <div className="-translate-y-[31rem] h-[30rem] flex items-end">
+                  <div className="h-[30rem] flex items-end">
                     {expanded ? (
                       <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
                         <div className="flex gap-3">
@@ -75,11 +77,11 @@ const EmojiSelect = ({
                           </button>
                         </div>
                         <div className="custom-scrollbar overflow-y-auto h-96">
-                          {history.length > 0 && search.length < 2 && (
+                          {recentEmojis.length > 0 && search.length < 2 && (
                             <div className='mb-2'>
                               <div className="font-semibold mb-2">Previously Selected</div>
                               <div className="grid grid-cols-7 gap-2">
-                                {findMostUsedStrings(history, 7).map((e, i) => (
+                                {recentEmojis.map((e, i) => (
                                   <button
                                     className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
                                     onClick={() => handleEmojiClick(e, close)}
