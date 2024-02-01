@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/24/solid"
 import ArticleCard from "@src/components/ArticleCard"
+import Carousel from "@src/components/Carousel"
 import ImageLoader from "@src/components/ImageLoader"
 import MarkdownRenderer from "@src/components/MarkdownRenderer"
 import Title from "@src/components/Title"
@@ -81,7 +82,7 @@ const Tour = () => {
                                 </div>
                             </div>
                             <div className="card overflow-hidden">
-                                <div className="carousel w-full">
+                                <Carousel>
                                     <div className="carousel-item w-full">
                                         <ReactPlayer url="https://www.youtube.com/watch?v=WLIv7HnZ_fE" height="30rem" width="100%" controls />
                                     </div>
@@ -94,7 +95,7 @@ const Tour = () => {
                                     <div className="carousel-item w-full">
                                         <ImageLoader src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e" className="w-full h-[30rem] object-cover" />
                                     </div>
-                                </div>
+                                </Carousel>
                             </div>
                             <div className="grid grid-cols-5 gap-5">
                                 <div className="col-span-5 title text-2xl font-semibold">
