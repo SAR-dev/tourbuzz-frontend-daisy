@@ -7,7 +7,7 @@
     @apply prose prose-img:w-full prose-h1:text-2xl prose-h2:text-2xl prose-h3:text-xl prose-h4:text-xl prose-h5:text-lg prose-h6:text-lg prose-h1:font-bold prose-h2:font-bold prose-h3:font-semibold prose-h4:font-semibold prose-h5:font-medium prose-h6:font-medium;
   }
   .reaction-badge {
-    @apply card flex-row justify-center items-center space-x-1.5 px-2 h-7 text-sm font-medium ring-1 ring-inset ring-base-content/10 bg-base-100 text-base-content hover:bg-base-200;
+    @apply card flex-row justify-center items-center space-x-1.5 px-2 h-7 text-sm font-medium ring-1 ring-inset ring-base-content/10 bg-base-100 text-base-content hover:bg-base-300;
   }
   .custom-scrollbar::-webkit-scrollbar {
     @apply w-2.5;
