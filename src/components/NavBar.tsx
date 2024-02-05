@@ -1,3 +1,4 @@
+import SignInButton from "./SignInButton";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const NavBar = () => {
@@ -19,7 +20,7 @@ const NavBar = () => {
                     </div>
                     <div className="navbar-end">
                         <ThemeSwitcher />
-                        <a className="btn">Sign In</a>
+                        <SignInButton />
                     </div>
                 </nav>
             </div>
