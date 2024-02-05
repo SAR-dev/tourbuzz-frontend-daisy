@@ -44,8 +44,8 @@ const TourCard = () => {
                         </div>
                     </div>
                     <div className="flex flex-col justify-between">
-                        <Link to="/tours/1" className="px-10 flex gap-5 pt-5 card flex-row rounded-l-none rounded-b-none h-fill items-start justify-between hover:bg-base-300/50 duration-100">
-                            <div>
+                        <div className="px-10 flex gap-5 pt-5 card flex-row rounded-l-none rounded-b-none h-fill relative hover:bg-base-300/50 duration-100">
+                            <Link to="/tours/1" className="w-[85%]">
                                 <div className="title text-2xl font-semibold line-clamp-2">
                                     Hong Kong Disneyland Park Tickets
                                 </div>
@@ -55,8 +55,8 @@ const TourCard = () => {
                                     <div>🚩 It will be a 5 day jouney, starting at 5 March, 2024</div>
                                     <div>⌛ Our journey will end on 25 March,2024</div>
                                 </div>
-                            </div>
-                            <div className="flex items-center font-semibold">
+                            </Link>
+                            <div className="flex items-center font-semibold absolute top-0 right-0 m-5">
                                 <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
                                     <BookmarkIcon className="h-5 w-5" />
                                 </button>
@@ -67,7 +67,7 @@ const TourCard = () => {
                                     <QuestionMarkCircleIcon className="h-5 w-5" />
                                 </button>
                             </div>
-                        </Link>
+                        </div>
                         <div className="bg-orange-200 text-black p-10 card rounded-l-none rounded-t-none">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
