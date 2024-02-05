@@ -3,9 +3,11 @@ import ArticleCard from "@src/components/ArticleCard"
 import Carousel from "@src/components/Carousel"
 import ImageLoader from "@src/components/ImageLoader"
 import MarkdownRenderer from "@src/components/MarkdownRenderer"
+import TabList from "@src/components/TabList"
 import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
 import NavLayout from "@src/layouts/NavLayout"
+import { useState } from "react"
 import ReactPlayer from "react-player"
 
 const md_article = `
@@ -66,7 +68,56 @@ const md_highlights = `
 🛌 Relax and unwind in carefully selected accommodations, offering a perfect blend of comfort and charm throughout your unforgettable tour.
 `
 
+const categories = [
+    { name: 'Economy' },
+    { name: 'Delux' },
+    { name: 'Super Delux' },
+];
+
+const categoryDesc = () => (
+    <div className="join join-vertical w-full">
+        <div className="collapse collapse-arrow join-item">
+            <input type="radio" checked />
+            <div className="collapse-title font-semibold">
+                🛎️ Included Services
+            </div>
+            <div className="collapse-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Harum sed voluptates exercitationem rem unde corrupti,
+                in molestias? Enim ab, in, recusandae, animi eligendi
+                aperiam neque natus sint eos delectus velit.
+            </div>
+        </div>
+        <div className="collapse collapse-arrow join-item">
+            <input type="radio" />
+            <div className="collapse-title font-semibold">
+                🙅🏻 Excluded Services
+            </div>
+            <div className="collapse-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Harum sed voluptates exercitationem rem unde corrupti,
+                in molestias? Enim ab, in, recusandae, animi eligendi
+                aperiam neque natus sint eos delectus velit.
+            </div>
+        </div>
+        <div className="collapse collapse-arrow join-item">
+            <input type="radio" />
+            <div className="collapse-title font-semibold">
+                📑 Conditions
+            </div>
+            <div className="collapse-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Harum sed voluptates exercitationem rem unde corrupti,
+                in molestias? Enim ab, in, recusandae, animi eligendi
+                aperiam neque natus sint eos delectus velit.
+            </div>
+        </div>
+    </div>
+)
+
 const Tour = () => {
+    const [selectedIndex, setSelectedIndex] = useState(0)
+
     return (
         <NavLayout>
             <div className="container mx-auto px-10 pt-5 pb-16">
@@ -124,7 +175,6 @@ const Tour = () => {
                                 </div>
                                 <MarkdownRenderer md_text={md_article} />
                             </div>
-
                         </div>
 
                     </div>
@@ -148,10 +198,16 @@ const Tour = () => {
                                     <Title>Packages</Title>
                                 </div>
                                 <div>
-                                    <div className="grid grid-cols-3 gap-3 mb-3">
-                                        <button className="btn">Economy</button>
-                                        <button className="btn">Economy</button>
-                                        <button className="btn">Economy</button>
+                                    <div>
+                                        <TabList tabs={categories.map(e => {
+                                            return {
+                                                name: e.name,
+                                                children: categoryDesc
+                                            }
+                                        })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+                                        <button className="btn btn-accent w-full mt-2">
+                                            Purchase Ticket
+                                        </button>
                                     </div>
                                 </div>
                             </div>
