@@ -1,5 +1,6 @@
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
+import { ReactNode } from 'react';
 
 interface TabType {
     name: string
