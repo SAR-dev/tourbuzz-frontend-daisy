@@ -1,8 +1,7 @@
 import { EmojiType, emojis } from '@src/assets/emojis'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-
-const emojiStoreKey = "emoji"
+import { constants } from './constantStore'
 
 type EmojiStore = {
     defaultEmojis: EmojiType[]
@@ -19,7 +18,7 @@ export const useEmojiStore = create<EmojiStore>()(
                 set(() => ({ expanded: value }))
             },
         }), {
-        name: emojiStoreKey,
+        name: constants.EMOJI_STORE_KEY,
         storage: createJSONStorage(() => localStorage),
     })
 )
