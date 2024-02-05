@@ -6,12 +6,8 @@ const api = axios.create();
 api.interceptors.request.use(
     (config) => {
         const jwt = localStorage.getItem(constants.JWT_KEY);
-        if (jwt) {
-            config.headers.Authorization = jwt;
-            config.baseURL = import.meta.env.VITE_API_URL;
-        } else {
-            config.baseURL = import.meta.env.VITE_API_URL;
-        }
+        config.baseURL = import.meta.env.VITE_API_URL;
+        if (jwt) config.headers.Authorization = jwt;
         return config;
     },
     (error) => {
