@@ -17,7 +17,7 @@ const App = () => {
           onClose={closeModal}
         />
       )}
-      <Toaster />
+      <Toaster position="bottom-left" reverseOrder={false} />
       <RouterProvider router={router} />
     </div>
   )
