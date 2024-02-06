@@ -54,7 +54,7 @@ const Home = () => {
             <div className="flex w-full justify-between mb-10">
               <Title>Why choose Us 🤔 ?</Title>
               <div className="flex gap-5">
-                <input type="text" placeholder="Email" className="input input-bordered w-full border-2 placeholder:opacity-50 w-72" />
+                <input type="text" placeholder="Email" className="input input-bordered border-2 placeholder:opacity-50 w-72" />
                 <button className="btn">Get Invitation Link</button>
               </div>
             </div>

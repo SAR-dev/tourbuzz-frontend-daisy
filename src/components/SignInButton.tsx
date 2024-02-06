@@ -8,19 +8,28 @@ import { constants } from '@src/stores/constantStore';
 const SignInButton = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [isMailSent, setIsMailSent] = useState(false)
 
     const [email, setEmail] = useState("");
+    const [magicToken, setMagicToken] = useState("")
 
     const handleEmailSubmit = () => {
+        if(!constants.REGEX_PATTERN.EMAIL.test(email)){
+            toast('Use valid email address.', {
+                icon: randChoice(constants.TOAST_ICON.ERROR),
+            });
+            return;
+        }
         setIsLoading(true);
         sendMagicLink({ email })
             .then((res) => {
                 if (res.error) {
-                    toast('Error sending Magic Link', {
+                    toast('Error sending Magic Token.', {
                         icon: randChoice(constants.TOAST_ICON.ERROR),
                     });
                 } else {
-                    toast('Magic Link has been sent to email.', {
+                    setIsMailSent(true)
+                    toast('Magic Token has been sent to your Email.', {
                         icon: randChoice(constants.TOAST_ICON.SUCCESS),
                     });
                 }
@@ -30,17 +39,32 @@ const SignInButton = () => {
             })
     }
 
+    const handleMagicTokenSubmit = () => {
+
+    }
+
     return (
         <div>
             <button className="btn" onClick={() => setIsOpen(true)}>Sign In</button>
             <Modal title='Sign In' closeButton isOpen={isOpen} setIsOpen={setIsOpen} maxWidth='25rem'>
-                <div className="flex flex-col gap-3">
-                    <input type="text" placeholder="Type here" className="input input-bordered w-full" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} />
-                    <div className="text-xs text-base-content/75">
-                        A confirmation link with magic code will be sent in your email
+                {!isMailSent && (
+                    <div className="flex flex-col gap-3">
+                        <input type="text" placeholder="Email Address" className="input input-bordered w-full" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} />
+                        <div className="text-xs text-base-content/75">
+                            A confirmation link with magic token will be sent in your email
+                        </div>
+                        <button className="btn btn-info" disabled={isLoading} onClick={handleEmailSubmit}>Get Magic Token</button>
                     </div>
-                    <button className="btn btn-info" disabled={isLoading} onClick={handleEmailSubmit}>Get Magic Link</button>
-                </div>
+                )}
+                {isMailSent && (
+                    <div className="flex flex-col gap-3">
+                        <input type="password" placeholder="Magic Token" className="input input-bordered w-full" disabled={isLoading} value={magicToken} onChange={e => setMagicToken(e.target.value)} />
+                        <div className="text-xs text-base-content/75">
+                            Do not share this magic token with anyone. Keep it secret.
+                        </div>
+                        <button className="btn btn-info" disabled={isLoading} onClick={handleMagicTokenSubmit}>Submit Token</button>
+                    </div>
+                )}
             </Modal>
         </div>
     )
