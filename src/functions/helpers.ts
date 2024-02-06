@@ -19,3 +19,7 @@ export function findMostUsedStrings(arr: string[], max: number): string[] {
         .slice(0, max)
         .map(([string]) => string);
 }
+
+export function randChoice<T>(arr: Array<T>): T {
+    return arr[Math.floor(Math.random() * arr.length)]
+}
