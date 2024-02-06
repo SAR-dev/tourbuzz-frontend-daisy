@@ -6,7 +6,8 @@ import { findMostUsedStrings, slugToText } from "@src/functions/helpers";
 import useLocalStorageState from "use-local-storage-state";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useEmojiStore } from "@src/stores/emojiStore";
-import { useDebounce } from "use-debounce";
+import { useDebounce } from "ahooks";
+import { constants } from "@src/stores/constantStore";
 
 const fuseOptions = {
   keys: ["emoji", "keywords", "key"],
@@ -29,10 +30,12 @@ const EmojiSelect = ({
   const [hovered, setHovered] = useState<EmojiType>(emojis[0])
   const [emojisList, setEmojiList] = useState<EmojiType[]>([...emojis])
   const [search, setSearch] = useState("")
-  const [history, setHistory] = useLocalStorageState<string[]>("emoji_history", {
+  const [history, setHistory] = useLocalStorageState<string[]>(constants.EMOJI_HISTORY_KEY, {
     defaultValue: []
   })
-  const [recentEmojis] = useDebounce(findMostUsedStrings(history, 7), 1000);
+  const recentEmojis = useDebounce(findMostUsedStrings(history, 7), {
+    wait: 1000
+  });
 
   useEffect(() => {
     if (search.length >= 2) {
