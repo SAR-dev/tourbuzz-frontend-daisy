@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Article from "./pages/Article";
 import { useImageModalStore } from "./stores/imageModalStore";
 import { Lightbox } from "react-modal-image";
+import { Toaster } from 'react-hot-toast';
 import Tour from "./pages/Tour";
 
 const App = () => {
@@ -10,14 +11,13 @@ const App = () => {
   return (
     <div>
       {url && (
-        <Lightbox
-          medium={url}
-          large={url}
+        <Lightbox medium={url} large={url}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment 
           // @ts-expect-error
           onClose={closeModal}
         />
       )}
+      <Toaster />
       <RouterProvider router={router} />
     </div>
   )
