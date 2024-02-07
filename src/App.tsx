@@ -1,18 +1,15 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Article from "./pages/Article";
-import { Toaster } from 'react-hot-toast';
 import Tour from "./pages/Tour";
 import MainLightBox from "./components/MainLightBox";
+import MainToaster from "./components/MainToaster";
 
 const App = () => {
   return (
     <>
       <MainLightBox />
-      <Toaster
-        position="bottom-left"
-        reverseOrder={false}
-      />
+      <MainToaster />
       <RouterProvider router={router} />
     </>
   )

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import Modal from './Modal'
 import { sendMagicLink } from '@src/api/auth'
 import toast from 'react-hot-toast';
-import { randChoice } from '@src/functions/helpers';
 import { constants } from '@src/stores/constantStore';
 
 const SignInButton = () => {
@@ -15,23 +14,17 @@ const SignInButton = () => {
 
     const handleEmailSubmit = () => {
         if(!constants.REGEX_PATTERN.EMAIL.test(email)){
-            toast('Use valid email address.', {
-                icon: randChoice(constants.TOAST_ICON.ERROR),
-            });
+            toast.error('Use valid email address.');
             return;
         }
         setIsLoading(true);
         sendMagicLink({ email })
             .then((res) => {
                 if (res.error) {
-                    toast('Error sending Magic Token.', {
-                        icon: randChoice(constants.TOAST_ICON.ERROR),
-                    });
+                    toast.error('Error sending Magic Token.');
                 } else {
                     setIsMailSent(true)
-                    toast('Magic Token has been sent to your Email.', {
-                        icon: randChoice(constants.TOAST_ICON.SUCCESS),
-                    });
+                    toast.success('Magic Token has been sent to your Email.');
                 }
             })
             .finally(() => {
