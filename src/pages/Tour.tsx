@@ -202,7 +202,7 @@ const Tour = () => {
                                         <TabList tabs={categories.map(e => {
                                             return {
                                                 name: e.name,
-                                                children: categoryDesc
+                                                children: categoryDesc()
                                             }
                                         })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                                         <button className="btn btn-accent w-full mt-2">

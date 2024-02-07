@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import Modal from './Modal'
 import { sendMagicLink } from '@src/api/auth'
-import toast from 'react-hot-toast';
 import { constants } from '@src/stores/constantStore';
+import { NotificationType } from '@src/enums/NotificationType';
+import { useNotification } from './Notification';
 
 const SignInButton = () => {
+    const notification = useNotification()
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [isMailSent, setIsMailSent] = useState(false)
@@ -13,18 +15,30 @@ const SignInButton = () => {
     const [magicToken, setMagicToken] = useState("")
 
     const handleEmailSubmit = () => {
-        if(!constants.REGEX_PATTERN.EMAIL.test(email)){
-            toast.error('Use valid email address.');
+        if (!constants.REGEX_PATTERN.EMAIL.test(email)) {
+            notification?.add({
+                title: "Invalid Email",
+                message: "Please use valid email address. If you use invalid email address magic token can not be sent.",
+                status: NotificationType.ERROR
+            })
             return;
         }
         setIsLoading(true);
         sendMagicLink({ email })
             .then((res) => {
                 if (res.error) {
-                    toast.error('Error sending Magic Token.');
+                    notification?.add({
+                        title: "Error Occured",
+                        message: "There was an error sending magic token to your email address. Please try again",
+                        status: NotificationType.ERROR
+                    })
                 } else {
                     setIsMailSent(true)
-                    toast.success('Magic Token has been sent to your Email.');
+                    notification?.add({
+                        title: "Token Mailed",
+                        message: "Magic token has been sent to your email address. Please check your inbox.",
+                        status: NotificationType.SUCCESS
+                    })
                 }
             })
             .finally(() => {
