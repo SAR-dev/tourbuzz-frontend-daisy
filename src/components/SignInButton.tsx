@@ -5,6 +5,7 @@ import { constants } from '@src/stores/constantStore';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useNotification } from './Notification';
 import toast from 'react-hot-toast';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 const SignInButton = () => {
     const notification = useNotification()
@@ -50,19 +51,24 @@ const SignInButton = () => {
     return (
         <div>
             <button className="btn" onClick={() => setIsOpen(true)}>Sign In</button>
-            <Modal title='Sign In' closeButton isOpen={isOpen} setIsOpen={setIsOpen} maxWidth='25rem'>
+            <Modal title={isMailSent ? 'Sign In' : 'Get Magic Token'} closeButton isOpen={isOpen} setIsOpen={setIsOpen} maxWidth='25rem'>
                 {!isMailSent && (
                     <div className="flex flex-col gap-3">
                         <input type="text" placeholder="Email Address" className="input input-bordered w-full" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} />
                         <div className="text-xs text-base-content/75">
                             A confirmation link with magic token will be sent in your email
                         </div>
-                        <button className="btn btn-info" disabled={isLoading} onClick={handleEmailSubmit}>
-                            {isLoading && (
-                                <div className="loading h-5 w-5" />
-                            )}
-                            Get Magic Token
-                        </button>
+                        <div className="flex gap-3">
+                            <button className="btn btn-info flex-1" disabled={isLoading} onClick={handleEmailSubmit}>
+                                {isLoading && (
+                                    <div className="loading h-5 w-5" />
+                                )}
+                                Sumbit Email
+                            </button>
+                            <button className="btn btn-info btn-square" disabled={isLoading} onClick={() => setIsMailSent(true)}>
+                                <ChevronRightIcon className='h-5 w-5' />
+                            </button>
+                        </div>
                     </div>
                 )}
                 {isMailSent && (
@@ -71,12 +77,17 @@ const SignInButton = () => {
                         <div className="text-xs text-base-content/75">
                             Do not share this magic token with anyone. Keep it secret.
                         </div>
-                        <button className="btn btn-info" disabled={isLoading} onClick={handleMagicTokenSubmit}>
-                            {isLoading && (
-                                <div className="loading h-5 w-5" />
-                            )}
-                            Submit Token
-                        </button>
+                        <div className="flex gap-3">
+                            <button className="btn btn-info btn-square" disabled={isLoading} onClick={() => setIsMailSent(false)}>
+                                <ChevronLeftIcon className='h-5 w-5' />
+                            </button>
+                            <button className="btn btn-info flex-1" disabled={isLoading} onClick={handleMagicTokenSubmit}>
+                                {isLoading && (
+                                    <div className="loading h-5 w-5" />
+                                )}
+                                Submit Token
+                            </button>
+                        </div>
                     </div>
                 )}
             </Modal>
