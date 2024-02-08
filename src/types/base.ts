@@ -1,4 +1,4 @@
 export interface DataResponseType {
-    data?: unknown;
+    data: unknown;
     error?: unknown;
 }

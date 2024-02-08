@@ -6,14 +6,19 @@ import { Fragment, ReactNode, createContext, useContext, useState } from 'react'
 interface NotificationProps {
     title: string;
     message: string;
+    body?: ReactNode;
     status: NotificationType;
 }
 
 interface CtxInterface {
     add: (props: NotificationProps) => void;
+    remove: () => void;
 }
 
-const Ctx = createContext<CtxInterface | null>(null);
+const Ctx = createContext<CtxInterface>({
+    add: () => {},
+    remove: () => {}
+});
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(true)
@@ -30,7 +35,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <Ctx.Provider value={{ add }}>
+        <Ctx.Provider value={{ add, remove }}>
             {children}
             {data && (
                 <Transition appear show={isOpen} as={Fragment}>
@@ -81,9 +86,13 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
                                                 {data.status === NotificationType.LOADING && (
                                                     <div className="spinner h-20 w-20" />
                                                 )}
+                                                {data.status === NotificationType.INFO && (
+                                                    <div className="text-6xl">📣</div>
+                                                )}
                                             </div>
                                             <div className='text-center text-xl font-medium'>{data.title}</div>
                                             <div className='text-center'>{data.message}</div>
+                                            <div>{data.body}</div>
                                         </div>
                                     </Dialog.Panel>
                                 </Transition.Child>

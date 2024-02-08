@@ -9,7 +9,7 @@ export const sendMagicLink = ({ email }: { email: string }): Promise<DataRespons
             return { data: res.data };
         })
         .catch((err) => {
-            return { error: err || true };
+            return { data: err, error: err || true };
         });
 }
 
@@ -21,6 +21,6 @@ export const verifyToken = ({ magic_token }: { magic_token: string }): Promise<D
             return { data: res.data };
         })
         .catch((err) => {
-            return { error: err || true };
+            return { data: err, error: err || true };
         });
 }

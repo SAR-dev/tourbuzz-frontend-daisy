@@ -1,5 +1,6 @@
 export enum NotificationType {
     SUCCESS = "Success", 
     ERROR = "Error", 
-    LOADING = "Loading"
+    LOADING = "Loading",
+    INFO = "Info"
 }
