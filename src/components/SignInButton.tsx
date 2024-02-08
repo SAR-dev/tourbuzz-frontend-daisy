@@ -4,10 +4,12 @@ import { sendMagicLink, verifyToken } from '@src/api/auth'
 import { constants } from '@src/stores/constantStore';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useNotification } from './Notification';
-import toast from 'react-hot-toast';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { AuthTokenType } from './../types/token';
 import { useAuthStore } from '@src/stores/authStore';
+import { useQuery } from '@tanstack/react-query';
+import { UserDataType, getLoggedInUser } from '@src/api/user';
+import DropdownSelect from './DropDownSelect';
 
 const SignInButton = () => {
     const notification = useNotification()
@@ -18,6 +20,12 @@ const SignInButton = () => {
 
     const [email, setEmail] = useState("");
     const [magicToken, setMagicToken] = useState("")
+
+    const { data } = useQuery<UserDataType, Error>({
+        queryKey: ['me'],
+        queryFn: () => getLoggedInUser(),
+        enabled: isLoggedIn()
+    })
 
     const handleEmailSubmit = () => {
         if (!constants.REGEX_PATTERN.EMAIL.test(email)) {
@@ -65,7 +73,11 @@ const SignInButton = () => {
                     const data: AuthTokenType = res.data as AuthTokenType;
                     setToken(data.accessToken)
                     setIsMailSent(true)
-                    toast.success("Sign In successfull!");
+                    notification.add({
+                        title: "Signed In",
+                        message: "You have signed in successfully. Enjoy 😎👌🔥 !!!",
+                        status: NotificationType.SUCCESS
+                    })
                 }
             })
             .finally(() => {
@@ -73,19 +85,22 @@ const SignInButton = () => {
             })
     }
 
-    const logout = () => {
+    const signOut = () => {
+        setToken(null)
+        localStorage.clear()
+        notification.remove()
+    }
+
+    const handleSignOut = () => {
         notification.add({
             title: "Confirmation Required",
             message: "Are you sure you want to Sign Out ? If you sign out all your data will be cleared.",
             status: NotificationType.INFO,
             body: (
-            <div className='flex justify-center w-full'>
-                <button className="btn btn-error" onClick={() => {
-                    setToken(null)
-                    localStorage.clear()
-                    notification.remove()
-                }}>Yes, I am Sure</button>
-            </div>
+                <div className='flex gap-3 justify-center w-full'>
+                    <button className="btn btn-error" onClick={signOut}>Yes, I am Sure</button>
+                    <button className="btn btn-success" onClick={() => notification.remove()}>No, I will Stay</button>
+                </div>
             )
         })
     }
@@ -93,7 +108,17 @@ const SignInButton = () => {
     if (isLoggedIn()) {
         return (
             <div>
-                <button className="btn" onClick={logout}>Sign Out</button>
+                <DropdownSelect
+                    button={
+                        <button className="btn btn-square">
+                            <img src={data?.data.avatar.optimized_url} className='h-5 w-5 rounded-full object-cover' />
+                        </button>
+                    }
+                    options={[
+                        { text: data?.data.name ?? "User Profile", value: data?.data.name ?? "", icon: <div className='mr-1'>😎</div> },
+                        { text: "Sign Out", value: "sign-out", handleClick: handleSignOut, icon: <div className='mr-1'>👋</div> },
+                    ]}
+                />
             </div>
         )
     } else {

@@ -7,7 +7,12 @@ api.interceptors.request.use(
     (config) => {
         const jwt = localStorage.getItem(constants.JWT_AUTH_KEY);
         config.baseURL = import.meta.env.VITE_API_URL;
-        if (jwt) config.headers.Authorization = jwt;
+        if (jwt) {
+            const parsed = JSON.parse(jwt);
+            if (parsed.state.token) {
+                config.headers.Authorization = parsed.state.token
+            }
+        }
         return config;
     },
     (error) => {
