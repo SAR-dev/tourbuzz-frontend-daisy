@@ -4,6 +4,7 @@ import { sendMagicLink } from '@src/api/auth'
 import { constants } from '@src/stores/constantStore';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useNotification } from './Notification';
+import toast from 'react-hot-toast';
 
 const SignInButton = () => {
     const notification = useNotification()
@@ -34,11 +35,7 @@ const SignInButton = () => {
                     })
                 } else {
                     setIsMailSent(true)
-                    notification?.add({
-                        title: "Token Mailed",
-                        message: "Magic token has been sent to your email address. Please check your inbox.",
-                        status: NotificationType.SUCCESS
-                    })
+                    toast.success("Magic token has been sent to your email address.");
                 }
             })
             .finally(() => {
@@ -60,7 +57,12 @@ const SignInButton = () => {
                         <div className="text-xs text-base-content/75">
                             A confirmation link with magic token will be sent in your email
                         </div>
-                        <button className="btn btn-info" disabled={isLoading} onClick={handleEmailSubmit}>Get Magic Token</button>
+                        <button className="btn btn-info" disabled={isLoading} onClick={handleEmailSubmit}>
+                            {isLoading && (
+                                <div className="loading h-5 w-5" />
+                            )}
+                            Get Magic Token
+                        </button>
                     </div>
                 )}
                 {isMailSent && (
@@ -69,7 +71,12 @@ const SignInButton = () => {
                         <div className="text-xs text-base-content/75">
                             Do not share this magic token with anyone. Keep it secret.
                         </div>
-                        <button className="btn btn-info" disabled={isLoading} onClick={handleMagicTokenSubmit}>Submit Token</button>
+                        <button className="btn btn-info" disabled={isLoading} onClick={handleMagicTokenSubmit}>
+                            {isLoading && (
+                                <div className="loading h-5 w-5" />
+                            )}
+                            Submit Token
+                        </button>
                     </div>
                 )}
             </Modal>
