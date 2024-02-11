@@ -21,7 +21,7 @@ const SignInButton = () => {
     const [email, setEmail] = useState("");
     const [magicToken, setMagicToken] = useState("")
 
-    const { data } = useQuery<UserDataType, Error>({
+    const user = useQuery<UserDataType, Error>({
         queryKey: ['me'],
         queryFn: () => getLoggedInUser(),
         enabled: isLoggedIn()
@@ -111,11 +111,11 @@ const SignInButton = () => {
                 <DropdownSelect
                     button={
                         <button className="btn btn-square">
-                            <img src={data?.data.avatar.optimized_url} className='h-5 w-5 rounded-full object-cover' />
+                            <img src={user.data?.data.avatar.optimized_url} className='h-5 w-5 rounded-full object-cover' />
                         </button>
                     }
                     options={[
-                        { text: data?.data.name ?? "User Profile", value: data?.data.name ?? "", icon: <div className='mr-1'>😎</div> },
+                        { text: user.data?.data.name ?? "User Profile", value: user.data?.data.name ?? "", icon: <div className='mr-1'>😎</div> },
                         { text: "Sign Out", value: "sign-out", handleClick: handleSignOut, icon: <div className='mr-1'>👋</div> },
                     ]}
                 />

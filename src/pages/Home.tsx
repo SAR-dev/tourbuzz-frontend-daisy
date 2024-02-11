@@ -1,4 +1,5 @@
 import { ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
+import { TourListDataType, getUpcomingTours } from "@src/api/tour"
 import ArticleCard from "@src/components/ArticleCard"
 import HotelCard from "@src/components/HotelCard"
 import OrganizerCard from "@src/components/OrganizerCard"
@@ -6,6 +7,7 @@ import PlaceCard from "@src/components/PlaceCard"
 import Title from "@src/components/Title"
 import TourCard from "@src/components/TourCard"
 import NavLayout from "@src/layouts/NavLayout"
+import { useQuery } from "@tanstack/react-query"
 
 const PromotionPoint = ({
   icon,
@@ -26,6 +28,11 @@ const PromotionPoint = ({
 )
 
 const Home = () => {
+  const upcomingTours = useQuery<TourListDataType, Error>({
+    queryKey: ['upcoming-tours'],
+    queryFn: () => getUpcomingTours()
+  })
+
   return (
     <NavLayout>
       <div className="h-[30rem] relative">
@@ -82,15 +89,18 @@ const Home = () => {
             </div>
           </section>
 
-          <section>
-            <div className="mb-10">
-              <Title to="/tours">Upcoming Tours ✈️</Title>
-            </div>
-            <div className="grid grid-cols-1 gap-8">
-              <TourCard />
-              <TourCard />
-            </div>
-          </section>
+          {upcomingTours.data && (
+            <section>
+              <div className="mb-10">
+                <Title to="/tours">Upcoming Tours ✈️</Title>
+              </div>
+              <div className="grid grid-cols-1 gap-8">
+                {upcomingTours.data.data.map((tour, i) => (
+                  <TourCard tour={tour} key={i} />
+                ))}
+              </div>
+            </section>
+          )}
 
           <section>
             <div className="mb-10">
@@ -143,7 +153,7 @@ const Home = () => {
             </div>
           </section>
 
-          <section>
+          {/* <section>
             <div className="mb-10">
               <Title to="/tours">Recently Completed Tours 🎫</Title>
             </div>
@@ -151,7 +161,7 @@ const Home = () => {
               <TourCard />
               <TourCard />
             </div>
-          </section>
+          </section> */}
 
           <section>
             <div className="bg-info text-info-content p-10 card flex flex-row items-center gap-5">

@@ -23,3 +23,63 @@ export function findMostUsedStrings(arr: string[], max: number): string[] {
 export function randChoice<T>(arr: Array<T>): T {
     return arr[Math.floor(Math.random() * arr.length)]
 }
+
+export function countDaysAndNights(startDate: Date, endDate: Date): { days: number, nights: number } {
+    startDate = new Date(startDate);
+    endDate = new Date(endDate)
+
+    // Calculate the difference in milliseconds between the two dates
+    const differenceMs = Math.abs(endDate.getTime() - startDate.getTime());
+
+    // Convert milliseconds to days (assuming 1 day = 24 hours = 86400000 milliseconds)
+    const days = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+
+    // Calculate the number of nights (assuming nights are between 6 PM and 6 AM)
+    const startHour = startDate.getHours();
+    const endHour = endDate.getHours();
+    const startNight = startHour >= 18 || startHour < 6;
+    const endNight = endHour >= 18 || endHour < 6;
+    let nights = days;
+    if (startNight) {
+        // If the start date is at night, reduce the number of nights by one
+        nights--;
+    }
+    if (endNight) {
+        // If the end date is at night, increase the number of nights by one
+        nights++;
+    }
+
+    // Return the result
+    return { days, nights };
+}
+
+export function formatDate(date: Date): { 
+    day: number, 
+    month: number, 
+    month_name: string, 
+    year: number, 
+    hour: number,
+    minute: number,
+    second: number
+} {
+    date = new Date(date);
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const month_name = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    return { day, month, month_name, year, hour, minute, second };
+}
+
+export function splitUniqueList(list: string[], maxLength: number): { show: string[], hide: string[] } {
+    // Remove duplicates by converting array to Set and back to array
+    const uniqueList = [...new Set(list)];
+
+    const show = uniqueList.slice(0, maxLength);
+    const hide = uniqueList.slice(maxLength);
+
+    return { show, hide };
+}
