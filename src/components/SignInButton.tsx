@@ -3,7 +3,7 @@ import Modal from './Modal'
 import { sendMagicLink, verifyToken } from '@src/api/auth'
 import { constants } from '@src/stores/constantStore';
 import { NotificationType } from '@src/enums/NotificationType';
-import { useNotification } from './Notification';
+import { useNotification } from '../contexts/Notification';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { AuthTokenType } from './../types/token';
 import { useAuthStore } from '@src/stores/authStore';

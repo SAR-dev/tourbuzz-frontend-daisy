@@ -9,9 +9,11 @@ import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import toast from "react-hot-toast";
+import { useReaction } from "@src/contexts/Reaction";
 
 const TourCard = ({ tour }: { tour: TourListType }) => {
     const queryClient = useQueryClient();
+    const { add } = useReaction()
 
     const daysAndNights = countDaysAndNights(tour.start_at, tour.finish_at);
     const startAt = formatDate(tour.start_at);
@@ -25,7 +27,18 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
 
     const handleEmojiSelect = (value: string) => {
         addReactionToTour({ id: tour.id, emoji: value })
-            .then(() => queryClient.invalidateQueries({queryKey: ['tour-reactions', tour.id]}))
+            .then(() => {
+                queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
+                add({ emoji: value })
+            })
+            .catch(() => toast.error("Emoji reaction failed!"))
+    }
+
+    const handleEmojiRemove = (value: string) => {
+        addReactionToTour({ id: tour.id, emoji: value })
+            .then(() => {
+                queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
+            })
             .catch(() => toast.error("Emoji reaction failed!"))
     }
 
@@ -54,10 +67,14 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                     setEmoji={handleEmojiSelect}
                                 />
                                 {tourReactions.data?.data.map((e, i) => (
-                                    <button className={classNames({
-                                        "reaction-badge": true,
-                                        "ring-2 ring-success/50": e.reacted
-                                    })} key={i}>
+                                    <button 
+                                        className={classNames({
+                                            "reaction-badge": true,
+                                            "ring-2 ring-success/50": e.reacted
+                                        })} 
+                                        onClick={() => handleEmojiRemove(e.emoji)} 
+                                        key={i}
+                                    >
                                         <span>{e.emoji}</span>
                                         <span>{e.count}</span>
                                     </button>
