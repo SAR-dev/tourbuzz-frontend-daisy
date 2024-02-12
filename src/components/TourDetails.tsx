@@ -103,11 +103,40 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 </div>
                             )}
                         </div>
+
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="col-span-5 title text-2xl font-semibold">
-                                🤔 What to Expect
+                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
+                                📌 What to Expect
                             </div>
                             <MarkdownRenderer md_text={tour.md_desc} />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5">
+                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
+                                📌 Pickup Locations and Guidelines
+                            </div>
+                            <MarkdownRenderer md_text={tour.start_ins} />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5">
+                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
+                                📌 Dropoff Locations and Guidelines
+                            </div>
+                            <MarkdownRenderer md_text={tour.finish_ins} />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5">
+                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
+                                📌 Frequently Asked Questions
+                            </div>
+                            <MarkdownRenderer md_text={tour.faq} />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5">
+                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
+                                📌 Ticket Cancellation
+                            </div>
+                            <MarkdownRenderer md_text={tour.cancel_ins} />
                         </div>
                     </div>
 
