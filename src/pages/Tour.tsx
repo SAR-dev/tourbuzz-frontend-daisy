@@ -103,16 +103,16 @@ const Tour = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="card overflow-hidden">
+                                <div className="card h-[30rem] overflow-hidden">
                                     <Carousel>
                                         {tour.data.data.video_link.length > 0 && (
-                                            <div className="carousel-item w-full">
+                                            <div className="carousel-item w-full h-[30rem]">
                                                 <ReactPlayer url={tour.data.data.video_link} height="30rem" width="100%" controls />
                                             </div>
                                         )}
                                         {tour.data.data.images.map((e, i) => (
-                                            <div className="carousel-item w-full" key={i}>
-                                                <ImageLoader src={e.source_url} className="w-full h-[30rem] object-cover" />
+                                            <div className="carousel-item w-full h-[30rem]" key={i}>
+                                                <ImageLoader src={e.source_url} className="w-full object-cover" />
                                             </div>
                                         ))}
                                     </Carousel>
