@@ -1,5 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { ChevronRightIcon } from "@heroicons/react/24/solid"
+import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import ArticleCard from "@src/components/ArticleCard"
 import Carousel from "@src/components/Carousel"
 import ImageLoader from "@src/components/ImageLoader"
@@ -9,12 +9,13 @@ import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
 import { formatDate, parrseToNDigit } from "@src/functions/helpers";
 import { constants } from "@src/stores/constantStore"
-import { PackageType, TourType } from "@src/types/base";
+import { TourType } from "@src/types/base";
 import classNames from "classnames";
 import { useState } from "react"
 import ReactPlayer from "react-player"
 import { Link } from "react-router-dom";
 import humanNumber from 'human-number';
+import CategoryDesc from "./CategoryDesc";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
@@ -23,60 +24,6 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     const startDate = formatDate(tour.start_at)
     const finishDate = formatDate(tour.finish_at)
     const lateSaleDate = formatDate(tour.last_sell_at)
-    const [openIndex, setOpenIndex] = useState<number | null>(0)
-
-    const handleOpenIndex = (index: number) => {
-        setOpenIndex(index === openIndex ? null : index)
-    }
-
-    const categoryDesc = (pac: PackageType) => {
-        return (
-            <div className="join join-vertical w-full">
-                <div
-                    className={classNames({
-                        "collapse collapse-arrow join-item": true,
-                        "accordion-open": openIndex === 0
-                    })}
-                    onClick={() => handleOpenIndex(0)}
-                >
-                    <div className="collapse-title font-semibold">
-                        🛎️ Included Services
-                    </div>
-                    <div className="collapse-content">
-                        <MarkdownRenderer md_text={pac.included} />
-                    </div>
-                </div>
-                <div
-                    className={classNames({
-                        "collapse collapse-arrow join-item": true,
-                        "accordion-open": openIndex === 1
-                    })}
-                    onClick={() => handleOpenIndex(1)}
-                >
-                    <div className="collapse-title font-semibold">
-                        🙅🏻 Excluded Services
-                    </div>
-                    <div className="collapse-content">
-                        <MarkdownRenderer md_text={pac.excluded} />
-                    </div>
-                </div>
-                <div
-                    className={classNames({
-                        "collapse collapse-arrow join-item": true,
-                        "accordion-open": openIndex === 2
-                    })}
-                    onClick={() => handleOpenIndex(2)}
-                >
-                    <div className="collapse-title font-semibold">
-                        📑 Conditions
-                    </div>
-                    <div className="collapse-content">
-                        <MarkdownRenderer md_text={pac.conditions} />
-                    </div>
-                </div>
-            </div>
-        )
-    }
 
     return (
         <div className="container mx-auto px-10 pt-5 pb-16">
@@ -189,7 +136,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     <TabList tabs={tour.packages.map(e => {
                                         return {
                                             name: e.title,
-                                            children: categoryDesc(e)
+                                            children: <CategoryDesc pac={e} />
                                         }
                                     })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                                     <button className="btn btn-accent w-full mt-2">

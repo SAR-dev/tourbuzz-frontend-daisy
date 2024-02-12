@@ -7,7 +7,9 @@ const NavLayout = ({ children }: { children: ReactNode }) => {
     return (
         <section>
             <NavBar />
-            {children}
+            <div className="min-h-screen">
+                {children}
+            </div>
             <ScrollRestoration />
             <Footer />
         </section>
