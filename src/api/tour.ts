@@ -7,7 +7,7 @@ export interface TourListDataType {
 
 export const getUpcomingTours = (): Promise<TourListDataType> => {
     return api
-        .get("/common/tours/upcoming")
+        .get("/guest/tours/upcoming")
         .then((res) => {
             return { data: res.data };
         })
