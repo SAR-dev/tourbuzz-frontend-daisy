@@ -66,7 +66,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                     <button 
                                         className={classNames({
                                             "reaction-badge": true,
-                                            "ring-2 ring-success/50": e.reacted
+                                            "ring-2 ring-inset ring-info": e.reacted
                                         })} 
                                         onClick={() => handleEmojiSelect(e.emoji)} 
                                         key={i}
