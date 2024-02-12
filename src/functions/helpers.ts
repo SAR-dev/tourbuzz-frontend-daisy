@@ -60,9 +60,11 @@ export function formatDate(date: Date): {
     year: number, 
     hour: number,
     minute: number,
-    second: number
+    second: number,
+    weekday: string
 } {
     date = new Date(date);
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const day = date.getDate();
     const month = date.getMonth() + 1;
@@ -71,7 +73,8 @@ export function formatDate(date: Date): {
     const hour = date.getHours();
     const minute = date.getMinutes();
     const second = date.getSeconds();
-    return { day, month, month_name, year, hour, minute, second };
+    const weekday = weekdays[date.getDay()];
+    return { day, month, month_name, year, hour, minute, second, weekday };
 }
 
 export function splitUniqueList(list: string[], maxLength: number): { show: string[], hide: string[] } {

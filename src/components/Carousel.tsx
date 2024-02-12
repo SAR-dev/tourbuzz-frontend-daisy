@@ -5,7 +5,7 @@ const Carousel = ({ children }: { children: ReactElement[] }) => {
     const [itemRefs, setItemRefs] = useState<RefObject<HTMLDivElement>[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    useEffect(() => {
+    useEffect(() => { 
         setItemRefs((prevRefs) => {
             const newRefs: RefObject<HTMLDivElement>[] = Array(children.length)
                 .fill(null)

@@ -80,7 +80,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                     </div>
                     <div className="flex flex-col justify-between">
                         <div className="px-10 flex gap-5 pt-5 card flex-row rounded-l-none rounded-b-none h-fill relative hover:bg-base-300/50 duration-100">
-                            <Link to="/tours/1" className="w-[85%]">
+                            <Link to={`/tours/${tour.slug}`} className="w-[85%]">
                                 <div className="title text-2xl font-semibold line-clamp-2">
                                     {tour.title}
                                 </div>
@@ -113,7 +113,10 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                 </div>
                                 <div>
                                     <div className="mb-1">💯Free Cancellation😉</div>
-                                    <button className="btn btn-primary w-full">
+                                    <button className={classNames({
+                                        "btn btn-primary w-full": true,
+                                        "btn-disabled": tour.expired
+                                    })}>
                                         Book Now 🐱
                                     </button>
                                 </div>

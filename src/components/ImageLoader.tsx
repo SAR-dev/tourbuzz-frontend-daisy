@@ -1,7 +1,7 @@
 import { useImageModalStore } from "@src/stores/imageModalStore";
 import { Img } from "react-image";
 
-const ImageLoader = ({ src, className }: { src: string, className: string }) => {
+const ImageLoader = ({ src = "", className }: { src?: string, className: string }) => {
     const { openModal } = useImageModalStore()
     return (
         <Img
