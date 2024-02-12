@@ -1,7 +1,7 @@
 import { useImageModalStore } from "@src/stores/imageModalStore";
 import { Img } from "react-image";
 
-const ImageLoader = ({ src = "", className }: { src?: string, className: string }) => {
+const ImageLoader = ({ src = "", modalSrc, className }: { src?: string, modalSrc?: string, className: string }) => {
     const { openModal } = useImageModalStore()
     return (
         <Img
@@ -10,7 +10,7 @@ const ImageLoader = ({ src = "", className }: { src?: string, className: string 
             unloader={<div className={className + " overflow-hidden bg-base-300"} />}
             className={className}
             style={{cursor: "zoom-in"}}
-            onClick={() => openModal(src)}
+            onClick={() => openModal(modalSrc ?? src)}
         />
     )
 }

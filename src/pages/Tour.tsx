@@ -112,7 +112,7 @@ const Tour = () => {
                                         )}
                                         {tour.data.data.images.map((e, i) => (
                                             <div className="carousel-item w-full h-[30rem]" key={i}>
-                                                <ImageLoader src={e.source_url} className="w-full object-cover" />
+                                                <ImageLoader src={e.optimized_url} modalSrc={e.source_url} className="w-full object-cover" />
                                             </div>
                                         ))}
                                     </Carousel>
