@@ -2,13 +2,15 @@ import { PackageType } from '@src/types/base'
 import { useState } from 'react';
 import MarkdownRenderer from './MarkdownRenderer'
 import classNames from 'classnames'
-import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import Modal from './Modal';
 import humanNumber from 'human-number';
+import { WalletIcon } from '@heroicons/react/24/outline';
 
 const TourPackage = ({ pac }: { pac: PackageType }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null)
-    const [openPackage, setOpenPackage] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isChecked, setIsChecked] = useState(false)
 
     const handleOpenIndex = (index: number) => {
         setOpenIndex(index === openIndex ? null : index)
@@ -60,17 +62,27 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                 </div>
             </div>
             <div className="px-3 mt-3">
-                <button className="btn w-full" onClick={() => setOpenPackage(true)}>
+                <button className="btn w-full" onClick={() => setIsModalOpen(true)}>
                     See Details
                     <ArrowRightIcon className="h-5 w-5" />
                 </button>
             </div>
-            <Modal isOpen={openPackage} setIsOpen={setOpenPackage} title="Tour Package Details" maxWidth='50rem' closeButton>
-                <div className='card flex justify-between flex-row my-3 px-3'>
-                    <div className="title text-xl font-semibold">🎁 {pac.title}</div>
-                    <div className="text-xl font-semibold">💰 {humanNumber(pac.price)} TK</div>
+            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} title={`Package Details: ${pac.title}`} maxWidth='50rem' closeButton footer={
+                <div className="flex items-center justify-between">
+                    <button className="btn" onClick={() => setIsModalOpen(false)}>
+                        <ArrowLeftIcon className='h-5 w-5' />
+                        Go Back
+                    </button>
+                    <button className={classNames({
+                        "btn-accent btn": true,
+                        "btn-disabled": !isChecked
+                    })}>
+                        Proceed to Payment
+                        <WalletIcon className='h-5 w-5' />
+                    </button>
                 </div>
-                <div className="overflow-y-auto custom-scrollbar max-h-[50vh]">
+            }>
+                <div className="overflow-y-auto custom-scrollbar max-h-[50vh] mt-5">
                     <div className="join join-vertical w-full">
                         <div className="collapse collapse-arrow join-item accordion-open">
                             <div className="collapse-title font-semibold">
@@ -96,7 +108,18 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                                 <MarkdownRenderer md_text={pac.conditions} />
                             </div>
                         </div>
+                        <div className="collapse collapse-arrow join-item accordion-open">
+                            <div className="collapse-title font-semibold">
+                                🏷️ Price: {humanNumber(pac.price)} TK
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div className="form-control w-fit mt-3">
+                    <label className="label cursor-pointer">
+                        <input type="checkbox" checked={isChecked} onChange={e => setIsChecked(e.target.checked)} className="checkbox" />
+                        <span className="label-text ml-2">I have read the terms and conditions and I agree to pay <b>{humanNumber(pac.price)} TK</b> to purchase thic package.</span>
+                    </label>
                 </div>
             </Modal>
         </div>
