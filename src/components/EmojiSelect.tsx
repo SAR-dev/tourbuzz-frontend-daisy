@@ -2,7 +2,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment, ReactNode, useEffect, useState } from "react";
 import { EmojiType, emojis } from "@src/assets/emojis";
 import Fuse from "fuse.js";
-import { findMostUsedStrings, slugToText } from "@src/functions/helpers";
+import { findMostUsedStrings } from "@src/functions/helpers";
 import useLocalStorageState from "use-local-storage-state";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useEmojiStore } from "@src/stores/emojiStore";
@@ -10,7 +10,7 @@ import { useDebounce } from "ahooks";
 import { constants } from "@src/stores/constantStore";
 
 const fuseOptions = {
-  keys: ["emoji", "keywords", "key"],
+  keys: ["emoji", "category", "description", "shortcode", "references"],
   shouldSort: true,
   ignoreLocation: true,
 };
@@ -112,14 +112,14 @@ const EmojiSelect = ({
                         </div>
                         <div className='bg-base-200 p-1 card flex flex-row gap-2 items-center'>
                           <div className="text-4xl h-11">{hovered.emoji}</div>
-                          <div className='font-semibold line-clamp-1'>{slugToText(hovered.key)}</div>
+                          <div className='font-semibold line-clamp-1'>{hovered.name}</div>
                         </div>
                       </div>
                     ) : (
                       <div className="w-96 p-2 card flex-col gap-2 shadow border border-base-300 bg-base-100">
                         <div className="grid grid-cols-7 gap-2">
                           {defaultEmojis.map((e, i) => (
-                            <div className="tooltip" data-tip={slugToText(e.key)} key={i}>
+                            <div className="tooltip" data-tip={e.name} key={i}>
                               <button
                                 className="border border-base-300 hover:bg-base-200 w-10 h-10 card items-center justify-center flex cursor-pointer hover:bg-base-100"
                                 onClick={() => handleEmojiClick(e.emoji, close)}
