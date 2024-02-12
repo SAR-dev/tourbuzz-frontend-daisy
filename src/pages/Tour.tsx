@@ -105,18 +105,16 @@ const Tour = () => {
                                 </div>
                                 <div className="card overflow-hidden">
                                     <Carousel>
-                                        <div className="carousel-item w-full">
-                                            <ReactPlayer url="https://www.youtube.com/watch?v=WLIv7HnZ_fE" height="30rem" width="100%" controls />
-                                        </div>
-                                        <div className="carousel-item w-full">
-                                            <ImageLoader src="https://images.unsplash.com/photo-1480796927426-f609979314bd" className="w-full h-[30rem] object-cover" />
-                                        </div>
-                                        <div className="carousel-item w-full">
-                                            <ImageLoader src="https://images.unsplash.com/photo-1522623349500-de37a56ea2a5" className="w-full h-[30rem] object-cover" />
-                                        </div>
-                                        <div className="carousel-item w-full">
-                                            <ImageLoader src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e" className="w-full h-[30rem] object-cover" />
-                                        </div>
+                                        {tour.data.data.video_link.length > 0 && (
+                                            <div className="carousel-item w-full">
+                                                <ReactPlayer url={tour.data.data.video_link} height="30rem" width="100%" controls />
+                                            </div>
+                                        )}
+                                        {tour.data.data.images.map((e, i) => (
+                                            <div className="carousel-item w-full" key={i}>
+                                                <ImageLoader src={e.source_url} className="w-full h-[30rem] object-cover" />
+                                            </div>
+                                        ))}
                                     </Carousel>
                                 </div>
                                 <div className="grid grid-cols-1 gap-5">

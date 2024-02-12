@@ -1,13 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { ReactElement, Children, RefObject, cloneElement, createRef, useEffect, useState } from 'react';
+import { Children, RefObject, cloneElement, createRef, useEffect, useState, ReactNode } from 'react';
 
-const Carousel = ({ children }: { children: ReactElement[] }) => {
+const Carousel = ({ children }: { children: ReactNode }) => {
     const [itemRefs, setItemRefs] = useState<RefObject<HTMLDivElement>[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
     useEffect(() => { 
         setItemRefs((prevRefs) => {
-            const newRefs: RefObject<HTMLDivElement>[] = Array(children.length)
+            const newRefs: RefObject<HTMLDivElement>[] = Array(Children.count(children))
                 .fill(null)
                 .map((_, i) => prevRefs[i] || createRef<HTMLDivElement>());
             return newRefs;
@@ -24,7 +24,7 @@ const Carousel = ({ children }: { children: ReactElement[] }) => {
     };
 
     const goNext = () => {
-        if (activeIndex > children.length - 2) return;
+        if (activeIndex > Children.count(children) - 2) return;
         scrollToIndex(activeIndex + 1)
     }
 
@@ -37,7 +37,7 @@ const Carousel = ({ children }: { children: ReactElement[] }) => {
         <div className="relative group">
             <div className="carousel w-full">
                 {Children.map(children, (child, i) => {
-                    return cloneElement(child, {
+                    return cloneElement(child as React.ReactElement, {
                         key: i,
                         ref: itemRefs[i],
                         index: i + 1,
