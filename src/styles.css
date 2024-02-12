@@ -191,3 +191,11 @@
   }
 }
 
+/* ACCORDION */
+.accordion-open {
+  grid-template-rows: auto 1fr;
+}
+.accordion-open .collapse-content {
+  visibility: visible;
+  min-height: fit-content;
+}

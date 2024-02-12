@@ -190,9 +190,9 @@ export interface TourType {
     cancel_ins: string
     start_ins: string
     finish_ins: string
-    start_at: string
-    finish_at: string
-    last_sell_at: string
+    start_at: Date
+    finish_at: Date
+    last_sell_at: Date
     image_ids: string
     created_at: Date;
     updated_at: Date;

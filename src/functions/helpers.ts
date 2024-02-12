@@ -86,3 +86,7 @@ export function splitUniqueList(list: string[], maxLength: number): { show: stri
 
     return { show, hide };
 }
+
+export function parrseToNDigit(value: number, digits: number){
+    return value.toLocaleString('en-US', {minimumIntegerDigits: digits, useGrouping:false})
+}
