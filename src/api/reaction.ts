@@ -5,7 +5,15 @@ export interface TourReactionDataType {
     data: EmojiReactionType[]
 }
 
-export const addReactionToTour = ({ id, emoji }: { id: number, emoji: string }): Promise<TourReactionDataType> => {
+export interface TourReactionAddDataType {
+    data: {
+        added: boolean;
+        removed: boolean;
+    }
+}
+
+
+export const addReactionToTour = ({ id, emoji }: { id: number, emoji: string }): Promise<TourReactionAddDataType> => {
     return api
         .post(`/guest/reactions/tours/${id}/${emoji}`)
         .then((res) => {

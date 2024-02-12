@@ -27,17 +27,11 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
 
     const handleEmojiSelect = (value: string) => {
         addReactionToTour({ id: tour.id, emoji: value })
-            .then(() => {
+            .then((res) => {
                 queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
-                add({ emoji: value })
-            })
-            .catch(() => toast.error("Emoji reaction failed!"))
-    }
-
-    const handleEmojiRemove = (value: string) => {
-        addReactionToTour({ id: tour.id, emoji: value })
-            .then(() => {
-                queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
+                if(res.data.added){
+                    add({ emoji: value })
+                }
             })
             .catch((err) => {
                 toast.error(err.response.data.message)
@@ -74,7 +68,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                             "reaction-badge": true,
                                             "ring-2 ring-success/50": e.reacted
                                         })} 
-                                        onClick={() => handleEmojiRemove(e.emoji)} 
+                                        onClick={() => handleEmojiSelect(e.emoji)} 
                                         key={i}
                                     >
                                         <span>{e.emoji}</span>
