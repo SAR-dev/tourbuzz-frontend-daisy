@@ -39,7 +39,9 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
             .then(() => {
                 queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
             })
-            .catch(() => toast.error("Emoji reaction failed!"))
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
     }
 
     return (

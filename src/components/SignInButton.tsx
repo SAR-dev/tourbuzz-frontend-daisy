@@ -7,12 +7,13 @@ import { useNotification } from '../contexts/Notification';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { AuthTokenType } from './../types/token';
 import { useAuthStore } from '@src/stores/authStore';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserDataType, getLoggedInUser } from '@src/api/user';
 import DropdownSelect from './DropDownSelect';
 
 const SignInButton = () => {
     const notification = useNotification()
+    const queryClient = useQueryClient()
     const { isLoggedIn, setToken } = useAuthStore()
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -89,6 +90,7 @@ const SignInButton = () => {
         setToken(null)
         localStorage.clear()
         notification.remove()
+        window.location.reload()
     }
 
     const handleSignOut = () => {
