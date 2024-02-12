@@ -15,7 +15,7 @@ import { useState } from "react"
 import ReactPlayer from "react-player"
 import { Link } from "react-router-dom";
 import humanNumber from 'human-number';
-import CategoryDesc from "./CategoryDesc";
+import TourPackage from "./TourPackage";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
@@ -136,7 +136,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     <TabList tabs={tour.packages.map(e => {
                                         return {
                                             name: e.title,
-                                            children: <CategoryDesc pac={e} />
+                                            children: <TourPackage pac={e} />
                                         }
                                     })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                                     <button className="btn btn-accent w-full mt-2">

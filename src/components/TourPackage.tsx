@@ -3,8 +3,10 @@ import { useState } from 'react';
 import MarkdownRenderer from './MarkdownRenderer'
 import classNames from 'classnames'
 import { ArrowRightIcon } from '@heroicons/react/24/solid'
+import Modal from './Modal';
+import humanNumber from 'human-number';
 
-const CategoryDesc = ({ pac }: { pac: PackageType }) => {
+const TourPackage = ({ pac }: { pac: PackageType }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null)
     const [openPackage, setOpenPackage] = useState(false)
 
@@ -63,8 +65,42 @@ const CategoryDesc = ({ pac }: { pac: PackageType }) => {
                     <ArrowRightIcon className="h-5 w-5" />
                 </button>
             </div>
+            <Modal isOpen={openPackage} setIsOpen={setOpenPackage} title="Tour Package Details" maxWidth='50rem' closeButton>
+                <div className='card flex justify-between flex-row my-3 px-3'>
+                    <div className="title text-xl font-semibold">🎁 {pac.title}</div>
+                    <div className="text-xl font-semibold">💰 {humanNumber(pac.price)} TK</div>
+                </div>
+                <div className="overflow-y-auto custom-scrollbar max-h-[50vh]">
+                    <div className="join join-vertical w-full">
+                        <div className="collapse collapse-arrow join-item accordion-open">
+                            <div className="collapse-title font-semibold">
+                                🛎️ Included Services
+                            </div>
+                            <div className="collapse-content">
+                                <MarkdownRenderer md_text={pac.included} />
+                            </div>
+                        </div>
+                        <div className="collapse collapse-arrow join-item accordion-open">
+                            <div className="collapse-title font-semibold">
+                                🙅🏻 Excluded Services
+                            </div>
+                            <div className="collapse-content">
+                                <MarkdownRenderer md_text={pac.excluded} />
+                            </div>
+                        </div>
+                        <div className="collapse collapse-arrow join-item accordion-open">
+                            <div className="collapse-title font-semibold">
+                                📑 Conditions
+                            </div>
+                            <div className="collapse-content">
+                                <MarkdownRenderer md_text={pac.conditions} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
         </div>
     )
 }
 
-export default CategoryDesc
+export default TourPackage
