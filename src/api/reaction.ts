@@ -7,7 +7,7 @@ export interface TourReactionDataType {
 
 export const addReactionToTour = ({ id, emoji }: { id: number, emoji: string }): Promise<TourReactionDataType> => {
     return api
-        .post(`/user/reactions/tours/${id}/${emoji}`)
+        .post(`/member/reactions/tours/${id}/${emoji}`)
         .then((res) => {
             return { data: res.data };
         })
@@ -18,7 +18,7 @@ export const addReactionToTour = ({ id, emoji }: { id: number, emoji: string }):
 
 export const getReactionToTour = ({ id }: { id: number }): Promise<TourReactionDataType> => {
     return api
-        .get(`/user/reactions/tours/${id}`)
+        .get(`/member/reactions/tours/${id}`)
         .then((res) => {
             return { data: res.data };
         })
