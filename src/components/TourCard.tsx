@@ -5,15 +5,28 @@ import { Link } from "react-router-dom";
 import { TourListType } from "@src/types/tour";
 import { countDaysAndNights, formatDate, splitUniqueList } from "@src/functions/helpers";
 import humanNumber from "human-number"
+import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import classNames from "classnames";
+import toast from "react-hot-toast";
 
-const TourCard = ({tour}:{tour: TourListType}) => {
+const TourCard = ({ tour }: { tour: TourListType }) => {
+    const queryClient = useQueryClient();
+
     const daysAndNights = countDaysAndNights(tour.start_at, tour.finish_at);
     const startAt = formatDate(tour.start_at);
     const finishAt = formatDate(tour.finish_at);
     const districtNames = splitUniqueList(tour.district_names_list, 3)
 
+    const tourReactions = useQuery<TourReactionDataType, Error>({
+        queryKey: ['tour-reactions', tour.id],
+        queryFn: () => getReactionToTour({ id: tour.id })
+    })
+
     const handleEmojiSelect = (value: string) => {
-        console.log(value)
+        addReactionToTour({ id: tour.id, emoji: value })
+            .then(() => queryClient.invalidateQueries({queryKey: ['tour-reactions', tour.id]}))
+            .catch(() => toast.error("Emoji reaction failed!"))
     }
 
     return (
@@ -40,14 +53,15 @@ const TourCard = ({tour}:{tour: TourListType}) => {
                                     }
                                     setEmoji={handleEmojiSelect}
                                 />
-                                <button className="reaction-badge">
-                                    <span>🚀</span>
-                                    <span>3</span>
-                                </button>
-                                <button className="reaction-badge">
-                                    <span>🤗</span>
-                                    <span>3</span>
-                                </button>
+                                {tourReactions.data?.data.map((e, i) => (
+                                    <button className={classNames({
+                                        "reaction-badge": true,
+                                        "ring-2 ring-success/50": e.reacted
+                                    })} key={i}>
+                                        <span>{e.emoji}</span>
+                                        <span>{e.count}</span>
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     </div>

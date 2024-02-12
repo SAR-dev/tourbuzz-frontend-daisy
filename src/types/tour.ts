@@ -1,4 +1,3 @@
-import { EmojiReactionType } from "./emoji_reaction";
 import { ImageType } from "./image";
 
 export interface TourListType {
@@ -26,7 +25,6 @@ export interface TourListType {
     district_names_list: string[];
     package_prices_list: number[];
     images: ImageType[];
-    emoji_reactions: EmojiReactionType[];
     avatar: ImageType;
     expired: boolean;
 }
