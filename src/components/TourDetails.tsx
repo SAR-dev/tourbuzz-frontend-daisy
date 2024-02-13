@@ -67,8 +67,9 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                             </Carousel>
                         </div>
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="title text-2xl font-semibold pb-5 border-b border-base-300">
-                                📌 Tour Destination Checklist
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                👉 Tour Destination Checklist
                             </div>
                             <div className={classNames({
                                 "grid grid-cols-5 gap-5": true,
@@ -104,8 +105,9 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                         </div>
 
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
-                                📌 What to Expect
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                🤔 What to Expect
                             </div>
                             <MarkdownRenderer md_text={tour.md_desc} />
                         </div>
@@ -113,29 +115,33 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                         {/* Tour Logs */}
 
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
-                                📌 Pickup Locations and Guidelines
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                🚙 Pickup Locations and Guidelines
                             </div>
                             <MarkdownRenderer md_text={tour.start_ins} />
                         </div>
 
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
-                                📌 Dropoff Locations and Guidelines
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                🤝 Dropoff Locations and Guidelines
                             </div>
                             <MarkdownRenderer md_text={tour.finish_ins} />
                         </div>
 
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
-                                📌 Frequently Asked Questions
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                🧐 Frequently Asked Questions
                             </div>
                             <MarkdownRenderer md_text={tour.faq} />
                         </div>
 
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
-                                📌 Ticket Cancellation
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                🔖 Ticket Cancellation
                             </div>
                             <MarkdownRenderer md_text={tour.cancel_ins} />
                         </div>
