@@ -3,8 +3,7 @@ import ImageLoader from "./ImageLoader";
 import EmojiSelect from "./EmojiSelect";
 import { Link } from "react-router-dom";
 import { TourListType } from "@src/types/tour";
-import { countDaysAndNights, formatDate, splitUniqueList } from "@src/functions/helpers";
-import humanNumber from "human-number"
+import { countDaysAndNights, formatDate, parsePrice, splitUniqueList } from "@src/functions/helpers";
 import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -106,7 +105,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                         <div className="bg-orange-200 text-black p-10 card rounded-l-none rounded-t-none">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
-                                    <div>💰 Starting from <b>{humanNumber(Math.min.apply(Math, tour.package_prices_list))} TK</b>. {tour.package_prices_list.length} packages available.</div>
+                                    <div>💰 Starting from <b>{parsePrice(Math.min.apply(Math, tour.package_prices_list))} TK</b>. {tour.package_prices_list.length} packages available.</div>
                                     <div>🛍️ Already booked by <b>265 Persons</b></div>
                                     <div>🚀 Start on <b>12 January, 2020</b></div>
                                     <div>🎯 Districts: <b>{districtNames.show.join(", ")}</b> {districtNames.hide.length > 0 ? `and ${districtNames.hide.length} more.` : "."}</div>

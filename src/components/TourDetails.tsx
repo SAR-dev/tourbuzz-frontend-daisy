@@ -7,14 +7,13 @@ import MarkdownRenderer from "@src/components/MarkdownRenderer"
 import TabList from "@src/components/TabList"
 import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
-import { formatDate, parrseToNDigit } from "@src/functions/helpers";
+import { formatDate, parrseToNDigit, parsePrice } from "@src/functions/helpers";
 import { constants } from "@src/stores/constantStore"
 import { TourType } from "@src/types/base";
 import classNames from "classnames";
 import { useState } from "react"
 import ReactPlayer from "react-player"
 import { Link } from "react-router-dom";
-import humanNumber from 'human-number';
 import TourPackage from "./TourPackage";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
@@ -68,8 +67,8 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                             </Carousel>
                         </div>
                         <div className="grid grid-cols-1 gap-5">
-                            <div className="title text-2xl font-semibold">
-                                🗺️ Tour Destination Checklist
+                            <div className="title text-2xl font-semibold pb-5 border-b border-base-300">
+                                📌 Tour Destination Checklist
                             </div>
                             <div className={classNames({
                                 "grid grid-cols-5 gap-5": true,
@@ -110,6 +109,8 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                             </div>
                             <MarkdownRenderer md_text={tour.md_desc} />
                         </div>
+
+                        {/* Tour Logs */}
 
                         <div className="grid grid-cols-1 gap-5">
                             <div className="col-span-5 title text-2xl font-semibold pb-5 border-b border-base-300">
@@ -169,7 +170,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                         }
                                     })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
                                     <button className="btn btn-accent w-full mt-2">
-                                        Purchase Ticket ({humanNumber(tour.packages[selectedIndex].price)} TK)
+                                        Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
                                     </button>
                                 </div>
                             </div>
