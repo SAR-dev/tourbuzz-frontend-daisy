@@ -34,7 +34,7 @@ const TabList = ({ tabs, selectedIndex, setSelectedIndex }: TabListType) => {
             </Tab.List>
             <Tab.Panels className="mt-2">
                 {tabs.map(e => (
-                    <Tab.Panel key={e.name} className="w-full border card p-3">
+                    <Tab.Panel key={e.name} className="w-full border border-base-300 card p-3">
                         {e.children}
                     </Tab.Panel>
                 ))}

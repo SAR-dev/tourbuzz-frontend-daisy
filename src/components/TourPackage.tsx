@@ -95,7 +95,7 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                     </button>
                 </div>
             }>
-                <div className="overflow-y-auto custom-scrollbar max-h-[50vh] mt-5">
+                <div className="overflow-y-auto custom-scrollbar max-h-[60vh] my-5">
                     <div className="join join-vertical w-full">
                         <div className="collapse join-item accordion-open">
                             <div className="collapse-title font-semibold">
@@ -130,12 +130,12 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="form-control w-fit mt-3">
-                    <label className="label cursor-pointer">
-                        <input type="checkbox" checked={isChecked} onChange={e => setIsChecked(e.target.checked)} className="checkbox" />
-                        <span className="label-text ml-2">I have read the terms and conditions and I agree to pay <b>{parsePrice(pac.price)} TK</b> to purchase thic package.</span>
-                    </label>
+                    <div className="form-control w-fit mt-3">
+                        <label className="label cursor-pointer">
+                            <input type="checkbox" checked={isChecked} onChange={e => setIsChecked(e.target.checked)} className="checkbox" />
+                            <span className="label-text ml-2">I have read the terms and conditions and I agree to pay <b>{parsePrice(pac.price)} TK</b> to purchase thic package.</span>
+                        </label>
+                    </div>
                 </div>
             </Modal>
         </div>

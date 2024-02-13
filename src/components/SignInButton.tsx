@@ -128,7 +128,7 @@ const SignInButton = () => {
                 <button className="btn" onClick={() => setIsOpen(true)}>Sign In</button>
                 <Modal title={isMailSent ? 'Sign In' : 'Get Magic Token'} closeButton isOpen={isOpen} setIsOpen={setIsOpen} maxWidth='25rem'>
                     {!isMailSent && (
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-3 pt-5 pb-10">
                             <input type="text" placeholder="Email Address" className="input input-bordered w-full" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} />
                             <div className="text-xs text-base-content/75">
                                 A confirmation link with magic token will be sent in your email
@@ -147,7 +147,7 @@ const SignInButton = () => {
                         </div>
                     )}
                     {isMailSent && (
-                        <div className="flex flex-col gap-3">
+                        <div className="flex flex-col gap-3 pt-5 pb-10">
                             <input type="password" placeholder="Magic Token" className="input input-bordered w-full" disabled={isLoading} value={magicToken} onChange={e => setMagicToken(e.target.value)} />
                             <div className="text-xs text-base-content/75">
                                 Do not share this magic token with anyone. Keep it secret.

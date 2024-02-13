@@ -45,20 +45,22 @@ const Modal = ({
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full transform overflow-hidden card p-5 bg-base-100 text-left align-middle shadow-xl transition-all" style={{ maxWidth }}>
+                            <Dialog.Panel className="w-full transform overflow-hidden card bg-base-100 text-left align-middle shadow-xl transition-all" style={{ maxWidth }}>
                                 <Dialog.Title
                                     as="div"
-                                    className="mb-2 flex justify-between items-center"
+                                    className="p-5 bg-base-200 flex justify-between items-center"
                                 >
                                     <div className='text-lg font-semibold'>{title}</div>
                                     {closeButton && (
-                                        <button className="btn btn-square btn-sm" onClick={() => setIsOpen(false)}>
+                                        <button className="btn btn-square btn-sm bg-base-100" onClick={() => setIsOpen(false)}>
                                             <XMarkIcon className='h-5 w-5' />
                                         </button>
                                     )}
                                 </Dialog.Title>
-                                <div>{children}</div>
-                                <div className="mt-4">{footer}</div>
+                                <div className='px-5'>{children}</div>
+                                {footer && (
+                                    <div className="p-5 bg-base-200">{footer}</div>
+                                )}
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>
