@@ -77,7 +77,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-1 mt-2">
-                                    <div>😎 Organized By: <b>{tour.organizer_name}</b></div>
+                                    <div>😎 Organized By <b>{tour.organizer_name}</b></div>
                                     <div>🤝 {tour.group_size}. {tour.group_info}</div>
                                     <div>🚩 It will be a <b>{daysAndNights.days} days</b>, <b>{daysAndNights.nights} nights</b> jouney, starting at <b>{startAt.day} {startAt.month_name}, {startAt.year}</b></div>
                                     <div>⌛ Our journey will end on <b>{finishAt.day} {finishAt.month_name}, {finishAt.year}</b></div>
