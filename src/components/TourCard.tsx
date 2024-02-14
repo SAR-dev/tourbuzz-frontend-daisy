@@ -3,7 +3,7 @@ import ImageLoader from "./ImageLoader";
 import EmojiSelect from "./EmojiSelect";
 import { Link } from "react-router-dom";
 import { TourListType } from "@src/types/tour";
-import { countDaysAndNights, formatDate, parsePrice, splitUniqueList } from "@src/functions/helpers";
+import { countDaysAndNights, formatDate, getTopEmojiReactionsWithSummary, parsePrice, splitUniqueList } from "@src/functions/helpers";
 import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -24,11 +24,13 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
         queryFn: () => getReactionToTour({ id: tour.id })
     })
 
+    const reactionSummary = getTopEmojiReactionsWithSummary(tourReactions.data?.data ?? [], 5)
+
     const handleEmojiSelect = (value: string) => {
         addReactionToTour({ id: tour.id, emoji: value })
             .then((res) => {
                 queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
-                if(res.data.added){
+                if (res.data.added) {
                     add({ emoji: value })
                 }
             })
@@ -61,19 +63,25 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                     }
                                     setEmoji={handleEmojiSelect}
                                 />
-                                {tourReactions.data?.data.map((e, i) => (
-                                    <button 
+                                {reactionSummary.topReactions.map((e, i) => (
+                                    <button
                                         className={classNames({
                                             "reaction-badge": true,
                                             "ring-2 ring-inset ring-info": e.reacted
-                                        })} 
-                                        onClick={() => handleEmojiSelect(e.emoji)} 
+                                        })}
+                                        onClick={() => handleEmojiSelect(e.emoji)}
                                         key={i}
                                     >
                                         <span>{e.emoji}</span>
                                         <span>{e.count}</span>
                                     </button>
                                 ))}
+                                {reactionSummary.remainingCountSum > 0 && (
+                                    <button className="reaction-badge">
+                                        <span>+</span>
+                                        <span>{reactionSummary.remainingCountSum}</span>
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

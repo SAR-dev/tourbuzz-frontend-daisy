@@ -1,3 +1,5 @@
+import { EmojiReactionType } from "@src/types/reaction";
+
 export function slugToText(slug: string) {
     // Replace hyphens and underscores with spaces and split the string into words
     const words = slug.replace(/[-_]/g, ' ').split(' ');
@@ -108,4 +110,24 @@ export function dateDifferenceInDays(date1: Date, date2: Date): number {
 
     // Convert the difference to days
     return Math.ceil(differenceMs / (1000 * 3600 * 24));
+}
+
+export function getTopEmojiReactionsWithSummary(reactions: EmojiReactionType[], n: number) {
+    // Sort the reactions based on whether they are reacted, and then by count in descending order
+    const sortedReactions = reactions.sort((a, b) => {
+        // If both reactions are reacted or both are not reacted, sort by count
+        if (a.reacted === b.reacted) {
+            return b.count - a.count;
+        }
+        // Sort by reacted status, with reacted reactions first
+        return a.reacted ? -1 : 1;
+    });
+    
+    // Slice the array to get the top n elements
+    const topReactions = sortedReactions.slice(0, n);
+    
+    // Calculate the sum of counts for the remaining reactions
+    const remainingCountSum = sortedReactions.slice(n).reduce((sum, reaction) => sum + reaction.count, 0);
+    
+    return { topReactions, remainingCountSum };
 }
