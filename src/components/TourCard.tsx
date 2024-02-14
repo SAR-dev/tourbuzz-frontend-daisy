@@ -58,10 +58,23 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                         </div>
                     </div>
                     <div className="flex flex-col justify-between">
-                        <div className="px-10 flex gap-5 pt-5 card flex-row rounded-l-none rounded-b-none h-fill relative hover:bg-base-300/50 duration-100">
-                            <Link to={`/tours/${tour.slug}`} className="w-[85%]">
-                                <div className="title text-2xl font-semibold line-clamp-2">
-                                    {tour.title}
+                        <div className="card flex-row px-10 py-5">
+                            <div className="w-full">
+                                <div className="flex items-start">
+                                    <Link to={`/tours/${tour.slug}`} className="title text-2xl font-semibold line-clamp-2 hover:text-info">
+                                        {tour.title}
+                                    </Link>
+                                    <div className="flex items-center font-semibold">
+                                        <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                                            <BookmarkIcon className="h-5 w-5" />
+                                        </button>
+                                        <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                                            <StarIcon className="h-5 w-5" />
+                                        </button>
+                                        <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
+                                            <QuestionMarkCircleIcon className="h-5 w-5" />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="flex flex-col gap-1 mt-2">
                                     <div>😎 Organized By: <b>{tour.organizer_name}</b></div>
@@ -69,20 +82,10 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                     <div>🚩 It will be a <b>{daysAndNights.days} days</b>, <b>{daysAndNights.nights} nights</b> jouney, starting at <b>{startAt.day} {startAt.month_name}, {startAt.year}</b></div>
                                     <div>⌛ Our journey will end on <b>{finishAt.day} {finishAt.month_name}, {finishAt.year}</b></div>
                                 </div>
-                            </Link>
-                            <div className="flex items-center font-semibold absolute top-0 right-0 m-5">
-                                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                                    <BookmarkIcon className="h-5 w-5" />
-                                </button>
-                                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                                    <StarIcon className="h-5 w-5" />
-                                </button>
-                                <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                                    <QuestionMarkCircleIcon className="h-5 w-5" />
-                                </button>
                             </div>
                         </div>
-                        <div className="bg-orange-200/20 p-10 card rounded-l-none rounded-t-none">
+                        <div className="border-t border-base-300 w-full"></div>
+                        <div className="card justify-center px-10 py-5">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
                                     <div>💰 Starting from <b>{parsePrice(Math.min.apply(Math, tour.package_prices_list))} TK</b>. {tour.package_prices_list.length} packages available.</div>
