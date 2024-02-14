@@ -7,7 +7,7 @@ import MarkdownRenderer from "@src/components/MarkdownRenderer"
 import TabList from "@src/components/TabList"
 import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
-import { formatDate, parrseToNDigit, parsePrice } from "@src/functions/helpers";
+import { formatDate, getTopEmojiReactionsWithSummary, parrseToNDigit, parsePrice } from "@src/functions/helpers";
 import { constants } from "@src/stores/constantStore"
 import { TourType } from "@src/types/base";
 import classNames from "classnames";
@@ -16,14 +16,42 @@ import ReactPlayer from "react-player"
 import { Link } from "react-router-dom";
 import TourPackage from "./TourPackage";
 import TourLogCard from "./TourLogCard";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
+import EmojiDisplay from "./EmojiDisplay";
+import { useReaction } from "@src/contexts/Reaction";
+import toast from "react-hot-toast";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
+    const queryClient = useQueryClient();
+    const { add } = useReaction()
+
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [showHighlights, setShowHighlights] = useState(false)
     const [showPlaces, setShowPlaces] = useState(false)
     const startDate = formatDate(tour.start_at)
     const finishDate = formatDate(tour.finish_at)
     const lateSaleDate = formatDate(tour.last_sell_at)
+
+    const tourReactions = useQuery<TourReactionDataType, Error>({
+        queryKey: ['tour-reactions', tour.id],
+        queryFn: () => getReactionToTour({ id: tour.id })
+    })
+
+    const reactionSummary = getTopEmojiReactionsWithSummary(tourReactions.data?.data ?? [], 12)
+
+    const handleEmojiSelect = (value: string) => {
+        addReactionToTour({ id: tour.id, emoji: value })
+            .then((res) => {
+                queryClient.invalidateQueries({ queryKey: ['tour-reactions', tour.id] })
+                if (res.data.added) {
+                    add({ emoji: value })
+                }
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+    }
 
     return (
         <div className="container mx-auto px-10 pt-5 pb-16">
@@ -66,6 +94,14 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     </div>
                                 ))}
                             </Carousel>
+                        </div>
+                        <div className="w-full">
+                            <div className="p-5 card flex-row items-center gap-3 bg-accent/20">
+                                <EmojiDisplay reactionSummary={reactionSummary} handleEmojiSelect={handleEmojiSelect} />
+                                {reactionSummary.topReactions.length < 5 && (
+                                    <div className="text-sm text-base-content/50">Give a reaction to let others know how you feel...</div>
+                                )}
+                            </div>
                         </div>
                         <div className="grid grid-cols-1 gap-5">
                             <div className="title text-2xl font-semibold flex items-center gap-3">

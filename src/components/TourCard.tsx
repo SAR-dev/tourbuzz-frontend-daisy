@@ -1,6 +1,5 @@
-import { BookmarkIcon, FaceSmileIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
+import { BookmarkIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
 import ImageLoader from "./ImageLoader";
-import EmojiSelect from "./EmojiSelect";
 import { Link } from "react-router-dom";
 import { TourListType } from "@src/types/tour";
 import { countDaysAndNights, formatDate, getTopEmojiReactionsWithSummary, parsePrice, splitUniqueList } from "@src/functions/helpers";
@@ -9,6 +8,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import toast from "react-hot-toast";
 import { useReaction } from "@src/contexts/Reaction";
+import EmojiDisplay from "./EmojiDisplay";
 
 const TourCard = ({ tour }: { tour: TourListType }) => {
     const queryClient = useQueryClient();
@@ -24,7 +24,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
         queryFn: () => getReactionToTour({ id: tour.id })
     })
 
-    const reactionSummary = getTopEmojiReactionsWithSummary(tourReactions.data?.data ?? [], 5)
+    const reactionSummary = getTopEmojiReactionsWithSummary(tourReactions.data?.data ?? [], 8)
 
     const handleEmojiSelect = (value: string) => {
         addReactionToTour({ id: tour.id, emoji: value })
@@ -54,35 +54,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                             </div>
                         </div>
                         <div className="absolute bottom-0 m-2">
-                            <div className="flex gap-1">
-                                <EmojiSelect
-                                    button={
-                                        <button className="reaction-badge w-7 p-0">
-                                            <FaceSmileIcon className="h-5 w-5" />
-                                        </button>
-                                    }
-                                    setEmoji={handleEmojiSelect}
-                                />
-                                {reactionSummary.topReactions.map((e, i) => (
-                                    <button
-                                        className={classNames({
-                                            "reaction-badge": true,
-                                            "ring-2 ring-inset ring-info": e.reacted
-                                        })}
-                                        onClick={() => handleEmojiSelect(e.emoji)}
-                                        key={i}
-                                    >
-                                        <span>{e.emoji}</span>
-                                        <span>{e.count}</span>
-                                    </button>
-                                ))}
-                                {reactionSummary.remainingCountSum > 0 && (
-                                    <button className="reaction-badge">
-                                        <span>+</span>
-                                        <span>{reactionSummary.remainingCountSum}</span>
-                                    </button>
-                                )}
-                            </div>
+                            <EmojiDisplay reactionSummary={reactionSummary} handleEmojiSelect={handleEmojiSelect} />
                         </div>
                     </div>
                     <div className="flex flex-col justify-between">

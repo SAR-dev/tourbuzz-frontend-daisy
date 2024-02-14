@@ -1,4 +1,4 @@
-import { EmojiReactionType } from "@src/types/reaction";
+import { EmojiReactionType, EmojiSummaryType } from "@src/types/reaction";
 
 export function slugToText(slug: string) {
     // Replace hyphens and underscores with spaces and split the string into words
@@ -112,7 +112,7 @@ export function dateDifferenceInDays(date1: Date, date2: Date): number {
     return Math.ceil(differenceMs / (1000 * 3600 * 24));
 }
 
-export function getTopEmojiReactionsWithSummary(reactions: EmojiReactionType[], n: number) {
+export function getTopEmojiReactionsWithSummary(reactions: EmojiReactionType[], n: number): EmojiSummaryType {
     // Sort the reactions based on whether they are reacted, and then by count in descending order
     const sortedReactions = reactions.sort((a, b) => {
         // If both reactions are reacted or both are not reacted, sort by count
