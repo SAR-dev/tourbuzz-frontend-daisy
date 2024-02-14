@@ -4,7 +4,7 @@ import ImageLoader from './ImageLoader'
 import Carousel from './Carousel'
 import { useState } from 'react'
 import classNames from 'classnames'
-import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 
 const TourLogCard = ({ tour_log, start_date }: { tour_log: TourLogType, start_date: Date }) => {
     const [isOpen, setIsOpen] = useState(false)
