@@ -15,6 +15,7 @@ import { useState } from "react"
 import ReactPlayer from "react-player"
 import { Link } from "react-router-dom";
 import TourPackage from "./TourPackage";
+import TourLogCard from "./TourLogCard";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
@@ -112,7 +113,15 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                             <MarkdownRenderer md_text={tour.md_desc} />
                         </div>
 
-                        {/* Tour Logs */}
+                        <div className="grid grid-cols-1 gap-5">
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
+                                📒 Day By Day Itinerary
+                            </div>
+                            {tour.tour_logs.map((tour_log, i) => (
+                                <TourLogCard tour_log={tour_log} start_date={tour.start_at} key={i} />
+                            ))}
+                        </div>
 
                         <div className="grid grid-cols-1 gap-5">
                             <div className="title text-2xl font-semibold flex items-center gap-3">
@@ -168,17 +177,15 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 <Title>Packages</Title>
                             </div>
                             <div>
-                                <div>
-                                    <TabList tabs={tour.packages.map(e => {
-                                        return {
-                                            name: e.title,
-                                            children: <TourPackage pac={e} />
-                                        }
-                                    })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
-                                    <button className="btn btn-accent w-full mt-2">
-                                        Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
-                                    </button>
-                                </div>
+                                <TabList tabs={tour.packages.map(e => {
+                                    return {
+                                        name: e.title,
+                                        children: <TourPackage pac={e} />
+                                    }
+                                })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+                                <button className="btn btn-accent w-full mt-2">
+                                    Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
+                                </button>
                             </div>
                         </div>
                     </div>

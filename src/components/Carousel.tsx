@@ -1,11 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import classNames from 'classnames';
 import { Children, RefObject, cloneElement, createRef, useEffect, useState, ReactNode } from 'react';
 
-const Carousel = ({ children }: { children: ReactNode }) => {
+const Carousel = ({ children, smallButton }: { children: ReactNode, smallButton?: boolean }) => {
     const [itemRefs, setItemRefs] = useState<RefObject<HTMLDivElement>[]>([]);
     const [activeIndex, setActiveIndex] = useState(0);
 
-    useEffect(() => { 
+    useEffect(() => {
         setItemRefs((prevRefs) => {
             const newRefs: RefObject<HTMLDivElement>[] = Array(Children.count(children))
                 .fill(null)
@@ -34,8 +35,8 @@ const Carousel = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <div className="relative group">
-            <div className="carousel w-full">
+        <div className="relative group h-full">
+            <div className="carousel w-full h-full">
                 {Children.map(children, (child, i) => {
                     return cloneElement(child as React.ReactElement, {
                         key: i,
@@ -45,12 +46,24 @@ const Carousel = ({ children }: { children: ReactNode }) => {
                 })}
             </div>
             <div className="absolute top-0 right-0 h-full flex items-center">
-                <button className='btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2' onClick={goNext}>
+                <button
+                    className={classNames({
+                        'btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2': true,
+                        'btn-sm': smallButton
+                    })}
+                    onClick={goNext}
+                >
                     <ChevronRightIcon className='h-5 w-5' />
                 </button>
             </div>
             <div className="absolute top-0 left-0 h-full flex items-center">
-                <button className='btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2' onClick={goPrev}>
+                <button
+                    className={classNames({
+                        'btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2': true,
+                        'btn-sm': smallButton
+                    })}
+                    onClick={goPrev}
+                >
                     <ChevronLeftIcon className='h-5 w-5' />
                 </button>
             </div>

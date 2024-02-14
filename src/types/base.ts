@@ -164,7 +164,7 @@ export interface TourLogType {
     hotels_id: number
     title: string;
     description: string;
-    date: string;
+    date: Date;
     image_ids: string;
     created_at: Date;
     updated_at: Date;

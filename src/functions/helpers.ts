@@ -94,3 +94,18 @@ export function parrseToNDigit(value: number, digits: number){
 export function parsePrice(price: number){
     return (new Intl.NumberFormat('en-US')).format(price)
 }
+
+export function dateDifferenceInDays(date1: Date, date2: Date): number {
+    date1 = new Date(date1);
+    date2 = new Date(date2);
+
+    // Convert both dates to milliseconds
+    const date1Ms = date1.getTime();
+    const date2Ms = date2.getTime();
+
+    // Calculate the difference in milliseconds
+    const differenceMs = Math.abs(date2Ms - date1Ms);
+
+    // Convert the difference to days
+    return Math.ceil(differenceMs / (1000 * 3600 * 24));
+}

@@ -102,7 +102,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                 </button>
                             </div>
                         </div>
-                        <div className="bg-orange-200 text-black p-10 card rounded-l-none rounded-t-none">
+                        <div className="bg-orange-200/20 p-10 card rounded-l-none rounded-t-none">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
                                     <div>💰 Starting from <b>{parsePrice(Math.min.apply(Math, tour.package_prices_list))} TK</b>. {tour.package_prices_list.length} packages available.</div>
