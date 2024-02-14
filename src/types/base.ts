@@ -153,6 +153,8 @@ export interface PackageType {
     excluded: string
     conditions: string
     price: number;
+    bkash_link: string;
+    nagad_link: string;
     created_at: Date;
     updated_at: Date;
 }
