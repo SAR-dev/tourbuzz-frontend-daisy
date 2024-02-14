@@ -11,7 +11,7 @@ const EmojiDisplay = ({
     handleEmojiSelect: (props: string) => void
 }) => {
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-2">
             <EmojiSelect
                 button={
                     <button className="reaction-badge w-7 p-0">
@@ -23,8 +23,8 @@ const EmojiDisplay = ({
             {reactionSummary.topReactions.map((e, i) => (
                 <button
                     className={classNames({
-                        "reaction-badge": true,
-                        "ring-1 ring-inset ring-info": e.reacted
+                        "reaction-badge outline outline-1 outline-base-100": true,
+                        "border-2 border-info/50": e.reacted
                     })}
                     onClick={() => handleEmojiSelect(e.emoji)}
                     key={i}
