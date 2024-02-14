@@ -1,43 +1,46 @@
 import { EnvelopeOpenIcon, LinkIcon, PhoneIcon } from "@heroicons/react/24/outline";
+import { constants } from "@src/stores/constantStore";
+import { OrganizerType } from "@src/types/base";
+import OrganizerVerification from "./OrganizerVerification";
 
-const OrganizerCard = () => {
+const OrganizerCard = ({ organizer }: { organizer: OrganizerType }) => {
     return (
         <div className="card border border-base-300 p-3 relative">
             <div className="absolute top-0 left-0 -m-5">
-                <div className="rounded-full border bg-base-100 border-base-300 p-2 relative">
+                <div className="rounded-full border bg-base-100 border-base-300 p-2">
                     <img
-                        src="https://daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+                        src={organizer.avatar?.optimized_url}
                         alt=""
                         className="h-20 w-20 object-cover rounded-full"
                     />
-                    <div className="absolute bottom-0 right-0 text-3xl">
-                        🥇
-                    </div>
                 </div>
             </div>
             <div className="pl-20">
-                <div className="title font-semibold text-xl leading-6">Qrio</div>
-                <div>Never Give Up On Yourself</div>
+                <div className="title font-semibold text-xl leading-6">{organizer.name}</div>
+                <div>{organizer.slogan}</div>
             </div>
             <div className="p-5 flex flex-col gap-4">
                 <div className="line-clamp-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla reiciendis,
-                    officia sed vero ipsa suscipit? Asperiores voluptatum sequi minus! Voluptas voluptatum
-                    atque officiis deleniti voluptates, neque reprehenderit quam officia!
+                    {organizer.description}
                 </div>
                 <div className="flex">
-                    <button className="btn btn-xs btn-ghost">
+                    <a href={`mailto:${organizer.email}`} className="btn btn-xs btn-ghost">
                         <EnvelopeOpenIcon className="h-4 w-4" />
                         Email
-                    </button>
-                    <button className="btn btn-xs btn-ghost">
+                    </a>
+                    <a href={`tel:${organizer.contact_no}`} className="btn btn-xs btn-ghost">
                         <PhoneIcon className="h-4 w-4" />
                         Phone
-                    </button>
-                    <button className="btn btn-xs btn-ghost">
+                    </a>
+                    <a href={organizer.social_link} className="btn btn-xs btn-ghost">
                         <LinkIcon className="h-4 w-4" />
                         Website
-                    </button>
+                    </a>
+                    <OrganizerVerification organizer={organizer}>
+                        <button className="btn btn-xs btn-ghost">
+                            {constants.ORGANIZER_MEDAL[organizer.verification as keyof typeof constants.ORGANIZER_MEDAL]}
+                        </button>
+                    </OrganizerVerification>
                 </div>
             </div>
         </div>

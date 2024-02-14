@@ -66,7 +66,7 @@ export interface WriterType {
     website: string
     created_at: Date;
     updated_at: Date;
-    avatar: ImageType | null
+    avatar: ImageType
 }
 
 export interface ArticleType {

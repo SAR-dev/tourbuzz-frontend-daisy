@@ -1,6 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
-import ArticleCard from "@src/components/ArticleCard"
 import Carousel from "@src/components/Carousel"
 import ImageLoader from "@src/components/ImageLoader"
 import MarkdownRenderer from "@src/components/MarkdownRenderer"
@@ -8,7 +7,6 @@ import TabList from "@src/components/TabList"
 import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
 import { formatDate, getTopEmojiReactionsWithSummary, parrseToNDigit, parsePrice } from "@src/functions/helpers";
-import { constants } from "@src/stores/constantStore"
 import { TourType } from "@src/types/base";
 import classNames from "classnames";
 import { useState } from "react"
@@ -17,10 +15,11 @@ import { Link } from "react-router-dom";
 import TourPackage from "./TourPackage";
 import TourLogCard from "./TourLogCard";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
+import { ReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
 import EmojiDisplay from "./EmojiDisplay";
 import { useReaction } from "@src/contexts/Reaction";
 import toast from "react-hot-toast";
+import OrganizerVerification from "./OrganizerVerification";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const queryClient = useQueryClient();
@@ -33,7 +32,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     const finishDate = formatDate(tour.finish_at)
     const lateSaleDate = formatDate(tour.last_sell_at)
 
-    const tourReactions = useQuery<TourReactionDataType, Error>({
+    const tourReactions = useQuery<ReactionDataType, Error>({
         queryKey: ['tour-reactions', tour.id],
         queryFn: () => getReactionToTour({ id: tour.id })
     })
@@ -68,17 +67,11 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     {tour.organizer.name}
                                 </Link>.
                                 This organizer is {tour.organizer.verification} verified.
-                                <div className="dropdown dropdown-end">
-                                    <div tabIndex={0} role="button" className="btn btn-circle btn-ghost btn-xs text-info">
+                                <OrganizerVerification organizer={tour.organizer}>
+                                    <button className="btn btn-circle btn-ghost btn-xs text-info">
                                         <InformationCircleIcon className="h-4 w-4" />
-                                    </div>
-                                    <div tabIndex={0} className="card compact dropdown-content z-[1] shadow bg-base-100 border border-base-300 w-96">
-                                        <div tabIndex={0} className="card-body">
-                                            <h2 className="card-title">{tour.organizer.verification}</h2>
-                                            <p className="text-sm">{constants.ORGANIZER_LEVEL[tour.organizer.verification as keyof typeof constants.ORGANIZER_LEVEL]}</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </button>
+                                </OrganizerVerification>
                             </div>
                         </div>
                         <div className="card h-[30rem] overflow-hidden">
@@ -95,13 +88,11 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 ))}
                             </Carousel>
                         </div>
-                        <div className="w-full">
-                            <div className="p-5 card flex-row items-center gap-3 bg-accent/20">
-                                <EmojiDisplay reactionSummary={reactionSummary} handleEmojiSelect={handleEmojiSelect} />
-                                {reactionSummary.topReactions.length < 5 && (
-                                    <div className="text-sm text-base-content/50">Give a reaction to let others know how you feel...</div>
-                                )}
-                            </div>
+                        <div className="w-full flex gap-3 items-center">
+                            <EmojiDisplay reactionSummary={reactionSummary} handleEmojiSelect={handleEmojiSelect} minimal />
+                            {reactionSummary.topReactions.length < 5 && (
+                                <div className="text-sm text-base-content/50">Give a reaction to let others know how you feel...</div>
+                            )}
                         </div>
                         <div className="grid grid-cols-1 gap-5">
                             <div className="title text-2xl font-semibold flex items-center gap-3">
@@ -198,6 +189,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                         <div>
                             <div className="pb-5 mb-5 border-b border-base-300">
                                 <Title>Summary</Title>
+                                <div>Key details regarding the tour</div>
                             </div>
                             <div className="border border-base-300 card grid grid-cols-3 divide-y divide-base-300">
                                 <div className="p-2 col-span-1 font-semibold border-r border-base-300">📅 Start Date</div><div className="p-2 col-span-2">{startDate.month_name} {startDate.day}, {startDate.year} ({startDate.weekday.slice(0, 3)})</div>
@@ -211,6 +203,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                         <div>
                             <div className="pb-5 mb-5 border-b border-base-300">
                                 <Title>Packages</Title>
+                                <div>Unveil Our Range of Enchanting Tour Packages</div>
                             </div>
                             <div>
                                 <TabList tabs={tour.packages.map(e => {
@@ -223,31 +216,6 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="pt-10 mt-10 border-t border-base-300 w-full">
-                <div className="grid grid-cols-1 gap-16">
-                    <div className="w-full">
-                        <div className="mb-10">
-                            <Title>Articles from Same Author</Title>
-                        </div>
-                        <div className="grid grid-cols-3 gap-8">
-                            <ArticleCard />
-                            <ArticleCard />
-                            <ArticleCard />
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <div className="mb-10">
-                            <Title>Similar Articles</Title>
-                        </div>
-                        <div className="grid grid-cols-3 gap-8">
-                            <ArticleCard />
-                            <ArticleCard />
-                            <ArticleCard />
                         </div>
                     </div>
                 </div>

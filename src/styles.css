@@ -17,6 +17,11 @@
   justify-content: flex-end;
 }
 
+.__react_modal_image__medium_img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
 @keyframes wave-animation {
   0% {
     transform: rotate(0deg);

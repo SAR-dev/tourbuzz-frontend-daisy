@@ -3,7 +3,7 @@ import ImageLoader from "./ImageLoader";
 import { Link } from "react-router-dom";
 import { TourListType } from "@src/types/tour";
 import { countDaysAndNights, formatDate, getTopEmojiReactionsWithSummary, parsePrice, splitUniqueList } from "@src/functions/helpers";
-import { TourReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
+import { ReactionDataType, addReactionToTour, getReactionToTour } from "@src/api/reaction";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import toast from "react-hot-toast";
@@ -19,7 +19,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
     const finishAt = formatDate(tour.finish_at);
     const districtNames = splitUniqueList(tour.district_names_list, 3)
 
-    const tourReactions = useQuery<TourReactionDataType, Error>({
+    const tourReactions = useQuery<ReactionDataType, Error>({
         queryKey: ['tour-reactions', tour.id],
         queryFn: () => getReactionToTour({ id: tour.id })
     })
@@ -61,7 +61,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                         <div className="card flex-row px-10 py-5">
                             <div className="w-full">
                                 <div className="flex items-start">
-                                    <Link to={`/tours/${tour.slug}`} className="title text-2xl font-semibold line-clamp-2 hover:text-info">
+                                    <Link to={`/tours/${tour.slug}`} className="title text-2xl font-semibold line-clamp-2 hover:text-teal-500 duration-100">
                                         {tour.title}
                                     </Link>
                                     <div className="flex items-center font-semibold">
@@ -84,8 +84,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="border-t border-base-300 w-full"></div>
-                        <div className="card justify-center px-10 py-5">
+                        <div className="card justify-center px-10 py-5 bg-orange-200/20 rounded-t-none rounded-l-none">
                             <div className="flex justify-between items-end">
                                 <div className="flex flex-col gap-1">
                                     <div>💰 Starting from <b>{parsePrice(Math.min.apply(Math, tour.package_prices_list))} TK</b>. {tour.package_prices_list.length} packages available.</div>

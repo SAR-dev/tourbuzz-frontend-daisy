@@ -101,15 +101,14 @@ export function dateDifferenceInDays(date1: Date, date2: Date): number {
     date1 = new Date(date1);
     date2 = new Date(date2);
 
-    // Convert both dates to milliseconds
-    const date1Ms = date1.getTime();
-    const date2Ms = date2.getTime();
+    const date1WithoutTime = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const date2WithoutTime = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
 
     // Calculate the difference in milliseconds
-    const differenceMs = Math.abs(date2Ms - date1Ms);
+    const differenceMs = Math.abs(date1WithoutTime.getTime() - date2WithoutTime.getTime());
 
-    // Convert the difference to days
-    return Math.ceil(differenceMs / (1000 * 3600 * 24));
+    // Convert the difference back to days and return
+    return Math.round(differenceMs / (1000 * 60 * 60 * 24)) + 1;
 }
 
 export function getTopEmojiReactionsWithSummary(reactions: EmojiReactionType[], n: number): EmojiSummaryType {

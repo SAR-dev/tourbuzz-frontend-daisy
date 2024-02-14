@@ -1,18 +1,20 @@
+import { HotelType } from "@src/types/base";
 import ImageLoader from "./ImageLoader";
 
-const HotelCard = () => {
+const HotelCard = ({ hotel }: { hotel: HotelType }) => {
     return (
         <div className="card border border-base-300 relative">
             <ImageLoader
-                src="https://morrisonhotelgallery.com/cdn/shop/products/diltz_Doors_MorrisonHotel.jpg?v=1629240651"
+                src={hotel.avatar.optimized_url}
+                modalSrc={hotel.avatar.source_url}
                 className="h-48 w-full object-cover card rounded-b-none"
             />
             <div className="flex flex-col gap-1 p-3">
-                <div className="title text-xl font-semibold">Hotel Transylvania</div>
-                <div>🚩 Moulovibazar, Sylhet</div>
+                <div className="title text-xl font-semibold">{hotel.name}</div>
+                <div>🚩 {hotel.district.name}, {hotel.district.division.name}</div>
                 <div className="grid grid-cols-2">
-                <div>🚀 <span className="link link-hover">Google Map</span></div>
-                <div>🔗 <span className="link link-hover">Website</span></div>
+                    <div>🚀 <a href={hotel.map_link} target="_blank" className="link link-hover">Google Map</a></div>
+                    <div>🔗 <a href={hotel.website} target="_blank" className="link link-hover">Website</a></div>
                 </div>
             </div>
         </div>

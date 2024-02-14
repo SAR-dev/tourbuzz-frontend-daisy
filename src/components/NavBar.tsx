@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SignInButton from "./SignInButton";
 import ThemeSwitcher from "./ThemeSwitcher";
 
@@ -7,10 +8,10 @@ const NavBar = () => {
             <div className="container mx-auto px-10">
                 <nav className="navbar">
                     <div className="navbar-start">
-                        <div className="text-xl font-semibold">🤖 TourBuzz</div>
+                        <Link to="/" className="text-xl font-semibold">🤖 TourBuzz</Link>
                     </div>
                     <div className="navbar-center flex">
-                        <ul className="menu menu-horizontal px-1 font-semibold">
+                        <ul className="menu menu-horizontal px-1 gap-1 font-semibold">
                             <li><a>Tours</a></li>
                             <li><a>Organizers</a></li>
                             <li><a>Hotels</a></li>
@@ -18,7 +19,7 @@ const NavBar = () => {
                             <li><a>Articles</a></li>
                         </ul>
                     </div>
-                    <div className="navbar-end">
+                    <div className="navbar-end gap-1">
                         <ThemeSwitcher />
                         <SignInButton />
                     </div>

@@ -1,4 +1,8 @@
 import { ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline"
+import { ArticleListDataType, getLatestArticles } from "@src/api/article"
+import { HotelListDataType, getRandomHotels } from "@src/api/hotel"
+import { OrganizerListDataType, getRandomOrganizers } from "@src/api/organizer"
+import { PlaceListDataType, getPopularPlaces } from "@src/api/place"
 import { TourListDataType, getUpcomingTours } from "@src/api/tour"
 import ArticleCard from "@src/components/ArticleCard"
 import HotelCard from "@src/components/HotelCard"
@@ -31,6 +35,28 @@ const Home = () => {
   const upcomingTours = useQuery<TourListDataType, Error>({
     queryKey: ['upcoming-tours'],
     queryFn: () => getUpcomingTours()
+  })
+
+  const latestArticles = useQuery<ArticleListDataType, Error>({
+    queryKey: ['latest-articles'],
+    queryFn: () => getLatestArticles({ count: 3 })
+  })
+
+  const randomHotels = useQuery<HotelListDataType, Error>({
+    queryKey: ['random-hotels'],
+    queryFn: () => getRandomHotels({ count: 4 }),
+    refetchOnWindowFocus: false
+  })
+
+  const popularPlaces = useQuery<PlaceListDataType, Error>({
+    queryKey: ['popular-places'],
+    queryFn: () => getPopularPlaces({ count: 6 }),
+  })
+
+  const randomOrganizers = useQuery<OrganizerListDataType, Error>({
+    queryKey: ['random-organizers'],
+    queryFn: () => getRandomOrganizers({ count: 6 }),
+    refetchOnWindowFocus: false
   })
 
   return (
@@ -102,57 +128,57 @@ const Home = () => {
             </section>
           )}
 
-          <section>
-            <div className="mb-10">
-              <Title to="/hotels">Relaxation and Dining Destinations 🛏️</Title>
-            </div>
-            <div className="grid grid-cols-4 gap-8">
-              <HotelCard />
-              <HotelCard />
-              <HotelCard />
-              <HotelCard />
-            </div>
-          </section>
+          {randomHotels.data && (
+            <section>
+              <div className="mb-10">
+                <Title to="/hotels">Relaxation and Dining Destinations 🛏️</Title>
+              </div>
+              <div className="grid grid-cols-4 gap-8">
+                {randomHotels.data.data.map((hotel, i) => (
+                  <HotelCard hotel={hotel} key={i} />
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section>
-            <div className="mb-10">
-              <Title to="/places">Where to next 🥳 ?</Title>
-            </div>
-            <div className="grid grid-cols-6 gap-8">
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-            </div>
-          </section>
+          {popularPlaces.data && (
+            <section>
+              <div className="mb-10">
+                <Title to="/places">Where to next 🥳 ?</Title>
+              </div>
+              <div className="grid grid-cols-6 gap-8">
+                {popularPlaces.data.data.map((place, i) => (
+                  <PlaceCard place={place} key={i} />
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section>
-            <div className="mb-10">
-              <Title to="/articles">Fresh ideas for fun 🤯</Title>
-            </div>
-            <div className="grid grid-cols-3 gap-8">
-              <ArticleCard />
-              <ArticleCard />
-              <ArticleCard />
-            </div>
-          </section>
+          {latestArticles.data && (
+            <section>
+              <div className="mb-10">
+                <Title to="/articles">Fresh ideas for fun 🤯</Title>
+              </div>
+              <div className="grid grid-cols-3 gap-8">
+                {latestArticles.data.data.map((article, i) => (
+                  <ArticleCard article={article} key={i} />
+                ))}
+              </div>
+            </section>
+          )}
 
-          <section>
-            <div className="mb-10">
-              <Title to="/organizers">Tour Organizers 👨‍🚀</Title>
-            </div>
-            <div className="grid grid-cols-3 gap-8">
-              <OrganizerCard />
-              <OrganizerCard />
-              <OrganizerCard />
-              <OrganizerCard />
-              <OrganizerCard />
-              <OrganizerCard />
-            </div>
-          </section>
-
+          {randomOrganizers.data && (
+            <section>
+              <div className="mb-10">
+                <Title to="/organizers">Tour Organizers 👨‍🚀</Title>
+              </div>
+              <div className="grid grid-cols-3 gap-8">
+                {randomOrganizers.data.data.map((organizer, i) => (
+                  <OrganizerCard organizer={organizer} key={i} />
+                ))}
+              </div>
+            </section>
+          )}
           {/* <section>
             <div className="mb-10">
               <Title to="/tours">Recently Completed Tours 🎫</Title>
