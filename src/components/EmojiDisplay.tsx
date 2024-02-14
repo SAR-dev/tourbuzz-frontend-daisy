@@ -23,7 +23,7 @@ const EmojiDisplay = ({
             {reactionSummary.topReactions.map((e, i) => (
                 <button
                     className={classNames({
-                        "reaction-badge outline outline-1 outline-base-100": true,
+                        "reaction-badge outline outline-1 outline-base-100/50": true,
                         "border-2 border-info/50": e.reacted
                     })}
                     onClick={() => handleEmojiSelect(e.emoji)}
