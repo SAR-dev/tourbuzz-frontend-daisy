@@ -17,7 +17,7 @@ const ArticleCard = ({ article }: { article: ArticleType }) => {
         queryFn: () => getReactionToArticle({ id: article.id })
     })
 
-    const reactionSummary = getTopEmojiReactionsWithSummary(articleReactions.data?.data ?? [], 6)
+    const reactionSummary = getTopEmojiReactionsWithSummary(articleReactions.data?.data ?? [], 5)
 
     const handleEmojiSelect = (value: string) => {
         addReactionToArticle({ id: article.id, emoji: value })

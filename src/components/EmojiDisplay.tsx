@@ -39,7 +39,7 @@ const EmojiDisplay = ({
             ))}
             {reactionSummary.remainingCountSum > 0 && (
                 <button className="reaction-badge border border-base-300">
-                    <span>+</span>
+                    <span>➕</span>
                     <span>{reactionSummary.remainingCountSum}</span>
                 </button>
             )}

@@ -14,10 +14,10 @@ export const constants = {
         LEVEL5: "Tour organizers at this level undergo fundamental checks to ensure they are legitimate businesses or individuals. This typically includes verifying their contact information, business registration (if applicable), and basic background screening.",
     },
     ORGANIZER_MEDAL: {
-        LEVEL1: "⚙️ LV 1",
-        LEVEL2: "🛡️ LV 2",
-        LEVEL3: "⚡ LV 3",
-        LEVEL4: "🌟 LV 4",
-        LEVEL5: "💎 LV 5",
+        LEVEL1: "⚙️ LEVEL 1",
+        LEVEL2: "🛡️ LEVEL 2",
+        LEVEL3: "⚡ LEVEL 3",
+        LEVEL4: "🌟 LEVEL 4",
+        LEVEL5: "💎 LEVEL 5",
     }
 }
