@@ -1,4 +1,5 @@
 import { TourDataType, getTourBySlug } from "@src/api/tour"
+import ErrorPage from "@src/components/ErrorPage";
 import TourDetails from "@src/components/TourDetails";
 import NavLayout from "@src/layouts/NavLayout"
 import { useQuery } from "@tanstack/react-query"
@@ -10,6 +11,10 @@ const Tour = () => {
         queryKey: ['tour', slug],
         queryFn: () => getTourBySlug({ slug })
     })
+
+    if(tour.isError){
+        return <ErrorPage error={tour.error} />
+    }
 
     return (
         <NavLayout>
