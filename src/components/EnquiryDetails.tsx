@@ -1,57 +1,113 @@
+import { postUserEnquiry } from '@src/api/enquiry';
+import { useNotification } from '@src/contexts/Notification';
+import { NotificationType } from '@src/enums/NotificationType';
+import { formatDate, parrseToNDigit } from '@src/functions/helpers';
 import { EnquiryType } from '@src/types/base'
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
+import { MessageChatbot } from "tabler-icons-react"
 
-const ChatBubbleLeft = () => (
-    <div className="flex gap-3 mr-auto">
-        <div className="w-10 flex-shrink-0">
-            <img src="https://i.pravatar.cc/300" className='h-10 w-10 rounded-full object-cover' />
-        </div>
-        <div className="flex flex-col gap-2">
-            <div className="card p-3 bg-base-200 rounded-tl-none">
-                <div className="whitespace-pre-line">
-                    Tailwind is a utility-first css framework.
+const EnquiryChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
+    const createdAt = formatDate(enquiry.created_at)
+    const answeredAt = enquiry.answered_at ? formatDate(enquiry.answered_at) : null
+
+    return (
+        <li className="mb-10 ms-6">
+            <span className="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent/20 ring-8 ring-base-200">
+                📣
+            </span>
+            <div className="block text-sm font-normal leading-none text-base-content/80">
+                {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
+            </div>
+            <div className="mt-2 mb-4">
+                <div className='font-semibold'>
+                    {enquiry.question}
                 </div>
             </div>
-            <div className='text-base-content/80 text-sm text-left'>11:12 PM</div>
-        </div>
-    </div>
-)
-
-const ChatBubbleRight = () => (
-    <div className="flex gap-3 ml-auto">
-        <div className="flex flex-col gap-2">
-            <div className="card p-3 bg-accent text-accent-content rounded-tr-none">
-                <div className="whitespace-pre-line">
-                    Tailwind is a utility-first css framework.
-                </div>
+            <div className='flex flex-col gap-2'>
+                {answeredAt && (
+                    <div className="flex gap-2 tems-center text-sm font-normal leading-none text-base-content/80">
+                        <MessageChatbot className='h-6 w-6' />
+                        <div>
+                            {parrseToNDigit(answeredAt.day, 2)} {answeredAt.month_name.slice(0, 3)} {answeredAt.year} {parrseToNDigit(answeredAt.hour, 2)}:{parrseToNDigit(answeredAt.minute, 2)}
+                        </div>
+                    </div>
+                )}
+                {enquiry.answer ? (
+                    <div className="text-base font-normal text-base-content/80">{enquiry.answer}</div>
+                ) : (
+                    <div className="bg-base-200 border border-base-300 card py-2 px-3 text-sm w-fit">
+                        Answer is pending from admin....
+                    </div>
+                )}
             </div>
-            <div className='text-base-content/80 text-sm text-right'>11:12 PM</div>
-        </div>
-        <div className="w-10 flex-shrink-0">
-            <img src="https://i.pravatar.cc/300" className='h-10 w-10 rounded-full object-cover' />
-        </div>
-    </div>
-)
+        </li>
+    )
+}
 
 const EnquiryDetails = ({ enquiries }: { enquiries: EnquiryType[] }) => {
+    const queryClient = useQueryClient()
+    const notification = useNotification()
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [question, setQuestion] = useState<string>("")
+
+    const addEnquiry = () => {
+        if (question.length <= 10) {
+            toast.error("Question must be minimum 10 characters length");
+            return;
+        }
+        setIsLoading(false)
+        postUserEnquiry({ question })
+            .then(() => {
+                setQuestion("")
+                notification.add({
+                    title: "Enquiry Submitted",
+                    message: "Your enquiry has been submitted. An admin soon return to you. It might take 1-2 days depending on type of question. Please wait.",
+                    status: NotificationType.SUCCESS
+                })
+                queryClient.invalidateQueries({ queryKey: ["enquiries"] })
+            })
+            .catch(err => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
     return (
         <div className="container mx-auto px-10 pt-5 pb-16">
             <div>
                 <div className='title font-semibold text-2xl'>Welcome to the Admin Chat Room!</div>
                 <div>Whether you have questions, feedback, or need assistance, our admin team is ready to assist you. Let's chat! 🚀</div>
             </div>
-            <div className="card w-full p-3 border border-base-300 my-5">
-                <div className='h-96 w-full custom-scrollbar overflow-y-auto'>
-                    <div className="grid grid-cols-1 gap-3">
-                        <ChatBubbleLeft />
-                        <ChatBubbleRight />
+            <div className="w-full mb-5 mt-10">
+                <div className="pl-5 max-w-[50rem]">
+                    <ol className="relative border-s border-base-300">
+                        {enquiries.map((enquiry, i) => (
+                            <EnquiryChatBubble enquiry={enquiry} key={i} />
+                        ))}
+                    </ol>
+                </div>
+                <div className='max-w-[50rem]'>
+                    <div className="flex w-full gap-5">
+                        <TextareaAutosize
+                            className='textarea textarea-bordered w-full'
+                            placeholder='Start typing enquiry...'
+                            onChange={e => setQuestion(e.target.value)}
+                            value={question}
+                            disabled={isLoading}
+                        />
+                        <button className="btn btn-info w-42 flex-shrink-0" disabled={isLoading} onClick={addEnquiry}>
+                            {isLoading && (
+                                <div className="loading h-5 w-5" />
+                            )}
+                            Send Message
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <div className="flex w-full gap-5">
-                <TextareaAutosize className='textarea textarea-bordered w-full' placeholder='Start typing...' />
-                <button className="btn btn-info">Send Message</button>
             </div>
         </div>
     )

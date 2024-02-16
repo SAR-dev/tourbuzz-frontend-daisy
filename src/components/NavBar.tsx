@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import SignInButton from "./SignInButton";
 import ThemeSwitcher from "./ThemeSwitcher";
+import NavChatMenu from "./NavChatMenu";
 
 const NavBar = () => {
     return (
@@ -20,6 +21,7 @@ const NavBar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end gap-1">
+                        <NavChatMenu />
                         <ThemeSwitcher />
                         <SignInButton />
                     </div>

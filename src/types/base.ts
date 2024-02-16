@@ -121,12 +121,12 @@ export interface EnquiryListType {
 export interface EnquiryType {
     id: number
     users_id: number
-    contact_no?: string
     question: string
     answer?: string
-    answered_at: string
+    answered_at?: Date
     created_at: Date;
     updated_at: Date;
+    user: UserType
 }
 
 export interface PlaceType {
