@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { postUserEnquiry } from '@src/api/enquiry';
 import { useNotification } from '@src/contexts/Notification';
 import { NotificationType } from '@src/enums/NotificationType';
@@ -7,7 +8,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
-import { MessageChatbot } from "tabler-icons-react"
 
 const EnquiryChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
     const createdAt = formatDate(enquiry.created_at)
@@ -15,31 +15,42 @@ const EnquiryChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
 
     return (
         <li className="mb-10 ms-6">
-            <span className="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent/20 ring-8 ring-base-200">
-                📣
-            </span>
-            <div className="block text-sm font-normal leading-none text-base-content/80">
-                {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
+            <div className="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full bg-accent/20 ring-8 ring-base-200">
+                {answeredAt ? (
+                    <CheckCircleIcon className='h-6 w-6 text-success' />
+                ) : <div className='loading h-6' />}
             </div>
-            <div className="mt-2 mb-4">
-                <div className='font-semibold'>
-                    {enquiry.question}
+            <div className="flex flex-col gap-1 mb-3">
+                <div className="card flex flex-row gap-2 bg-base-200 border border-base-300 p-3 text-sm w-fit">
+                    <div className='h-6 w-6 flex-shrink-0'>
+                        <img className='h-6 w-6 object-cover rounded-full' src={enquiry.user.avatar?.thumbnail_url} alt="" />
+                    </div>
+                    <div>
+                        {enquiry.question}
+                    </div>
+                </div>
+                <div className="text-xs text-base-content/80">
+                    {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
                 </div>
             </div>
-            <div className='flex flex-col gap-2'>
-                {answeredAt && (
-                    <div className="flex gap-2 items-center text-sm font-normal leading-none text-base-content/80">
-                        <MessageChatbot className='h-6 w-6' />
-                        <div>
-                            {parrseToNDigit(answeredAt.day, 2)} {answeredAt.month_name.slice(0, 3)} {answeredAt.year} {parrseToNDigit(answeredAt.hour, 2)}:{parrseToNDigit(answeredAt.minute, 2)}
-                        </div>
-                    </div>
-                )}
+            <div className="flex flex-col gap-1">
                 {enquiry.answer ? (
-                    <div className="text-base font-normal text-base-content/80">{enquiry.answer}</div>
+                    <>
+                        <div className="card flex flex-row gap-2 bg-base-200 border border-base-300 p-3 text-sm w-fit">
+                            <div className='h-6 w-6 flex-shrink-0'>
+                                <div className='text-xl'>🤗</div>
+                            </div>
+                            <div>
+                                {enquiry.answer}
+                            </div>
+                        </div>
+                        <div className="text-xs text-base-content/80">
+                            {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
+                        </div>
+                    </>
                 ) : (
-                    <div className="bg-base-200 border border-base-300 card py-2 px-3 text-sm w-fit">
-                        Answer is pending from admin....
+                    <div className="text-sm w-fit text-warning">
+                        😴 Answer is pending from admin....
                     </div>
                 )}
             </div>
