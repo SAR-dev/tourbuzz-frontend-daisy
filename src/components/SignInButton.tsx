@@ -11,11 +11,14 @@ import { useQuery } from '@tanstack/react-query';
 import { UserDataType, getLoggedInUser } from '@src/api/user';
 import DropdownSelect from './DropDownSelect';
 import { useSignInModalStore } from '@src/stores/signInModalStore';
+import { useNavigate } from 'react-router-dom';
 
 const SignInButton = () => {
     const notification = useNotification()
+    const navigate = useNavigate()
     const { isLoggedIn, setToken } = useAuthStore()
     const { isOpenSignIn, setIsOpenSignIn, disableClose } = useSignInModalStore();
+
     const [isLoading, setIsLoading] = useState(false)
     const [isMailSent, setIsMailSent] = useState(false)
 
@@ -119,6 +122,7 @@ const SignInButton = () => {
                     }
                     options={[
                         { text: user.data?.data.name ?? "User Profile", value: user.data?.data.name ?? "", icon: <div className='mr-1'>😎</div> },
+                        { text: "Enquiry", value: "enquiry", handleClick: () => navigate("/chat/enquiry"), icon: <div className='mr-1'>📣</div> },
                         { text: "Sign Out", value: "sign-out", handleClick: handleSignOut, icon: <div className='mr-1'>👋</div> },
                     ]}
                 />
