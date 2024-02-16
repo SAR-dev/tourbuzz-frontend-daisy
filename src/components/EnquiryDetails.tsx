@@ -28,7 +28,7 @@ const EnquiryChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
             </div>
             <div className='flex flex-col gap-2'>
                 {answeredAt && (
-                    <div className="flex gap-2 tems-center text-sm font-normal leading-none text-base-content/80">
+                    <div className="flex gap-2 items-center text-sm font-normal leading-none text-base-content/80">
                         <MessageChatbot className='h-6 w-6' />
                         <div>
                             {parrseToNDigit(answeredAt.day, 2)} {answeredAt.month_name.slice(0, 3)} {answeredAt.year} {parrseToNDigit(answeredAt.hour, 2)}:{parrseToNDigit(answeredAt.minute, 2)}
