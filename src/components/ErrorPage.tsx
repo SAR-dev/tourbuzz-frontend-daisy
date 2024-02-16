@@ -8,7 +8,7 @@ const ErrorPage = ({ error }: { error: Error }) => {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
-    const statusCode = error.response.status;
+    const statusCode = error.response.status || 404;
 
     return (
         <NavLayout>
@@ -16,8 +16,9 @@ const ErrorPage = ({ error }: { error: Error }) => {
                 <div>
                     <p className="text-sm font-medium text-info">{statusCode} error</p>
                     <h1 className="mt-3 font-semibold text-3xl">{httpStatus.getStatusText(statusCode)}</h1>
-                    <p className="mt-4 text-base-content/75">Sorry, We are facing problem showing this page. Please try again later.</p>
-
+                    <p className="mt-4 text-base-content/75">
+                        Sorry, We are facing problem showing this page. Please try again later.
+                    </p>
                     <div className="flex items-center mt-6 gap-x-3">
                         <button onClick={() => navigate(-1)} className="btn btn-outline border-base-300">
                             <ArrowLeftIcon className='h-5 w-5' />

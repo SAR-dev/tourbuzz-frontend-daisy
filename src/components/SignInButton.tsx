@@ -10,11 +10,12 @@ import { useAuthStore } from '@src/stores/authStore';
 import { useQuery } from '@tanstack/react-query';
 import { UserDataType, getLoggedInUser } from '@src/api/user';
 import DropdownSelect from './DropDownSelect';
+import { useSignInModalStore } from '@src/stores/signInModalStore';
 
 const SignInButton = () => {
     const notification = useNotification()
     const { isLoggedIn, setToken } = useAuthStore()
-    const [isOpen, setIsOpen] = useState(false)
+    const { isOpenSignIn, setIsOpenSignIn, disableClose } = useSignInModalStore();
     const [isLoading, setIsLoading] = useState(false)
     const [isMailSent, setIsMailSent] = useState(false)
 
@@ -82,6 +83,7 @@ const SignInButton = () => {
             })
             .finally(() => {
                 setIsLoading(false)
+                setIsOpenSignIn(false)
             })
     }
 
@@ -125,8 +127,8 @@ const SignInButton = () => {
     } else {
         return (
             <div>
-                <button className="btn" onClick={() => setIsOpen(true)}>Sign In</button>
-                <Modal title={isMailSent ? 'Sign In' : 'Get Magic Token'} closeButton isOpen={isOpen} setIsOpen={setIsOpen} maxWidth='25rem'>
+                <button className="btn" onClick={() => setIsOpenSignIn(true)}>Sign In</button>
+                <Modal title="Sign In to continue" closeButton={!disableClose} isOpen={isOpenSignIn} setIsOpen={setIsOpenSignIn} maxWidth='25rem'>
                     {!isMailSent && (
                         <div className="flex flex-col gap-3 pt-5 pb-10">
                             <input type="text" placeholder="Email Address" className="input input-bordered w-full" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} />
@@ -138,7 +140,7 @@ const SignInButton = () => {
                                     {isLoading && (
                                         <div className="loading h-5 w-5" />
                                     )}
-                                    Sumbit Email
+                                    Get Magic Token
                                 </button>
                                 <button className="btn btn-info btn-square" disabled={isLoading} onClick={() => setIsMailSent(true)}>
                                     <ChevronRightIcon className='h-5 w-5' />

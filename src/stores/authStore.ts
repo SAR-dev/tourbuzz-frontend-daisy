@@ -17,11 +17,12 @@ export const useAuthStore = create<AuthStore>()(
                 set(() => ({ token: value }))
             },
             isLoggedIn: () => {
-                const token = get().token;
-                if(!token) return false;
-                const decoded: JwtPayload = jwtDecode(token)
+                const authToken = get().token;
+                if(!authToken) return false;
+                const decoded: JwtPayload = jwtDecode(authToken)
+                const now = Math.floor(Date.now() / 1000);
                 if(!decoded.exp || !decoded.iat) return false;
-                if(decoded.exp <= decoded.iat) return false;
+                if(decoded.exp <= now) return false;
                 return true;
             }
         }), {

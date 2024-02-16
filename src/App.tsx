@@ -11,6 +11,8 @@ import Tour from "./pages/tours/Tour";
 import MainLightBox from "./components/MainLightBox";
 import MainToaster from "./components/MainToaster";
 import ErrorFallback from "./components/ErrorFallback";
+import Enquiry from "./pages/chat/Enquiry";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient()
 
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
     path: "/tours/:slug",
     element: <Tour />,
   },
+  {
+    path: "/chat/enquiry",
+    element: <Enquiry />
+  },
+  {
+    path: "*",
+    element: <NotFound />
+  }
 ]);
 
 export default App

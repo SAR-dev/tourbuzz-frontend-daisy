@@ -11,7 +11,9 @@ import PlaceCard from "@src/components/PlaceCard"
 import Title from "@src/components/Title"
 import TourCard from "@src/components/TourCard"
 import NavLayout from "@src/layouts/NavLayout"
+import { constants } from "@src/stores/constantStore"
 import { useQuery } from "@tanstack/react-query"
+import { Link } from "react-router-dom"
 
 const PromotionPoint = ({
   icon,
@@ -179,15 +181,6 @@ const Home = () => {
               </div>
             </section>
           )}
-          {/* <section>
-            <div className="mb-10">
-              <Title to="/tours">Recently Completed Tours 🎫</Title>
-            </div>
-            <div className="grid grid-cols-1 gap-8">
-              <TourCard />
-              <TourCard />
-            </div>
-          </section> */}
 
           <section>
             <div className="bg-info text-info-content p-10 card flex flex-row items-center gap-5">
@@ -199,14 +192,14 @@ const Home = () => {
                 </div>
               </div>
               <div className="flex gap-3">
-                <button className="btn">
+                <Link to="/chat/enquiry" className="btn">
                   Chat with Us
                   <ChatBubbleLeftRightIcon className="h-5 w-5" />
-                </button>
-                <button className="btn">
+                </Link>
+                <a href={constants.ADMIN_HELP_MAIL_MAILTO_LINK} className="btn">
                   Send Email
                   <PaperAirplaneIcon className="h-5 w-5" />
-                </button>
+                </a>
               </div>
             </div>
           </section>

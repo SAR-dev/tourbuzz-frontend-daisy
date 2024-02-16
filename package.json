@@ -30,6 +30,7 @@
     "react-modal-image": "^2.6.0",
     "react-player": "^2.14.1",
     "react-router-dom": "^6.21.3",
+    "react-textarea-autosize": "^8.5.3",
     "rehype-external-links": "^3.0.0",
     "remark-emoji": "^4.0.1",
     "remark-gfm": "^4.0.0",
