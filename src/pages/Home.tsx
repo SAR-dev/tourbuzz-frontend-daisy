@@ -41,18 +41,18 @@ const Home = () => {
 
   const latestArticles = useQuery<ArticleListDataType, Error>({
     queryKey: ['latest-articles'],
-    queryFn: () => getLatestArticles({ count: 3 })
+    queryFn: () => getLatestArticles({ count: 6 })
   })
 
   const randomHotels = useQuery<HotelListDataType, Error>({
     queryKey: ['random-hotels'],
-    queryFn: () => getRandomHotels({ count: 4 }),
+    queryFn: () => getRandomHotels({ count: 8 }),
     refetchOnWindowFocus: false
   })
 
   const popularPlaces = useQuery<PlaceListDataType, Error>({
     queryKey: ['popular-places'],
-    queryFn: () => getPopularPlaces({ count: 6 }),
+    queryFn: () => getPopularPlaces({ count: 12 }),
   })
 
   const randomOrganizers = useQuery<OrganizerListDataType, Error>({

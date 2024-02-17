@@ -31,3 +31,14 @@ export const getTourBySlug = ({ slug }: { slug: string }): Promise<TourDataType>
             throw err;
         });
 }
+
+export const getTourByPlaceId = ({ id }: { id: number }): Promise<TourListDataType> => {
+    return api
+        .get(`/guest/tours/place/${id}`)
+        .then((res) => {
+            return { data: res.data };
+        })
+        .catch((err) => {
+            throw err;
+        });
+}

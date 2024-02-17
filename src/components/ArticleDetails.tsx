@@ -40,19 +40,14 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                 <div className="col-span-2">
                     <div className="grid grid-cols-1 gap-8">
                         <div>
-                            <div className="bg-base-300 font-medium px-2.5 py-0.5 card inline-flex">
-                                {article.category}
-                            </div>
-                        </div>
-                        <div>
                             <Title>{article.title}</Title>
                             <div>{article.subtitle}</div>
                         </div>
-                        <div className="card overflow-hidden">
+                        <div className="card h-[30rem] overflow-hidden">
                             <Carousel>
                                 {article.images.map((image, i) => (
                                     <div className="carousel-item w-full" key={i}>
-                                        <ImageLoader src={image.optimized_url} modalSrc={image.source_url} className="w-full h-[30rem] object-cover" />
+                                        <ImageLoader src={image.optimized_url} modalSrc={image.source_url} className="w-full object-cover" />
                                     </div>
                                 ))}
                             </Carousel>
@@ -76,6 +71,14 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                             <div className='whitespace-pre-line'>
                                 {article.summary}
                             </div>
+                            <div className="flex gap-2 mt-5">
+                                {article.category.split(",").map((e, i) => (
+                                    <div className="bg-base-300 font-medium px-2.5 py-0.5 card inline-flex" key={i}>
+                                        {e.trim()}
+                                    </div>
+                                ))}
+                            </div>
+
                         </div>
 
                         <div>

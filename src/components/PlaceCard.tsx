@@ -1,3 +1,4 @@
+import { trimStringToNChars } from "@src/functions/helpers";
 import { PlaceType } from "@src/types/base";
 import { Link } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const PlaceCard = ({place}:{place: PlaceType}) => {
                     {place.name}
                 </h1>
                 <p className="opacity-0 text-white text-sm group-hover:opacity-80 transform duration-500">
-                    {place.description}
+                    {trimStringToNChars(place.description,100)}
                 </p>
             </div>
         </Link>

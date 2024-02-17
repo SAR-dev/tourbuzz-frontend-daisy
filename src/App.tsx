@@ -13,6 +13,7 @@ import MainToaster from "./components/MainToaster";
 import ErrorFallback from "./components/ErrorFallback";
 import Enquiry from "./pages/chat/Enquiry";
 import NotFound from "./pages/NotFound";
+import Place from "./pages/places/Place";
 
 const queryClient = new QueryClient()
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: "/tours/:slug",
     element: <Tour />,
+  },
+  {
+    path: "/places/:id",
+    element: <Place />,
   },
   {
     path: "/chat/enquiry",

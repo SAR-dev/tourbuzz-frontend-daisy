@@ -130,3 +130,11 @@ export function getTopEmojiReactionsWithSummary(reactions: EmojiReactionType[], 
     
     return { topReactions, remainingCountSum };
 }
+
+export function trimStringToNChars(str: string, n: number): string {
+    if (str.length <= n) {
+        return str;
+    } else {
+        return str.slice(0, n) + '...';
+    }
+}
