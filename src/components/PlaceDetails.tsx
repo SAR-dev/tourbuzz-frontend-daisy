@@ -1,7 +1,6 @@
 import { TourListDataType, getTourByPlaceId } from '@src/api/tour'
 import { PlaceType } from '@src/types/base'
 import { useQuery } from '@tanstack/react-query'
-import React from 'react'
 import Title from './Title'
 import ImageLoader from './ImageLoader'
 import TourCard from './TourCard'
@@ -14,33 +13,53 @@ const PlaceDetails = ({ place }: { place: PlaceType }) => {
 
     return (
         <div className="container mx-auto px-10 pt-5 pb-16">
-            <div className="grid grid-cols-1 gap-8">
-                <section className="flex gap-5">
-                    <div className="w-72 h-48 card flex-shrink-0 overflow-hidden">
-                        <ImageLoader src={place.avatar?.optimized_url} modalSrc={place.avatar?.source_url} className='w-full h-48 object-cover' />
+            <div className="grid grid-cols-3 gap-8">
+                <div className="col-span-2">
+                    <div className="grid grid-cols-1 gap-8">
+                        <div>
+                            <Title>{place.name}</Title>
+                            <div className="flex gap-3">
+                                <div>📌 Location: {place.district.name}, {place.district.division.name}</div>
+                                <div>🚩 Post Code: {place.postal_code}</div>
+                                <div>🔖 Type: {place.type}</div>
+                            </div>
+                        </div>
+                        <div className="card h-[30rem] overflow-hidden">
+                            <ImageLoader src={place.avatar?.optimized_url} modalSrc={place.avatar?.source_url} className="card w-full object-cover" />
+                        </div>
                     </div>
+                </div>
+                <div className="col-span-1">
                     <div>
-                        <Title>{place.name}</Title>
-                        <div className='mt-3 flex flex-col gap-2'>
-                            <div>📌 Location: {place.district.name}, {place.district.division.name}</div>
-                            <div>🚩 Post Code: {place.postal_code}</div>
-                            <div>🔖 Type: {place.type}</div>
-                            <div>🔰 Map: <a className='link-hover' href={place.map_link} target='_blank'>{place.map_link}</a></div>
+                        <div className="pb-5 mb-5 border-b border-base-300">
+                            <Title>Description</Title>
+                        </div>
+                        <div className='whitespace-pre-line'>
+                            {place.description}
+                        </div>
+                        <div className="mt-5">
+                            <a href={place.map_link} target='_blank' className="link">
+                                Visit Google Map
+                            </a>
                         </div>
                     </div>
-                </section>
-                {placeTours.data && (
-                    <section>
-                        <div className="mb-10">
-                            <Title to="/tours">Related Tours</Title>
-                        </div>
-                        <div className="grid grid-cols-1 gap-8">
-                            {placeTours.data.data.map((tour, i) => (
-                                <TourCard tour={tour} key={i} />
-                            ))}
-                        </div>
-                    </section>
-                )}
+                </div>
+                <div className="col-span-3">
+                    <div className="pb-5 mb-5 border-b border-base-300">
+                        <Title>Tours</Title>
+                    </div>
+                    <div className="grid grid-cols-1 gap-5">
+                        {placeTours.data && (
+                            <section>
+                                <div className="grid grid-cols-1 gap-8">
+                                    {placeTours.data.data.map((tour, i) => (
+                                        <TourCard tour={tour} key={i} />
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+                    </div>
+                </div>
             </div>
         </div>
     )

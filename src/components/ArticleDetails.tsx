@@ -60,7 +60,6 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                         </div>
                         <MarkdownRenderer md_text={article.md_desc} />
                     </div>
-
                 </div>
                 <div className="col-span-1">
                     <div className="flex flex-col gap-10 sticky top-[5rem]">
