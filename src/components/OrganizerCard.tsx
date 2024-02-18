@@ -2,6 +2,7 @@ import { EnvelopeOpenIcon, LinkIcon, PhoneIcon } from "@heroicons/react/24/outli
 import { constants } from "@src/stores/constantStore";
 import { OrganizerType } from "@src/types/base";
 import OrganizerVerification from "./OrganizerVerification";
+import { Link } from "react-router-dom";
 
 const OrganizerCard = ({ organizer }: { organizer: OrganizerType }) => {
     return (
@@ -16,7 +17,7 @@ const OrganizerCard = ({ organizer }: { organizer: OrganizerType }) => {
                 </div>
             </div>
             <div className="ml-2 pl-20 pt-5">
-                <div className="title font-semibold text-xl leading-6">{organizer.name}</div>
+                <Link to={`/organizers/${organizer.username}`} className="title font-semibold text-xl leading-6 hover:text-teal-500 duration-100">{organizer.name}</Link>
                 <div>{organizer.slogan}</div>
             </div>
             <div className="p-5 flex flex-col gap-4 h-fill justify-between">

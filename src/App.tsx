@@ -14,6 +14,7 @@ import ErrorFallback from "./components/ErrorFallback";
 import Enquiry from "./pages/chat/Enquiry";
 import NotFound from "./pages/NotFound";
 import Place from "./pages/places/Place";
+import Organizer from "./pages/organizers/Organizer";
 
 const queryClient = new QueryClient()
 
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/places/:id",
     element: <Place />,
+  },
+  {
+    path: "/organizers/:username",
+    element: <Organizer />,
   },
   {
     path: "/chat/enquiry",
