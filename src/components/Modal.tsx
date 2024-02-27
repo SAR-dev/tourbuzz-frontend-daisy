@@ -9,7 +9,8 @@ const Modal = ({
     children,
     footer,
     maxWidth = "30rem",
-    closeButton
+    closeButton,
+    onClose = () => {}
 }: {
     isOpen: boolean,
     setIsOpen: (props: boolean) => void,
@@ -17,11 +18,18 @@ const Modal = ({
     children: ReactNode,
     maxWidth?: string,
     closeButton?: boolean,
-    footer?: ReactNode
+    footer?: ReactNode,
+    onClose?: () => void
 }) => {
+
+    const handleClose = () => {
+        onClose()
+        setIsOpen(false)
+    }
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={() => { }}>
+            <Dialog as="div" className="relative z-10" onClose={() => {}}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -52,7 +60,7 @@ const Modal = ({
                                 >
                                     <div className='text-lg font-semibold'>{title}</div>
                                     {closeButton && (
-                                        <button className="btn btn-square btn-sm bg-base-100" onClick={() => setIsOpen(false)}>
+                                        <button className="btn btn-square btn-sm bg-base-100" onClick={handleClose}>
                                             <XMarkIcon className='h-5 w-5' />
                                         </button>
                                     )}

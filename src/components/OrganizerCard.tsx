@@ -33,7 +33,7 @@ const OrganizerCard = ({ organizer }: { organizer: OrganizerType }) => {
                         <PhoneIcon className="h-4 w-4" />
                         Phone
                     </a>
-                    <a href={organizer.social_link} className="btn btn-xs border border-base-300 btn-ghost">
+                    <a href={organizer.social_link} target="_blank" className="btn btn-xs border border-base-300 btn-ghost">
                         <LinkIcon className="h-4 w-4" />
                         Website
                     </a>

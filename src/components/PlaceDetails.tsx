@@ -48,6 +48,11 @@ const PlaceDetails = ({ place }: { place: PlaceType }) => {
                     <div className="pb-5 mb-5 border-b border-base-300">
                         <Title>Tours</Title>
                     </div>
+                    {placeTours.data && placeTours.data.data.length === 0 && (
+                        <div className='text-info'>
+                            🥺 No results found
+                        </div>
+                    )}
                     <div className="grid grid-cols-1 gap-5">
                         {placeTours.data && (
                             <section>

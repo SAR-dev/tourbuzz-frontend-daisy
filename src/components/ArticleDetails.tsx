@@ -9,6 +9,8 @@ import { ReactionDataType, addReactionToArticle, getReactionToArticle } from '@s
 import { getTopEmojiReactionsWithSummary } from '@src/functions/helpers'
 import toast from 'react-hot-toast'
 import EmojiDisplay from './EmojiDisplay'
+import CommentList from './CommentList'
+import { CommentListDataType, getCommentsByArticleId } from '@src/api/comment'
 
 const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const queryClient = useQueryClient();
@@ -17,6 +19,11 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const articleReactions = useQuery<ReactionDataType, Error>({
         queryKey: ['article-reactions', article.id],
         queryFn: () => getReactionToArticle({ id: article.id })
+    })
+
+    const articleComments = useQuery<CommentListDataType, Error>({
+        queryKey: ['article-comments', article.id],
+        queryFn: () => getCommentsByArticleId({ id: article.id })
     })
 
     const reactionSummary = getTopEmojiReactionsWithSummary(articleReactions.data?.data ?? [], 5)
@@ -59,6 +66,9 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                             )}
                         </div>
                         <MarkdownRenderer md_text={article.md_desc} />
+                        {articleComments.data && (
+                            <CommentList comments={articleComments.data.data} />
+                        )}
                     </div>
                 </div>
                 <div className="col-span-1">

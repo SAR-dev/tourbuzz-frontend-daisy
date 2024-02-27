@@ -22,7 +22,7 @@ const Enquiry = () => {
             setDisableClose(true)
             setIsOpenSignIn(true)
         }
-    }, [isLoggedIn])
+    }, [isLoggedIn, setDisableClose, setIsOpenSignIn])
 
     if(enquiries.isError){
         return <ErrorPage error={enquiries.error} />

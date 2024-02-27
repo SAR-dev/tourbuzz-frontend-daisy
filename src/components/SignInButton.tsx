@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from './Modal'
 import { sendMagicLink, verifyToken } from '@src/api/auth'
 import { constants } from '@src/stores/constantStore';
@@ -7,13 +7,14 @@ import { useNotification } from '../contexts/Notification';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { AuthTokenType } from './../types/token';
 import { useAuthStore } from '@src/stores/authStore';
-import { useQuery } from '@tanstack/react-query';
-import { UserDataType, getLoggedInUser } from '@src/api/user';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { UserDataType, getLoggedInUser, updateLoggedInUser } from '@src/api/user';
 import DropdownSelect from './DropDownSelect';
 import { useSignInModalStore } from '@src/stores/signInModalStore';
 import { useNavigate } from 'react-router-dom';
 
 const SignInButton = () => {
+    const queryClient = useQueryClient()
     const notification = useNotification()
     const navigate = useNavigate()
     const { isLoggedIn, setToken } = useAuthStore()
@@ -21,15 +22,27 @@ const SignInButton = () => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [isMailSent, setIsMailSent] = useState(false)
+    const [nameNotSet, setNameNotSet] = useState(false)
 
     const [email, setEmail] = useState("");
     const [magicToken, setMagicToken] = useState("")
+    const [name, setName] = useState("")
 
     const user = useQuery<UserDataType, Error>({
         queryKey: ['me'],
         queryFn: () => getLoggedInUser(),
         enabled: isLoggedIn()
     })
+
+    useEffect(() => {
+        if (user.data) {
+            if (!user.data.data.name || user.data.data.name.length < 1) {
+                setNameNotSet(true)
+            } else {
+                setNameNotSet(false)
+            }
+        }
+    }, [user])
 
     const handleEmailSubmit = () => {
         if (!constants.REGEX_PATTERN.EMAIL.test(email)) {
@@ -90,6 +103,30 @@ const SignInButton = () => {
             })
     }
 
+    const handleNameChange = () => {
+        setIsLoading(true)
+        updateLoggedInUser({ name })
+            .then((res) => {
+                if (res.error) {
+                    notification.add({
+                        title: "Error Occured",
+                        message: "There was an error updating name.",
+                        status: NotificationType.ERROR
+                    })
+                } else {
+                    notification.add({
+                        title: "Name updated",
+                        message: "Thank you for letting us know your name. From now on we will call you " + name + ".",
+                        status: NotificationType.INFO
+                    })
+                    queryClient.invalidateQueries({ queryKey: ["me"] })
+                }
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
+
     const signOut = () => {
         setToken(null)
         localStorage.clear()
@@ -111,6 +148,15 @@ const SignInButton = () => {
         })
     }
 
+    const handleClose = () => {
+        if (disableClose) {
+            setIsOpenSignIn(false)
+            navigate(-1)
+        } else {
+            setIsOpenSignIn(false)
+        }
+    }
+
     if (isLoggedIn()) {
         return (
             <div>
@@ -126,13 +172,23 @@ const SignInButton = () => {
                         { text: "Sign Out", value: "sign-out", handleClick: handleSignOut, icon: <div className='mr-1'>👋</div> },
                     ]}
                 />
+                <Modal isOpen={nameNotSet} setIsOpen={setNameNotSet} title='What should we call you ?'>
+                    <div className='flex flex-col gap-5 pb-5'>
+                        <input type="text" placeholder="Type your nickname..." className="input input-bordered w-full" disabled={isLoading} value={name} onChange={e => setName(e.target.value)} />
+                        <button className='btn btn-info' disabled={isLoading} onClick={handleNameChange}>
+                            {isLoading && (
+                                <div className="loading h-5 w-5" />
+                            )}
+                            Submit</button>
+                    </div>
+                </Modal>
             </div>
         )
     } else {
         return (
             <div>
                 <button className="btn" onClick={() => setIsOpenSignIn(true)}>Sign In</button>
-                <Modal title="Sign In to continue" closeButton={!disableClose} isOpen={isOpenSignIn} setIsOpen={setIsOpenSignIn} maxWidth='25rem'>
+                <Modal title="Sign In to continue" closeButton onClose={handleClose} isOpen={isOpenSignIn} setIsOpen={setIsOpenSignIn} maxWidth='25rem'>
                     {!isMailSent && (
                         <div className="flex flex-col gap-3 pt-5 pb-10">
                             <input type="text" placeholder="Email Address" className="input input-bordered w-full" disabled={isLoading} value={email} onChange={e => setEmail(e.target.value)} />

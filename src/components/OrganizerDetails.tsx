@@ -35,9 +35,9 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                         </div>
                         <div className="mt-5">
                             <div className="flex flex-col gap-3">
-                                {/* email */}
-                                {/* verification */}
-                                {/* contact no */}
+                                <div><b>Email: </b> {organizer.email}</div>
+                                <div><b>Contact No: </b> {organizer.contact_no}</div>
+                                <div><b>Verification: </b> {organizer.verification}</div>
                                 <a href={organizer.social_link} target='_blank' className="link">
                                     Visit Social Site
                                 </a>
@@ -49,6 +49,11 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                     <div className="pb-5 mb-5 border-b border-base-300">
                         <Title>Tours</Title>
                     </div>
+                    {organizerTours.data && organizerTours.data.data.length === 0 && (
+                        <div className='text-info'>
+                            🥺 No results found
+                        </div>
+                    )}
                     <div className="grid grid-cols-1 gap-5">
                         {organizerTours.data && (
                             <section>

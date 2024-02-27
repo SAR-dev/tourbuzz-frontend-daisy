@@ -87,7 +87,7 @@ export interface ArticleType {
 
 export interface UserType {
     id: number
-    email: number
+    email: string
     username: string
     name: string
     images_id: number
