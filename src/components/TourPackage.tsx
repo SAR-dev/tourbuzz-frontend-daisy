@@ -28,6 +28,7 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
     const handleOpenIndex = (index: number) => {
         setOpenIndex(index === openIndex ? null : index)
     }
+    
     return (
         <div>
             <div className="join join-vertical w-full">

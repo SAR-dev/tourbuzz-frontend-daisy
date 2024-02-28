@@ -60,7 +60,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const { run } = useDebounceFn(
         () => {
             if (commentsRef.current) {
-                commentsRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+                commentsRef.current.scrollIntoView({ behavior: "smooth", block: commentLimit === 0 ? "start" : "end", inline: "end" });
             }
         },
         {
@@ -114,7 +114,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                             <Title>{article.title}</Title>
                             <div>{article.subtitle}</div>
                         </div>
-                        <div className="card h-[30rem] overflow-hidden">
+                        <div className="card h-[30rem] border border-gray-200 overflow-hidden">
                             <Carousel>
                                 {article.images.map((image, i) => (
                                     <div className="carousel-item w-full" key={i}>
@@ -133,7 +133,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                         <div ref={commentsRef}>
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="title text-2xl font-semibold">
-                                    Threads ({articleComments.data?.data ? articleComments.data.data.length : 0})
+                                    Discussion Threads ({articleComments.data?.data ? articleComments.data.data.length : 0})
                                 </h2>
                             </div>
                             <div className="mb-6">

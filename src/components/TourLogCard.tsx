@@ -5,6 +5,7 @@ import Carousel from './Carousel'
 import { useState } from 'react'
 import classNames from 'classnames'
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import { Link } from 'react-router-dom'
 
 const TourLogCard = ({ tour_log, start_date }: { tour_log: TourLogType, start_date: Date }) => {
     const [isOpen, setIsOpen] = useState(false)
@@ -13,7 +14,7 @@ const TourLogCard = ({ tour_log, start_date }: { tour_log: TourLogType, start_da
     return (
         <div className='card p-3 gap-3 border border-base-300'>
             <div className="flex gap-5">
-                <div className="card h-48 w-64 flex-shrink-0 overflow-hidden sticky top-[5rem]">
+                <div className="card h-52 w-64 flex-shrink-0 overflow-hidden sticky top-[5rem]">
                     <Carousel smallButton>
                         {tour_log.images.map((image, i) => (
                             <div className="carousel-item h-full w-full" key={i}>
@@ -24,8 +25,11 @@ const TourLogCard = ({ tour_log, start_date }: { tour_log: TourLogType, start_da
                 </div>
                 <div className='w-full flex flex-col gap-2'>
                     <div className="flex justify-between text-base-content/75">
-                        <div>Day {parrseToNDigit(dateDifferenceInDays(start_date, tour_log.date), 2)}</div>
-                        <div>{parrseToNDigit(date.day, 2)} {date.month_name.slice(0, 3)}, {date.year}</div>
+                        <div>Day {parrseToNDigit(dateDifferenceInDays(start_date, tour_log.date), 2)} . {parrseToNDigit(date.day, 2)} {date.month_name.slice(0, 3)}, {date.year}</div>
+                        <div className="flex gap-2 items-center">
+                            <div>🛏️</div>
+                            <a className='link link-hover' href={tour_log.hotel.website} target='_blank'>{tour_log.hotel.name}</a>
+                        </div>
                     </div>
                     <div className="font-semibold title">{tour_log.title}</div>
                     <div className={classNames({
@@ -34,6 +38,16 @@ const TourLogCard = ({ tour_log, start_date }: { tour_log: TourLogType, start_da
                     })}>
                         {tour_log.description}
                     </div>
+                    {isOpen && (
+                        <div className="mt-3">
+                            <div className="font-semibold title">Destinations</div>
+                            <div className="flex gap-3 mt-1">
+                                {tour_log.places.map((place, i) => (
+                                    <Link className='btn btn-sm' to={`/places/${place.id}`} key={i}>📍 {place.name}</Link>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                     {!isOpen && (
                         <button className="btn btn-sm" onClick={() => setIsOpen(true)}>
                             Expand

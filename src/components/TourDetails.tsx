@@ -74,7 +74,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 </OrganizerVerification>
                             </div>
                         </div>
-                        <div className="card h-[30rem] overflow-hidden">
+                        <div className="card h-[30rem] border border-gray-300 overflow-hidden">
                             <Carousel>
                                 {tour.video_link.length > 0 && (
                                     <div className="carousel-item w-full h-[30rem]">
@@ -153,6 +153,14 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                         <div className="grid grid-cols-1 gap-5">
                             <div className="title text-2xl font-semibold flex items-center gap-3">
                                 <div className="h-full w-2 card bg-accent" />
+                                🧐 Frequently Asked Questions
+                            </div>
+                            <MarkdownRenderer md_text={tour.faq} />
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-5">
+                            <div className="title text-2xl font-semibold flex items-center gap-3">
+                                <div className="h-full w-2 card bg-accent" />
                                 🚙 Pickup Locations and Guidelines
                             </div>
                             <MarkdownRenderer md_text={tour.start_ins} />
@@ -164,14 +172,6 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 🤝 Dropoff Locations and Guidelines
                             </div>
                             <MarkdownRenderer md_text={tour.finish_ins} />
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-5">
-                            <div className="title text-2xl font-semibold flex items-center gap-3">
-                                <div className="h-full w-2 card bg-accent" />
-                                🧐 Frequently Asked Questions
-                            </div>
-                            <MarkdownRenderer md_text={tour.faq} />
                         </div>
 
                         <div className="grid grid-cols-1 gap-5">
@@ -206,12 +206,16 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 <div>Unveil Our Range of Enchanting Tour Packages</div>
                             </div>
                             <div>
-                                <TabList tabs={tour.packages.map(e => {
-                                    return {
-                                        name: e.title,
-                                        children: <TourPackage pac={e} />
-                                    }
-                                })} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+                                <TabList
+                                    tabs={tour.packages.map(e => {
+                                        return {
+                                            name: e.title,
+                                            children: <TourPackage pac={e} />
+                                        }
+                                    })}
+                                    selectedIndex={selectedIndex}
+                                    setSelectedIndex={setSelectedIndex}
+                                />
                                 <button className="btn btn-accent w-full mt-2">
                                     Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
                                 </button>
