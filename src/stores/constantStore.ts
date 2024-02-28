@@ -20,5 +20,8 @@ export const constants = {
         LEVEL4: "🌟 LEVEL 4",
         LEVEL5: "💎 LEVEL 5",
     },
-    ADMIN_HELP_MAIL_MAILTO_LINK: "mailto:tourbuzz.help@gmail.com?subject=Assistance%20Needed%20with%20TourBuzz%20Platform"
+    ADMIN_HELP_MAIL_MAILTO_LINK: "mailto:tourbuzz.help@gmail.com?subject=Assistance%20Needed%20with%20TourBuzz%20Platform",
+    COMMENT_LIMIT: {
+        ARTICLE: 5
+    }
 }

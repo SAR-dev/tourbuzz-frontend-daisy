@@ -11,10 +11,13 @@ import toast from 'react-hot-toast'
 import EmojiDisplay from './EmojiDisplay'
 import CommentList from './CommentList'
 import { CommentListDataType, getCommentsByArticleId } from '@src/api/comment'
+import { useState } from 'react'
+import { constants } from '@src/stores/constantStore'
 
 const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const queryClient = useQueryClient();
     const { add } = useReaction()
+    const [commentLimit, setCommentLimit] = useState(constants.COMMENT_LIMIT.ARTICLE)
 
     const articleReactions = useQuery<ReactionDataType, Error>({
         queryKey: ['article-reactions', article.id],
@@ -22,8 +25,8 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
     })
 
     const articleComments = useQuery<CommentListDataType, Error>({
-        queryKey: ['article-comments', article.id],
-        queryFn: () => getCommentsByArticleId({ id: article.id })
+        queryKey: ['article-comments', article.id, commentLimit],
+        queryFn: () => getCommentsByArticleId({ id: article.id, limit: commentLimit })
     })
 
     const reactionSummary = getTopEmojiReactionsWithSummary(articleReactions.data?.data ?? [], 5)
@@ -67,7 +70,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                         </div>
                         <MarkdownRenderer md_text={article.md_desc} />
                         {articleComments.data && (
-                            <CommentList comments={articleComments.data.data} />
+                            <CommentList comments={articleComments.data.data} limit={commentLimit} setLimit={setCommentLimit} />
                         )}
                     </div>
                 </div>
@@ -114,7 +117,6 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

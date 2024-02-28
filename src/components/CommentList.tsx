@@ -1,73 +1,60 @@
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline"
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid"
+import { formatDate, parrseToNDigit } from "@src/functions/helpers"
+import { constants } from "@src/stores/constantStore"
 import { CommentType } from "@src/types/comment"
 import TimeAgo from 'react-timeago'
 
-const Comment = ({ comment }: { comment: CommentType }) => {
-    // const replies = useQuery<UserDataType, Error>({
-    //     queryKey: ['me'],
-    //     queryFn: () => getLoggedInUser(),
-    //     enabled: isLoggedIn()
-    // })
-
+const TreeComment = ({ comment }: { comment: CommentType }) => {
+    const formattedDate = formatDate(comment.created_at)
     return (
-        <div className="grid grid-cols-1 gap-6 pt-6">
-            <article>
-                <footer className="flex justify-between items-center mb-2">
-                    <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm font-semibold">
-                            <img
-                                className="mr-2 w-6 h-6 rounded-full"
-                                src={comment.author.avatar?.thumbnail_url}
-                            />
-                            {comment.author.name}
-                        </p>
-                        <p className="text-sm text-base-content/70">
-                            <TimeAgo date={comment.created_at} />
-                        </p>
+        <li className="group">
+            <div className="relative pb-8">
+                <span
+                    className="absolute left-3 top-5 h-full w-0.5 bg-base-300 group-hover:bg-base-content/50"
+                    aria-hidden="true"
+                />
+                <div className="relative flex items-start space-x-3">
+                    <div>
+                        <div className="relative px-1">
+                            <div className="ring-2 ring-offset-2 ring-blue-500 rounded-full">
+                                <img
+                                    src={comment.author.avatar?.optimized_url}
+                                    className="h-5 w-5 rounded-full object-cover"
+                                    alt=""
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <button className="btn btn-ghost btn-xs">
-                        <EllipsisHorizontalIcon className="h-6 w-6" />
-                    </button>
-                </footer>
-                <p>
-                    {comment.details}
-                </p>
-                <div className="flex items-center mt-4 space-x-4">
-                    <button className="flex gap-2 items-center text-sm font-medium text-base-content/70">
-                        <ChatBubbleLeftEllipsisIcon className="h-4 w-4" />
-                        Replies ({comment.child_count})
-                    </button>
+                    <div className="flex flex-col gap-2">
+                        <div className="flex gap-1 items-center text-sm">
+                            <div className="font-medium">Sayed Rafi</div>
+                            <div className="text-base-content/70">
+                                <TimeAgo date={comment.created_at} /> at {parrseToNDigit(formattedDate.hour, 2)}:{parrseToNDigit(formattedDate.minute, 2)}
+                            </div>
+                        </div>
+                        <div className="whitespace-pre-line">{comment.details}</div>
+                        <div>
+                            <button className="flex gap-2 items-center text-sm font-medium text-base-content/70">
+                                <ChatBubbleLeftEllipsisIcon className="h-4 w-4" />
+                                Replies ({comment.child_count})
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </article>
-            {/* <article className="mb-3 ml-12">
-                <footer className="flex justify-between items-center mb-2">
-                    <div className="flex items-center">
-                        <p className="inline-flex items-center mr-3 text-sm font-semibold">
-                            <img
-                                className="mr-2 w-6 h-6 rounded-full"
-                                src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                alt="Michael Gough"
-                            />
-                            Michael Gough
-                        </p>
-                        <p className="text-sm text-base-content/70">
-                            Feb. 8, 2022
-                        </p>
-                    </div>
-                    <button className="btn btn-ghost btn-xs">
-                        <EllipsisHorizontalIcon className="h-6 w-6" />
-                    </button>
-                </footer>
-                <p>
-                    Much appreciated! Glad you liked it ☺️
-                </p>
-            </article> */}
-        </div>
+            </div>
+        </li>
     )
 }
 
-const CommentList = ({ comments }: { comments: CommentType[] }) => {
+const CommentList = ({
+    comments,
+    limit,
+    setLimit
+}: {
+    comments: CommentType[],
+    limit: number,
+    setLimit: (props: number) => void
+}) => {
     return (
         <section className="">
             <div className="flex justify-between items-center mb-6">
@@ -86,11 +73,16 @@ const CommentList = ({ comments }: { comments: CommentType[] }) => {
                     Post comment
                 </button>
             </div>
-            <div className="flex flex-col gap-6 divide-y divide-base-300">
+            {(limit !== 0 || comments.length < constants.COMMENT_LIMIT.ARTICLE) ? (
+                <button className="btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => setLimit(0)}>Show previous threads</button>
+            ) : (
+                <button className="btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => setLimit(5)}>Show latest threads</button>
+            )}
+            <ul className="mt-5">
                 {comments.map((e, i) => (
-                    <Comment comment={e} key={i} />
+                    <TreeComment comment={e} key={i} />
                 ))}
-            </div>
+            </ul>
         </section>
     )
 }

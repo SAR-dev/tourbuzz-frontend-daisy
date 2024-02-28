@@ -5,9 +5,13 @@ export interface CommentListDataType {
     data: CommentType[]
 }
 
-export const getCommentsByArticleId = ({ id }: { id: number }): Promise<CommentListDataType> => {
+export const getCommentsByArticleId = ({ id, limit }: { id: number, limit: number }): Promise<CommentListDataType> => {
     return api
-        .get(`/guest/comments/article/${id}/parents`)
+        .get(`/guest/comments/article/${id}/parents`, {
+            params: {
+                limit
+            }
+        })
         .then((res) => {
             return { data: res.data };
         })
