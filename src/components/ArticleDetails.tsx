@@ -10,14 +10,23 @@ import { getTopEmojiReactionsWithSummary } from '@src/functions/helpers'
 import toast from 'react-hot-toast'
 import EmojiDisplay from './EmojiDisplay'
 import CommentList from './CommentList'
-import { CommentListDataType, getCommentsByArticleId } from '@src/api/comment'
-import { useState } from 'react'
+import { CommentListDataType, addCommentByArticleId, getCommentsByArticleId } from '@src/api/comment'
+import { useRef, useState } from 'react'
 import { constants } from '@src/stores/constantStore'
+import { AddCommentType } from '@src/types/comment'
+import useLocalStorageState from 'use-local-storage-state'
+import { useDebounceFn } from 'ahooks'
 
 const ArticleDetails = ({ article }: { article: ArticleType }) => {
+    const commentsRef = useRef<HTMLDivElement>(null);
     const queryClient = useQueryClient();
     const { add } = useReaction()
     const [commentLimit, setCommentLimit] = useState(constants.COMMENT_LIMIT.ARTICLE)
+
+    const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.ARTICLE_COMMENT_STORE_KEY + article.id, {
+        defaultValue: ""
+    })
+    const [isLoading, setIsLoading] = useState(false)
 
     const articleReactions = useQuery<ReactionDataType, Error>({
         queryKey: ['article-reactions', article.id],
@@ -42,6 +51,50 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
             .catch((err) => {
                 toast.error(err.response.data.message)
             })
+    }
+
+    const { run } = useDebounceFn(
+        () => {
+            if (commentsRef.current) {
+                commentsRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+            }
+        },
+        {
+          wait: 500,
+        },
+      );
+
+    const handleCommentSubmit = () => {
+        if (commentDetails.length < 2) return;
+
+        const data: AddCommentType = {
+            reference_id: article.id,
+            parent_id: 0,
+            details: commentDetails
+        }
+        setIsLoading(true)
+        addCommentByArticleId({ data })
+            .then(() => {
+                setCommentDetails("")
+                queryClient.invalidateQueries({ queryKey: ['article-comments', article.id] })
+                run()
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
+
+    const toogleLimit = () => {
+        if(commentLimit === 0){
+            setCommentLimit(constants.COMMENT_LIMIT.ARTICLE)
+            run()
+        } else {
+            setCommentLimit(0)
+            run()
+        }
     }
 
     return (
@@ -69,9 +122,32 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                             )}
                         </div>
                         <MarkdownRenderer md_text={article.md_desc} />
-                        {articleComments.data && (
-                            <CommentList comments={articleComments.data.data} limit={commentLimit} setLimit={setCommentLimit} />
-                        )}
+                        <div ref={commentsRef}>
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="title text-2xl font-semibold">
+                                    Threads ({articleComments.data?.data ? articleComments.data.data.length : 0})
+                                </h2>
+                            </div>
+                            <div className="mb-6">
+                                <textarea
+                                    rows={6}
+                                    className="textarea textarea-bordered w-full custom-scrollbar"
+                                    placeholder="Share your thoughts..."
+                                    value={commentDetails}
+                                    onChange={e => setCommentDetails(e.target.value)}
+                                    disabled={isLoading}
+                                />
+                                <button className="btn btn-info" disabled={isLoading} onClick={handleCommentSubmit}>
+                                    {isLoading && (
+                                        <div className="loading h-5 w-5" />
+                                    )}
+                                    Post comment
+                                </button>
+                            </div>
+                            {articleComments.data && (
+                                <CommentList comments={articleComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} />
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="col-span-1">
@@ -90,7 +166,6 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                     </div>
                                 ))}
                             </div>
-
                         </div>
 
                         <div>

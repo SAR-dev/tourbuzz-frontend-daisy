@@ -1,5 +1,6 @@
 export const constants = {
     EMOJI_STORE_KEY: "emoji",
+    ARTICLE_COMMENT_STORE_KEY: "article_comment_",
     THEME_STORE_KEY: "theme",
     JWT_AUTH_KEY: "auth",
     EMOJI_HISTORY_KEY: "emoji_history",
