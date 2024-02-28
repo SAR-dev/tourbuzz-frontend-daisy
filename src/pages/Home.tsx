@@ -61,6 +61,10 @@ const Home = () => {
     refetchOnWindowFocus: false
   })
 
+  const getSliceSize = ({ size, multiple }: { size: number, multiple: number }) => {
+    return Math.floor(size / multiple) * multiple
+  }
+
   return (
     <NavLayout>
       <div className="h-[30rem] relative">
@@ -136,7 +140,7 @@ const Home = () => {
                 <Title to="/hotels">Relaxation and Dining Destinations 🛏️</Title>
               </div>
               <div className="grid grid-cols-4 gap-8">
-                {randomHotels.data.data.map((hotel, i) => (
+                {randomHotels.data.data.slice(0, getSliceSize({ size: randomHotels.data.data.length, multiple: 4 })).map((hotel, i) => (
                   <HotelCard hotel={hotel} key={i} />
                 ))}
               </div>
@@ -149,7 +153,7 @@ const Home = () => {
                 <Title to="/places">Where to next 🥳 ?</Title>
               </div>
               <div className="grid grid-cols-6 gap-8">
-                {popularPlaces.data.data.map((place, i) => (
+                {popularPlaces.data.data.slice(0, getSliceSize({ size: popularPlaces.data.data.length, multiple: 6 })).map((place, i) => (
                   <PlaceCard place={place} key={i} />
                 ))}
               </div>
@@ -162,7 +166,7 @@ const Home = () => {
                 <Title to="/articles">Fresh ideas for fun 🤯</Title>
               </div>
               <div className="grid grid-cols-3 gap-8">
-                {latestArticles.data.data.map((article, i) => (
+                {latestArticles.data.data.slice(0, getSliceSize({ size: latestArticles.data.data.length, multiple: 3 })).map((article, i) => (
                   <ArticleCard article={article} key={i} />
                 ))}
               </div>
@@ -175,7 +179,7 @@ const Home = () => {
                 <Title to="/organizers">Tour Organizers 👨‍🚀</Title>
               </div>
               <div className="grid grid-cols-3 gap-8">
-                {randomOrganizers.data.data.map((organizer, i) => (
+                {randomOrganizers.data.data.slice(0, getSliceSize({ size: randomOrganizers.data.data.length, multiple: 3 })).map((organizer, i) => (
                   <OrganizerCard organizer={organizer} key={i} />
                 ))}
               </div>

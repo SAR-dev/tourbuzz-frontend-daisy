@@ -62,7 +62,7 @@ const TreeComment = ({ comment }: { comment: ParentCommentType }) => {
                         </div>
                         <div className="whitespace-pre-line">{comment.details}</div>
                         <div>
-                            <button className="flex gap-2 items-center text-sm font-medium text-base-content/70">
+                            <button className="flex gap-2 items-center text-sm font-medium text-base-content/70 hover:text-base-content">
                                 <ChatBubbleLeftEllipsisIcon className="h-4 w-4" />
                                 Reply
                             </button>

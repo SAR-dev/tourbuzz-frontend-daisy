@@ -16,11 +16,15 @@ import { constants } from '@src/stores/constantStore'
 import { AddCommentType } from '@src/types/comment'
 import useLocalStorageState from 'use-local-storage-state'
 import { useDebounceFn } from 'ahooks'
+import { useAuthStore } from '@src/stores/authStore'
+import { useSignInModalStore } from '@src/stores/signInModalStore'
 
 const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const commentsRef = useRef<HTMLDivElement>(null);
     const queryClient = useQueryClient();
     const { add } = useReaction()
+    const { isLoggedIn } = useAuthStore()
+    const { setIsOpenSignIn } = useSignInModalStore();
     const [commentLimit, setCommentLimit] = useState(constants.COMMENT_LIMIT.ARTICLE)
 
     const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.ARTICLE_COMMENT_STORE_KEY + article.id, {
@@ -65,6 +69,10 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
       );
 
     const handleCommentSubmit = () => {
+        if(!isLoggedIn()){
+            setIsOpenSignIn(true)
+            return;
+          }
         if (commentDetails.length < 2) return;
 
         const data: AddCommentType = {
@@ -115,7 +123,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                 ))}
                             </Carousel>
                         </div>
-                        <div className="w-full flex gap-3 items-center">
+                        <div className="card w-full flex flex-row gap-3 items-center border border-base-300 p-2">
                             <EmojiDisplay reactionSummary={reactionSummary} handleEmojiSelect={handleEmojiSelect} minimal />
                             {reactionSummary.topReactions.length < 5 && (
                                 <div className="text-sm text-base-content/50">Give a reaction to let others know how you feel...</div>

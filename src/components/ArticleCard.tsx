@@ -56,9 +56,9 @@ const ArticleCard = ({ article }: { article: ArticleType }) => {
             <div className="line-clamp-4 whitespace-pre-line">
                 {article.summary}
             </div>
-            <div className="card flex gap-3 items-center items-center flex-row">
+            <div className="card flex gap-3 items-center items-center flex-row border border-base-300 p-2">
                 <EmojiDisplay reactionSummary={reactionSummary} handleEmojiSelect={handleEmojiSelect} minimal />
-                {reactionSummary.topReactions.length < 5 && (
+                {reactionSummary.topReactions.length === 0 && (
                     <div className="text-sm text-base-content/50">Give a reaction ...</div>
                 )}
             </div>

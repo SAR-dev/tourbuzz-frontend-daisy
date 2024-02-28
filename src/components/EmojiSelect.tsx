@@ -8,6 +8,8 @@ import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useEmojiStore } from "@src/stores/emojiStore";
 import { useDebounce } from "ahooks";
 import { constants } from "@src/stores/constantStore";
+import { useAuthStore } from "@src/stores/authStore";
+import { useSignInModalStore } from "@src/stores/signInModalStore";
 
 const fuseOptions = {
   keys: ["emoji", "category", "description", "shortcode", "references"],
@@ -26,6 +28,8 @@ const EmojiSelect = ({
   button: ReactNode;
   setEmoji: (props: string) => void;
 }) => {
+  const { isLoggedIn } = useAuthStore()
+  const { setIsOpenSignIn } = useSignInModalStore();
   const { expanded, setExpanded, defaultEmojis } = useEmojiStore()
   const [hovered, setHovered] = useState<EmojiType>(emojis[0])
   const [emojisList, setEmojiList] = useState<EmojiType[]>([...emojis])
@@ -46,6 +50,10 @@ const EmojiSelect = ({
   }, [search])
 
   const handleEmojiClick = async (emojiHex: string, close: () => void) => {
+    if(!isLoggedIn()){
+      setIsOpenSignIn(true)
+      return;
+    }
     setHistory([...history, emojiHex])
     setEmoji(emojiHex)
     close()

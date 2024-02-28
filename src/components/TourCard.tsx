@@ -46,7 +46,7 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                     <div className="relative">
                         <ImageLoader
                             src={tour.avatar.source_url}
-                            className="h-96 w-full h-full object-cover card rounded-r-none"
+                            className="h-96 w-full object-cover card rounded-r-none"
                         />
                         <div className="absolute top-0 left-0 m-2">
                             <div className="bg-primary-content card text-sm font-medium px-2.5 py-0.5 text-primary card">
