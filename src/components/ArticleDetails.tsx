@@ -141,7 +141,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                     {isLoading && (
                                         <div className="loading h-5 w-5" />
                                     )}
-                                    Post comment
+                                    Start new thread
                                 </button>
                             </div>
                             {articleComments.data && (
