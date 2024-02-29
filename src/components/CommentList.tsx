@@ -40,15 +40,17 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
 const TreeComment = ({
     comment,
     last,
-    handleReplySubmit
+    submitReply
 }: {
     comment: ParentCommentType,
     last: boolean,
-    handleReplySubmit: (
-        parent_id: number, 
-        setLoading: (props: boolean) => void, 
+    submitReply: ({ ...props }: {
+        parent_id: number,
+        setLoading: (props: boolean) => void,
         replyDetails: string,
-        setReplyDetails: (props: string) => void) => void
+        setReplyDetails: (props: string) => void,
+        setShowReplyEditor: (props: boolean) => void
+    }) => void
 }) => {
     const replyEditorRef = useRef<HTMLDivElement>(null);
     const [isLoading, setIsLoading] = useState(false)
@@ -155,7 +157,7 @@ const TreeComment = ({
                                         onChange={e => setReplyDetails(e.target.value)}
                                         disabled={isLoading}
                                     />
-                                    <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => handleReplySubmit(comment.id, setIsLoading, replyDetails, setReplyDetails)}>
+                                    <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => submitReply({parent_id: comment.id, setLoading: setIsLoading, replyDetails, setReplyDetails, setShowReplyEditor})}>
                                         {isLoading && (
                                             <div className="loading h-5 w-5" />
                                         )}
@@ -175,22 +177,24 @@ const CommentList = ({
     comments,
     limit,
     toogleLimit,
-    handleReplySubmit
+    submitReply
 }: {
     comments: ParentCommentType[],
     limit: number,
     toogleLimit: () => void,
-    handleReplySubmit: (
-        parent_id: number, 
-        setLoading: (props: boolean) => void, 
+    submitReply: ({ ...props }: {
+        parent_id: number,
+        setLoading: (props: boolean) => void,
         replyDetails: string,
-        setReplyDetails: (props: string) => void) => void
+        setReplyDetails: (props: string) => void,
+        setShowReplyEditor: (props: boolean) => void
+    }) => void
 }) => {
     return (
         <section>
             <ul className="mt-5">
                 {comments.map((comment, i) => (
-                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} handleReplySubmit={handleReplySubmit} />
+                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} submitReply={submitReply} />
                 ))}
             </ul>
 
