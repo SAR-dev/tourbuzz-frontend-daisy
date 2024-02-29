@@ -30,7 +30,7 @@ const EnquiryChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
                     </div>
                 </div>
                 <div className="text-xs text-base-content/80">
-                    {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
+                    {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour24, 2)}:{parrseToNDigit(createdAt.minute, 2)}
                 </div>
             </div>
             <div className="flex flex-col gap-1">
@@ -45,7 +45,7 @@ const EnquiryChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
                             </div>
                         </div>
                         <div className="text-xs text-base-content/80">
-                            {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
+                            {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour24, 2)}:{parrseToNDigit(createdAt.minute, 2)}
                         </div>
                     </>
                 ) : (

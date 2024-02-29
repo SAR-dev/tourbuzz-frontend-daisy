@@ -43,6 +43,17 @@ export const getTourByPlaceId = ({ id }: { id: number }): Promise<TourListDataTy
         });
 }
 
+export const getTourByHotelId = ({ id }: { id: number }): Promise<TourListDataType> => {
+    return api
+        .get(`/guest/tours/hotel/${id}`)
+        .then((res) => {
+            return { data: res.data };
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
 export const getTourByOrganizerId = ({ id }: { id: number }): Promise<TourListDataType> => {
     return api
         .get(`/guest/tours/organizer/${id}`)

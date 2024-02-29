@@ -15,6 +15,7 @@ import Enquiry from "./pages/chat/Enquiry";
 import NotFound from "./pages/NotFound";
 import Place from "./pages/places/Place";
 import Organizer from "./pages/organizers/Organizer";
+import Hotel from "./pages/hotels/Hotel";
 
 const queryClient = new QueryClient()
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/places/:id",
     element: <Place />,
+  },
+  {
+    path: "/hotels/:id",
+    element: <Hotel />,
   },
   {
     path: "/organizers/:username",

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import Title from './Title'
 import ImageLoader from './ImageLoader'
 import TourCard from './TourCard'
+import NoResultFound from './NoResultFound'
 
 const PlaceDetails = ({ place }: { place: PlaceType }) => {
     const placeTours = useQuery<TourListDataType, Error>({
@@ -49,9 +50,7 @@ const PlaceDetails = ({ place }: { place: PlaceType }) => {
                         <Title>Tours</Title>
                     </div>
                     {placeTours.data && placeTours.data.data.length === 0 && (
-                        <div className='text-info'>
-                            🥺 No results found
-                        </div>
+                        <NoResultFound />
                     )}
                     <div className="grid grid-cols-1 gap-5">
                         {placeTours.data && (

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import Title from './Title'
 import ImageLoader from './ImageLoader'
 import TourCard from './TourCard'
+import NoResultFound from './NoResultFound';
 
 const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
     const organizerTours = useQuery<TourListDataType, Error>({
@@ -50,9 +51,7 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                         <Title>Tours</Title>
                     </div>
                     {organizerTours.data && organizerTours.data.data.length === 0 && (
-                        <div className='text-info'>
-                            🥺 No results found
-                        </div>
+                        <NoResultFound />
                     )}
                     <div className="grid grid-cols-1 gap-5">
                         {organizerTours.data && (

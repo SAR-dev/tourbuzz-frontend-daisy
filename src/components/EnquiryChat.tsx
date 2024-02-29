@@ -29,7 +29,7 @@ const AdminChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
                 </div>
                 {answeredAt && (
                     <div className='text-base-content/80 text-sm text-left'>
-                        {parrseToNDigit(answeredAt.day, 2)} {answeredAt.month_name.slice(0, 3)} {answeredAt.year} {parrseToNDigit(answeredAt.hour, 2)}:{parrseToNDigit(answeredAt.minute, 2)}
+                        {parrseToNDigit(answeredAt.day, 2)} {answeredAt.month_name.slice(0, 3)} {answeredAt.year} {parrseToNDigit(answeredAt.hour24, 2)}:{parrseToNDigit(answeredAt.minute, 2)}
                     </div>
                 )}
             </div>
@@ -48,7 +48,7 @@ const UserChatBubble = ({ enquiry }: { enquiry: EnquiryType }) => {
                     </div>
                 </div>
                 <div className='text-base-content/80 text-xs text-right'>
-                    {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour, 2)}:{parrseToNDigit(createdAt.minute, 2)}
+                    {parrseToNDigit(createdAt.day, 2)} {createdAt.month_name.slice(0, 3)} {createdAt.year} {parrseToNDigit(createdAt.hour24, 2)}:{parrseToNDigit(createdAt.minute, 2)}
                 </div>
             </div>
             <div className="w-10 flex-shrink-0">
