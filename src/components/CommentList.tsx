@@ -10,7 +10,7 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     return (
         <div className="relative pl-16 relative">
             <span
-                className="absolute left-8 top-7 h-px w-16 bg-base-300 group-hover:bg-info/50"
+                className="absolute left-8 top-7 h-[2px] w-16 bg-base-300 group-hover:bg-info/50"
             />
             <div className="relative flex items-start space-x-3">
                 <div className="relative px-1 flex-shrink-0">
@@ -35,7 +35,7 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     )
 }
 
-const TreeComment = ({ comment }: { comment: ParentCommentType }) => {
+const TreeComment = ({ comment, last }: { comment: ParentCommentType, last: boolean }) => {
     const [showReplies, setShowReplies] = useState(false)
     const formattedDate = formatDate(comment.created_at)
     const avatars = useMemo(() => [...new Set(comment.children.map(e => e.author.avatar?.thumbnail_url))], [comment.children])
@@ -43,9 +43,11 @@ const TreeComment = ({ comment }: { comment: ParentCommentType }) => {
     return (
         <li className="group">
             <div className="relative pb-8">
-                <span
-                    className="absolute left-8 top-0 h-full w-px bg-base-300 group-hover:bg-info/50"
-                />
+                {!last && (
+                    <span
+                        className="absolute left-8 top-0 h-full w-[1.5px] bg-base-300 group-hover:bg-info/50"
+                    />
+                )}
                 <div className="relative flex items-start space-x-3">
                     <div className="relative px-1 flex-shrink-0">
                         <div className="card ring-1 ring-offset-2 ring-base-300 group-hover:ring-info">
@@ -65,8 +67,8 @@ const TreeComment = ({ comment }: { comment: ParentCommentType }) => {
                         <div className="whitespace-pre-line">{comment.details}</div>
                         {avatars.length > 0 && !showReplies && (
                             <div className="flex gap-2 items-center mt-1">
-                                {avatars.map(e => (
-                                    <div className="h-5 w-5 card">
+                                {avatars.map((e, i) => (
+                                    <div className="h-5 w-5 card" key={i}>
                                         <ImageLoader src={e} className="h-5 w-5 object-cover card" />
                                     </div>
                                 ))}
@@ -98,17 +100,19 @@ const CommentList = ({
 }) => {
     return (
         <section>
-            {!(limit !== 0 || comments.length < constants.COMMENT_LIMIT.ARTICLE) && (
-                <button className="mb-3 btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => toogleLimit()}>Show latest threads</button>
-            )}
             <ul className="mt-5">
-                {comments.map((comment) => (
-                    <TreeComment comment={comment} key={comment.id} />
+                {comments.map((comment, i) => (
+                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} />
                 ))}
             </ul>
-            {(limit !== 0 || comments.length < constants.COMMENT_LIMIT.ARTICLE) && (
-                <button className="mt-3 btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => toogleLimit()}>Show all threads</button>
-            )}
+
+            {comments.length !== 0 && (<>
+                {(limit !== 0 || comments.length < constants.COMMENT_LIMIT.ARTICLE) ? (
+                    <button className="mt-3 btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => toogleLimit()}>Show all threads</button>
+                ) : (
+                    <button className="mb-3 btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => toogleLimit()}>Show latest threads</button>
+                )}
+            </>)}
         </section>
     )
 }

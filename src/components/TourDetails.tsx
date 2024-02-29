@@ -9,7 +9,7 @@ import TourPlacecard from "@src/components/TourPlacecard"
 import { formatDate, getTopEmojiReactionsWithSummary, parrseToNDigit, parsePrice } from "@src/functions/helpers";
 import { TourType } from "@src/types/base";
 import classNames from "classnames";
-import { useState } from "react"
+import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
 import { Link } from "react-router-dom";
 import TourPackage from "./TourPackage";
@@ -20,14 +20,32 @@ import EmojiDisplay from "./EmojiDisplay";
 import { useReaction } from "@src/contexts/Reaction";
 import toast from "react-hot-toast";
 import OrganizerVerification from "./OrganizerVerification";
+import { constants } from "@src/stores/constantStore";
+import { useAuthStore } from "@src/stores/authStore";
+import { useSignInModalStore } from "@src/stores/signInModalStore";
+import { CommentListDataType, addCommentByTourId, getCommentsByToureId } from "@src/api/comment";
+import { useDebounceFn } from "ahooks";
+import useLocalStorageState from "use-local-storage-state";
+import { AddCommentType } from "@src/types/comment";
+import CommentList from "./CommentList";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const queryClient = useQueryClient();
     const { add } = useReaction()
+    const commentsRef = useRef<HTMLDivElement>(null);
 
+    const { isLoggedIn } = useAuthStore()
+    const { setIsOpenSignIn } = useSignInModalStore();
+    const [commentLimit, setCommentLimit] = useState(constants.COMMENT_LIMIT.TOUR)
     const [selectedIndex, setSelectedIndex] = useState(0)
     const [showHighlights, setShowHighlights] = useState(false)
     const [showPlaces, setShowPlaces] = useState(false)
+
+    const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.TOUR_COMMENT_STORE_KEY + tour.id, {
+        defaultValue: ""
+    })
+    const [isLoading, setIsLoading] = useState(false)
+
     const startDate = formatDate(tour.start_at)
     const finishDate = formatDate(tour.finish_at)
     const lateSaleDate = formatDate(tour.last_sell_at)
@@ -35,6 +53,11 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     const tourReactions = useQuery<ReactionDataType, Error>({
         queryKey: ['tour-reactions', tour.id],
         queryFn: () => getReactionToTour({ id: tour.id })
+    })
+
+    const tourComments = useQuery<CommentListDataType, Error>({
+        queryKey: ['tour-comments', tour.id, commentLimit],
+        queryFn: () => getCommentsByToureId({ id: tour.id, limit: commentLimit })
     })
 
     const reactionSummary = getTopEmojiReactionsWithSummary(tourReactions.data?.data ?? [], 12)
@@ -50,6 +73,54 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             .catch((err) => {
                 toast.error(err.response.data.message)
             })
+    }
+
+    const { run } = useDebounceFn(
+        () => {
+            if (commentsRef.current) {
+                commentsRef.current.scrollIntoView({ behavior: "smooth", block: commentLimit === 0 ? "start" : "end", inline: "end" });
+            }
+        },
+        {
+          wait: 500,
+        },
+      );
+
+    const handleCommentSubmit = () => {
+        if(!isLoggedIn()){
+            setIsOpenSignIn(true)
+            return;
+          }
+        if (commentDetails.length < 2) return;
+
+        const data: AddCommentType = {
+            reference_id: tour.id,
+            parent_id: 0,
+            details: commentDetails
+        }
+        setIsLoading(true)
+        addCommentByTourId({ data })
+            .then(() => {
+                setCommentDetails("")
+                queryClient.invalidateQueries({ queryKey: ['tour-comments', tour.id] })
+                run()
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
+
+    const toogleLimit = () => {
+        if(commentLimit === 0){
+            setCommentLimit(constants.COMMENT_LIMIT.ARTICLE)
+            run()
+        } else {
+            setCommentLimit(0)
+            run()
+        }
     }
 
     return (
@@ -180,6 +251,33 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 🔖 Ticket Cancellation
                             </div>
                             <MarkdownRenderer md_text={tour.cancel_ins} />
+                        </div>
+
+                        <div ref={commentsRef}>
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="title text-2xl font-semibold">
+                                    Discussion Threads ({tourComments.data?.data ? tourComments.data.data.length : 0})
+                                </h2>
+                            </div>
+                            <div className="mb-6">
+                                <textarea
+                                    rows={6}
+                                    className="textarea textarea-bordered w-full custom-scrollbar resize-none"
+                                    placeholder="Share your thoughts..."
+                                    value={commentDetails}
+                                    onChange={e => setCommentDetails(e.target.value)}
+                                    disabled={isLoading}
+                                />
+                                <button className="btn btn-info" disabled={isLoading} onClick={handleCommentSubmit}>
+                                    {isLoading && (
+                                        <div className="loading h-5 w-5" />
+                                    )}
+                                    Start new thread
+                                </button>
+                            </div>
+                            {tourComments.data && (
+                                <CommentList comments={tourComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} />
+                            )}
                         </div>
                     </div>
 

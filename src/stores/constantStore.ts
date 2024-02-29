@@ -1,6 +1,7 @@
 export const constants = {
     EMOJI_STORE_KEY: "emoji",
     ARTICLE_COMMENT_STORE_KEY: "article_comment_",
+    TOUR_COMMENT_STORE_KEY: "tour_comment_",
     THEME_STORE_KEY: "theme",
     JWT_AUTH_KEY: "auth",
     EMOJI_HISTORY_KEY: "emoji_history",
@@ -23,6 +24,7 @@ export const constants = {
     },
     ADMIN_HELP_MAIL_MAILTO_LINK: "mailto:tourbuzz.help@gmail.com?subject=Assistance%20Needed%20with%20TourBuzz%20Platform",
     COMMENT_LIMIT: {
-        ARTICLE: 5
+        ARTICLE: 5,
+        TOUR: 10,
     }
 }
