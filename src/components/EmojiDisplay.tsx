@@ -16,8 +16,8 @@ const EmojiDisplay = ({
         <div className="flex gap-2 items-center">
             <EmojiSelect
                 button={
-                    <button className="reaction-badge w-7 p-0 border border-base-300">
-                        <FaceSmileIcon className="h-6 w-6" />
+                    <button>
+                        <FaceSmileIcon className="h-7 w-7" />
                     </button>
                 }
                 setEmoji={handleEmojiSelect}

@@ -64,7 +64,7 @@ const EmojiSelect = ({
       <Popover className="relative">
         {() => (
           <>
-            <Popover.Button className="focus:outline-none">
+            <Popover.Button className="focus:outline-none flex items-center">
               {button}
             </Popover.Button>
             <Transition

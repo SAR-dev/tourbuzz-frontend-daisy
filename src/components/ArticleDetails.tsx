@@ -139,7 +139,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                             <div className="mb-6">
                                 <textarea
                                     rows={6}
-                                    className="textarea textarea-bordered w-full custom-scrollbar"
+                                    className="textarea textarea-bordered w-full custom-scrollbar resize-none"
                                     placeholder="Share your thoughts..."
                                     value={commentDetails}
                                     onChange={e => setCommentDetails(e.target.value)}
