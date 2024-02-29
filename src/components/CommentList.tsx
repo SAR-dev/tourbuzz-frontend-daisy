@@ -3,14 +3,16 @@ import { constants } from "@src/stores/constantStore"
 import { ChildCommentType, ParentCommentType } from "@src/types/comment"
 import TimeAgo from 'react-timeago'
 import ImageLoader from "./ImageLoader"
-import { useMemo, useState } from "react"
+import { useMemo, useRef, useState } from "react"
+import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline"
+import { useDebounceFn } from "ahooks"
 
 const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     const formattedDate = formatDate(comment.created_at)
     return (
-        <div className="relative pl-16 relative">
+        <div className="relative pl-16">
             <span
-                className="absolute left-8 top-7 h-[2px] w-16 bg-base-300 group-hover:bg-info/50"
+                className="absolute left-8 top-7 h-[1.5px] w-16 bg-base-300 group-hover:bg-info/50"
             />
             <div className="relative flex items-start space-x-3">
                 <div className="relative px-1 flex-shrink-0">
@@ -35,10 +37,44 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     )
 }
 
-const TreeComment = ({ comment, last }: { comment: ParentCommentType, last: boolean }) => {
+const TreeComment = ({
+    comment,
+    last,
+    handleReplySubmit
+}: {
+    comment: ParentCommentType,
+    last: boolean,
+    handleReplySubmit: (
+        parent_id: number, 
+        setLoading: (props: boolean) => void, 
+        replyDetails: string,
+        setReplyDetails: (props: string) => void) => void
+}) => {
+    const replyEditorRef = useRef<HTMLDivElement>(null);
+    const [isLoading, setIsLoading] = useState(false)
+    const [replyDetails, setReplyDetails] = useState("")
+    const [showReplyEditor, setShowReplyEditor] = useState(false)
+
     const [showReplies, setShowReplies] = useState(false)
     const formattedDate = formatDate(comment.created_at)
     const avatars = useMemo(() => [...new Set(comment.children.map(e => e.author.avatar?.thumbnail_url))], [comment.children])
+
+    const { run } = useDebounceFn(
+        () => {
+            if (replyEditorRef.current) {
+                replyEditorRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+            }
+        },
+        {
+            wait: 500,
+        },
+    );
+
+    const showReply = () => {
+        setShowReplies(true)
+        setShowReplyEditor(true)
+        run()
+    }
 
     return (
         <li className="group">
@@ -65,16 +101,24 @@ const TreeComment = ({ comment, last }: { comment: ParentCommentType, last: bool
                             </div>
                         </div>
                         <div className="whitespace-pre-line">{comment.details}</div>
-                        {avatars.length > 0 && !showReplies && (
-                            <div className="flex gap-2 items-center mt-1">
-                                {avatars.map((e, i) => (
-                                    <div className="h-5 w-5 card" key={i}>
-                                        <ImageLoader src={e} className="h-5 w-5 object-cover card" />
-                                    </div>
-                                ))}
-                                <button className="text-info text-sm font-medium" onClick={() => setShowReplies(true)}>{comment.child_count} replies</button>
-                            </div>
-                        )}
+                        <div className="flex gap-3 items-center mt-1">
+                            <button className="flex text-info text-sm font-medium items-center gap-2" onClick={showReply}>
+                                <ChatBubbleLeftIcon className="h-5 w-5" />
+                                Reply
+                            </button>
+                            {avatars.length > 0 && !showReplies && (
+                                <div className="flex gap-2 items-center">
+                                    {avatars.map((e, i) => (
+                                        <div className="h-5 w-5 card" key={i}>
+                                            <ImageLoader src={e} className="h-5 w-5 object-cover card" />
+                                        </div>
+                                    ))}
+                                    <button className="text-info text-sm font-medium" onClick={() => setShowReplies(true)}>
+                                        {comment.child_count} Replies
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
                 {comment.children.length > 0 && showReplies && (
@@ -82,6 +126,44 @@ const TreeComment = ({ comment, last }: { comment: ParentCommentType, last: bool
                         {comment.children.map((e, i) => (
                             <ChildComment comment={e} key={i} />
                         ))}
+                    </div>
+                )}
+                {showReplyEditor && (
+                    <div className="relative pl-16 mt-8" ref={replyEditorRef}>
+                        <span
+                            className="absolute left-8 top-7 h-[1.5px] w-16 bg-base-300 group-hover:bg-info/50"
+                        />
+                        <div className="relative flex items-start space-x-3">
+                            <div className="relative px-1 flex-shrink-0">
+                                <div className="card ring-1 ring-offset-2 ring-base-300 group-hover:ring-info">
+                                    <ImageLoader
+                                        src={comment.author.avatar?.optimized_url}
+                                        className="h-14 w-14 card object-cover"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-1 w-full">
+                                <div className="flex gap-1 items-center">
+                                    <div className="font-medium">{comment.author.name}</div>
+                                </div>
+                                <div>
+                                    <textarea
+                                        rows={6}
+                                        className="textarea textarea-bordered w-full custom-scrollbar resize-none"
+                                        placeholder="Share your thoughts..."
+                                        value={replyDetails}
+                                        onChange={e => setReplyDetails(e.target.value)}
+                                        disabled={isLoading}
+                                    />
+                                    <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => handleReplySubmit(comment.id, setIsLoading, replyDetails, setReplyDetails)}>
+                                        {isLoading && (
+                                            <div className="loading h-5 w-5" />
+                                        )}
+                                        Send Reply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
@@ -92,17 +174,23 @@ const TreeComment = ({ comment, last }: { comment: ParentCommentType, last: bool
 const CommentList = ({
     comments,
     limit,
-    toogleLimit
+    toogleLimit,
+    handleReplySubmit
 }: {
     comments: ParentCommentType[],
     limit: number,
-    toogleLimit: () => void
+    toogleLimit: () => void,
+    handleReplySubmit: (
+        parent_id: number, 
+        setLoading: (props: boolean) => void, 
+        replyDetails: string,
+        setReplyDetails: (props: string) => void) => void
 }) => {
     return (
         <section>
             <ul className="mt-5">
                 {comments.map((comment, i) => (
-                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} />
+                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} handleReplySubmit={handleReplySubmit} />
                 ))}
             </ul>
 

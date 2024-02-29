@@ -64,15 +64,15 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
             }
         },
         {
-          wait: 500,
+            wait: 500,
         },
-      );
+    );
 
     const handleCommentSubmit = () => {
-        if(!isLoggedIn()){
+        if (!isLoggedIn()) {
             setIsOpenSignIn(true)
             return;
-          }
+        }
         if (commentDetails.length < 2) return;
 
         const data: AddCommentType = {
@@ -95,8 +95,39 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
             })
     }
 
+    const handleReplySubmit = (
+        parent_id: number, 
+        setLoading: (props: boolean) => void, 
+        replyDetails: string,
+        setReplyDetails: (props: string) => void
+    ) => {
+        if (!isLoggedIn()) {
+            setIsOpenSignIn(true)
+            return;
+        }
+        if (replyDetails.length < 2) return;
+
+        const data: AddCommentType = {
+            reference_id: article.id,
+            parent_id: parent_id,
+            details: replyDetails
+        }
+        setLoading(true)
+        addCommentByArticleId({ data })
+            .then(() => {
+                setReplyDetails("")
+                queryClient.invalidateQueries({ queryKey: ['article-comments', article.id] })
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
     const toogleLimit = () => {
-        if(commentLimit === 0){
+        if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.ARTICLE)
             run()
         } else {
@@ -153,7 +184,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                 </button>
                             </div>
                             {articleComments.data && (
-                                <CommentList comments={articleComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} />
+                                <CommentList comments={articleComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} handleReplySubmit={handleReplySubmit} />
                             )}
                         </div>
                     </div>

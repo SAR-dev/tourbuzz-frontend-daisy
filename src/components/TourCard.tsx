@@ -64,17 +64,6 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                     <Link to={`/tours/${tour.slug}`} className="title text-2xl font-semibold line-clamp-2 hover:text-teal-500 duration-100">
                                         {tour.title}
                                     </Link>
-                                    <div className="flex items-center font-semibold">
-                                        <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                                            <BookmarkIcon className="h-5 w-5" />
-                                        </button>
-                                        <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                                            <StarIcon className="h-5 w-5" />
-                                        </button>
-                                        <button className="btn btn-ghost btn-sm w-8 h-8 p-0">
-                                            <QuestionMarkCircleIcon className="h-5 w-5" />
-                                        </button>
-                                    </div>
                                 </div>
                                 <div className="flex flex-col gap-1 mt-2">
                                     <div>😎 Organized By <b>{tour.organizer_name}</b></div>

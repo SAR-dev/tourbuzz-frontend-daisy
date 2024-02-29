@@ -1,4 +1,4 @@
-import NoResultSvg from './NoResultSvg'
+import NoResultSvg from "@src/icons/NoResultSvg"
 
 function NoResultFound() {
     return (
