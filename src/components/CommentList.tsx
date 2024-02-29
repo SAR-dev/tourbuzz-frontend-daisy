@@ -157,12 +157,15 @@ const TreeComment = ({
                                         onChange={e => setReplyDetails(e.target.value)}
                                         disabled={isLoading}
                                     />
+                                    <div className="flex gap-3 mt-1">
                                     <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => submitReply({parent_id: comment.id, setLoading: setIsLoading, replyDetails, setReplyDetails, setShowReplyEditor})}>
                                         {isLoading && (
                                             <div className="loading h-5 w-5" />
                                         )}
                                         Send Reply
                                     </button>
+                                    <button className="btn btn-sm" onClick={() => setShowReplyEditor(false)}>Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
