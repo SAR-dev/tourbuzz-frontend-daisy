@@ -28,6 +28,7 @@ import { useDebounceFn } from "ahooks";
 import useLocalStorageState from "use-local-storage-state";
 import { AddCommentType } from "@src/types/comment";
 import CommentList from "./CommentList";
+import TextareaAutosize from 'react-textarea-autosize';
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const queryClient = useQueryClient();
@@ -293,7 +294,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 </h2>
                             </div>
                             <div className="mb-6">
-                                <textarea
+                                <TextareaAutosize
                                     rows={6}
                                     className="textarea textarea-bordered w-full custom-scrollbar resize-none"
                                     placeholder="Share your thoughts..."

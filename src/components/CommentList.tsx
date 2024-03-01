@@ -153,7 +153,7 @@ const TreeComment = ({
                             </ContextMenu.Portal>
                         </ContextMenu.Root>
                         <div className="flex gap-3 items-center mt-1">
-                            <button className="flex text-info text-sm font-medium items-center gap-2" onClick={showReply}>
+                            <button className="flex group-hover:text-info duration-100 text-sm font-medium items-center gap-2" onClick={showReply}>
                                 <ChatBubbleLeftIcon className="h-5 w-5" />
                                 Reply
                             </button>
@@ -164,7 +164,7 @@ const TreeComment = ({
                                             <ImageLoader src={e} className="h-5 w-5 object-cover card" />
                                         </div>
                                     ))}
-                                    <button className="text-info text-sm font-medium" onClick={() => setShowReplies(true)}>
+                                    <button className="group-hover:text-info duration-100 text-sm font-medium" onClick={() => setShowReplies(true)}>
                                         {comment.child_count} Replies
                                     </button>
                                 </div>
@@ -260,8 +260,8 @@ const CommentList = ({
                 ))}
             </ul>
 
-            {comments.length !== 0 && (<>
-                {(limit !== 0 || comments.length < constants.COMMENT_LIMIT.ARTICLE) ? (
+            {comments.length !== 0 && !(comments.length < constants.COMMENT_LIMIT.ARTICLE) && (<>
+                {(limit !== 0) ? (
                     <button className="mt-3 btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => toogleLimit()}>Show all threads</button>
                 ) : (
                     <button className="mb-3 btn btn-xs btn-ghost border-base-300 hover:bg-base-300 hover:text-base-content w-full" onClick={() => toogleLimit()}>Show latest threads</button>

@@ -19,6 +19,7 @@ import { useDebounceFn } from 'ahooks'
 import { useAuthStore } from '@src/stores/authStore'
 import { useSignInModalStore } from '@src/stores/signInModalStore'
 import { PlayIcon } from '@heroicons/react/24/outline'
+import TextareaAutosize from 'react-textarea-autosize';
 
 const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const commentsRef = useRef<HTMLDivElement>(null);
@@ -171,7 +172,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                 </h2>
                             </div>
                             <div className="mb-6">
-                                <textarea
+                                <TextareaAutosize
                                     rows={6}
                                     className="textarea textarea-bordered w-full custom-scrollbar resize-none"
                                     placeholder="Share your thoughts..."
