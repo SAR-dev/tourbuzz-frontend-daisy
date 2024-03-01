@@ -179,7 +179,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                     onChange={e => setCommentDetails(e.target.value)}
                                     disabled={isLoading}
                                 />
-                                <button className="btn btn-info" disabled={isLoading} onClick={handleCommentSubmit}>
+                                <button className="btn btn-info mt-1" disabled={isLoading} onClick={handleCommentSubmit}>
                                     {isLoading ? (
                                         <div className="loading h-5 w-5" />
                                     ):(

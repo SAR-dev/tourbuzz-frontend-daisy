@@ -7,6 +7,7 @@ import { useMemo, useRef, useState } from "react"
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline"
 import { useDebounceFn } from "ahooks"
 import { AnimatePresence, motion } from "framer-motion"
+import TextareaAutosize from 'react-textarea-autosize';
 
 const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     const formattedDate = formatDate(comment.created_at)
@@ -159,10 +160,10 @@ const TreeComment = ({
                                     <div className="font-medium">{comment.author.name}</div>
                                 </div>
                                 <div>
-                                    <textarea
-                                        rows={6}
-                                        className="textarea textarea-bordered w-full custom-scrollbar resize-none"
-                                        placeholder="Share your thoughts..."
+                                    <TextareaAutosize
+                                        rows={1}
+                                        className="textarea textarea-bordered w-full resize-none"
+                                        placeholder="Write a reply..."
                                         value={replyDetails}
                                         onChange={e => setReplyDetails(e.target.value)}
                                         disabled={isLoading}

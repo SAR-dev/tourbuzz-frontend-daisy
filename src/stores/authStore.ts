@@ -6,7 +6,8 @@ import { JwtPayload, jwtDecode } from 'jwt-decode'
 type AuthStore = {
     token: string | null,
     setToken: (props: string | null) => void,
-    isLoggedIn: () => boolean
+    isLoggedIn: () => boolean,
+    getLoggedInUserId: () => number
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -24,6 +25,15 @@ export const useAuthStore = create<AuthStore>()(
                 if(!decoded.exp || !decoded.iat) return false;
                 if(decoded.exp <= now) return false;
                 return true;
+            },
+            getLoggedInUserId: () => {
+                const authToken = get().token;
+                if(!authToken) return 0;
+                const decoded: JwtPayload = jwtDecode(authToken)
+                const now = Math.floor(Date.now() / 1000);
+                if(!decoded.exp || !decoded.iat) return 0;
+                if(decoded.exp <= now) return 0;
+                return Number(decoded.sub);
             }
         }), {
         name: constants.JWT_AUTH_KEY,
