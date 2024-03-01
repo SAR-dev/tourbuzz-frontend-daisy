@@ -6,6 +6,7 @@ import ImageLoader from "./ImageLoader"
 import { useMemo, useRef, useState } from "react"
 import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline"
 import { useDebounceFn } from "ahooks"
+import { AnimatePresence, motion } from "framer-motion"
 
 const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     const formattedDate = formatDate(comment.created_at)
@@ -81,7 +82,7 @@ const TreeComment = ({
     return (
         <li className="group">
             <div className="relative pb-8">
-                {!last && (
+                {(!last || (last && comment.child_count > 0)) && (
                     <span
                         className="absolute left-8 top-0 h-full w-[1.5px] bg-base-300 group-hover:bg-info/50"
                     />
@@ -124,11 +125,20 @@ const TreeComment = ({
                     </div>
                 </div>
                 {comment.children.length > 0 && showReplies && (
-                    <div className="flex flex-col gap-8 mt-8">
-                        {comment.children.map((e, i) => (
-                            <ChildComment comment={e} key={i} />
-                        ))}
-                    </div>
+                    <AnimatePresence>
+                        <div className="flex flex-col gap-8 mt-8">
+                            {comment.children.map((e) => (
+                                <motion.div
+                                    key={e.id}
+                                    initial={{ y: 10 }}
+                                    animate={{ y: 0 }}
+                                    exit={{ y: -10 }}
+                                >
+                                    <ChildComment comment={e} />
+                                </motion.div>
+                            ))}
+                        </div>
+                    </AnimatePresence>
                 )}
                 {showReplyEditor && (
                     <div className="relative pl-16 mt-8" ref={replyEditorRef}>
@@ -158,13 +168,13 @@ const TreeComment = ({
                                         disabled={isLoading}
                                     />
                                     <div className="flex gap-3 mt-1">
-                                    <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => submitReply({parent_id: comment.id, setLoading: setIsLoading, replyDetails, setReplyDetails, setShowReplyEditor})}>
-                                        {isLoading && (
-                                            <div className="loading h-5 w-5" />
-                                        )}
-                                        Send Reply
-                                    </button>
-                                    <button className="btn btn-sm" onClick={() => setShowReplyEditor(false)}>Close</button>
+                                        <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => submitReply({ parent_id: comment.id, setLoading: setIsLoading, replyDetails, setReplyDetails, setShowReplyEditor })}>
+                                            {isLoading && (
+                                                <div className="loading h-5 w-5" />
+                                            )}
+                                            Send Reply
+                                        </button>
+                                        <button className="btn btn-sm" onClick={() => setShowReplyEditor(false)}>Close</button>
                                     </div>
                                 </div>
                             </div>

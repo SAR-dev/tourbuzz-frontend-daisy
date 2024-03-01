@@ -1,5 +1,5 @@
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { ChevronRightIcon } from "@heroicons/react/24/solid";
+import { ChevronRightIcon, PlayIcon } from "@heroicons/react/24/solid";
 import Carousel from "@src/components/Carousel"
 import ImageLoader from "@src/components/ImageLoader"
 import MarkdownRenderer from "@src/components/MarkdownRenderer"
@@ -110,6 +110,39 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             })
             .finally(() => {
                 setIsLoading(false)
+            })
+    }
+
+    const handleReplySubmit = ({ ...props }: {
+        parent_id: number,
+        setLoading: (props: boolean) => void,
+        replyDetails: string,
+        setReplyDetails: (props: string) => void,
+        setShowReplyEditor: (props: boolean) => void
+    }) => {
+        if (!isLoggedIn()) {
+            setIsOpenSignIn(true)
+            return;
+        }
+        if (props.replyDetails.length < 2) return;
+
+        const data: AddCommentType = {
+            reference_id: tour.id,
+            parent_id: props.parent_id,
+            details: props.replyDetails
+        }
+        props.setLoading(true)
+        addCommentByTourId({ data })
+            .then(() => {
+                props.setReplyDetails("")
+                props.setShowReplyEditor(false)
+                queryClient.invalidateQueries({ queryKey: ['tour-comments', tour.id] })
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                props.setLoading(false)
             })
     }
 
@@ -269,14 +302,16 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     disabled={isLoading}
                                 />
                                 <button className="btn btn-info" disabled={isLoading} onClick={handleCommentSubmit}>
-                                    {isLoading && (
+                                    {isLoading ? (
                                         <div className="loading h-5 w-5" />
+                                    ):(
+                                        <PlayIcon className='h-5 w-5' />
                                     )}
                                     Start new thread
                                 </button>
                             </div>
                             {tourComments.data && (
-                                <CommentList comments={tourComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} />
+                                <CommentList comments={tourComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} submitReply={handleReplySubmit} />
                             )}
                         </div>
                     </div>

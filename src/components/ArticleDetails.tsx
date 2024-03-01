@@ -18,6 +18,7 @@ import useLocalStorageState from 'use-local-storage-state'
 import { useDebounceFn } from 'ahooks'
 import { useAuthStore } from '@src/stores/authStore'
 import { useSignInModalStore } from '@src/stores/signInModalStore'
+import { PlayIcon } from '@heroicons/react/24/outline'
 
 const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const commentsRef = useRef<HTMLDivElement>(null);
@@ -179,8 +180,10 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                     disabled={isLoading}
                                 />
                                 <button className="btn btn-info" disabled={isLoading} onClick={handleCommentSubmit}>
-                                    {isLoading && (
+                                    {isLoading ? (
                                         <div className="loading h-5 w-5" />
+                                    ):(
+                                        <PlayIcon className='h-5 w-5' />
                                     )}
                                     Start new thread
                                 </button>
