@@ -1,6 +1,6 @@
 import { formatDate, parrseToNDigit } from "@src/functions/helpers"
 import { constants } from "@src/stores/constantStore"
-import { AddCommentType, ChildCommentType, ParentCommentType } from "@src/types/comment"
+import { AddCommentType, ChildCommentType, ParentCommentType, UpdateCommentType } from "@src/types/comment"
 import TimeAgo from 'react-timeago'
 import ImageLoader from "./ImageLoader"
 import { useMemo, useRef, useState } from "react"
@@ -15,9 +15,62 @@ import { useSignInModalStore } from "@src/stores/signInModalStore"
 import { useQueryClient } from "@tanstack/react-query"
 import { DataResponseType } from "@src/types/base"
 import toast from "react-hot-toast"
+import classNames from "classnames"
+import { deleteComment, updateComment } from "@src/api/comment"
 
-const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
+const ChildComment = ({
+    comment,
+    limit,
+    referenceId,
+    queryKey
+}: {
+    comment: ChildCommentType,
+    limit: number,
+    referenceId: number,
+    queryKey: string,
+}) => {
+    const queryClient = useQueryClient();
+    const { getLoggedInUserId } = useAuthStore()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const [showUpdateEditor, setShowUpdateEditor] = useState(false)
+    const [updateDetails, setUpdateDetails] = useState(comment.details)
+
     const formattedDate = formatDate(comment.created_at)
+
+    const handleUpdateComment = () => {
+        if (updateDetails.length < 2) return;
+
+        const data: UpdateCommentType = {
+            id: comment.id,
+            details: updateDetails
+        }
+        setIsLoading(true)
+        updateComment({ data })
+            .then(() => {
+                setUpdateDetails(updateDetails)
+                setShowUpdateEditor(false)
+                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId, limit] })
+                toast.success("Comment has been updated")
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
+
+    const handleDeleteComment = () => {
+        deleteComment({ id: comment.id })
+            .then(() => {
+                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId, limit] })
+                toast.success("Comment has been deleted")
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+    }
 
     return (
         <div className="relative pl-16">
@@ -33,7 +86,7 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
                         />
                     </div>
                 </div>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 w-full">
                     <div className="flex gap-1 items-center">
                         <div className="font-medium">{comment.author.name}</div>
                         <div className="text-base-content/70">
@@ -41,20 +94,61 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
                         </div>
                     </div>
                     <ContextMenu.Root>
-                        <ContextMenu.Trigger>
-                            <div className="whitespace-pre-line">{comment.details}</div>
+                        <ContextMenu.Trigger disabled={showUpdateEditor || comment.deleted}>
+                            {showUpdateEditor ? (
+                                <div className="w-full">
+                                    <TextareaAutosize
+                                        minRows={1}
+                                        className="textarea textarea-bordered w-full resize-none custom-scrollbar"
+                                        placeholder="Write a reply..."
+                                        value={updateDetails}
+                                        onChange={e => setUpdateDetails(e.target.value)}
+                                        disabled={isLoading}
+                                    />
+                                    <div className="flex gap-3 mt-1">
+                                        <button className="btn btn-info btn-sm" disabled={isLoading} onClick={handleUpdateComment}>
+                                            {isLoading && (
+                                                <div className="loading h-5 w-5" />
+                                            )}
+                                            Update
+                                        </button>
+                                        <button className="btn btn-sm" onClick={() => setShowUpdateEditor(false)}>Close</button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="whitespace-pre-line">{comment.details}</div>
+                            )}
                         </ContextMenu.Trigger>
                         <ContextMenu.Portal>
                             <ContextMenu.Content className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" sideOffset={5} align="end">
-                                <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info">
+                                <ContextMenu.Item
+                                    className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info"
+                                    onClick={() => navigator.clipboard.writeText(comment.details)}
+                                >
                                     <ClipboardIcon className="h-4 w-4" />
                                     Copy
                                 </ContextMenu.Item>
-                                <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-primary">
+                                <ContextMenu.Item
+                                    disabled={getLoggedInUserId() !== comment.author.id}
+                                    className={classNames({
+                                        "flex text-sm gap-3 items-center hover:bg-base-300 card flex-row p-2 text-primary": true,
+                                        "cursor-not-allowed": getLoggedInUserId() !== comment.author.id,
+                                        "cursor-pointer": getLoggedInUserId() === comment.author.id
+                                    })}
+                                    onClick={() => setShowUpdateEditor(true)}
+                                >
                                     <PencilIcon className="h-4 w-4" />
                                     Edit
                                 </ContextMenu.Item>
-                                <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-error">
+                                <ContextMenu.Item
+                                    disabled={getLoggedInUserId() !== comment.author.id}
+                                    className={classNames({
+                                        "flex text-sm gap-3 items-center card flex-row p-2": true,
+                                        "cursor-not-allowed text-error/50": getLoggedInUserId() !== comment.author.id,
+                                        "cursor-pointer hover:bg-base-300 text-error": getLoggedInUserId() === comment.author.id
+                                    })}
+                                    onClick={handleDeleteComment}
+                                >
                                     <TrashIcon className="h-4 w-4" />
                                     Delete
                                 </ContextMenu.Item>
@@ -72,21 +166,28 @@ const TreeComment = ({
     last,
     submitReply,
     referenceId,
-    queryKey
+    queryKey,
+    limit
 }: {
     comment: ParentCommentType,
     last: boolean,
-    submitReply: ({data}:{data: AddCommentType}) => Promise<DataResponseType>,
+    submitReply: ({ data }: { data: AddCommentType }) => Promise<DataResponseType>,
     referenceId: number,
-    queryKey: string
+    queryKey: string,
+    limit: number
 }) => {
     const queryClient = useQueryClient();
+    const { getLoggedInUserId } = useAuthStore()
     const { isLoggedIn } = useAuthStore()
     const { setIsOpenSignIn } = useSignInModalStore();
     const replyEditorRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState(false)
+
     const [replyDetails, setReplyDetails] = useState("")
     const [showReplyEditor, setShowReplyEditor] = useState(false)
+
+    const [showUpdateEditor, setShowUpdateEditor] = useState(false)
+    const [updateDetails, setUpdateDetails] = useState(comment.details)
 
     const [showReplies, setShowReplies] = useState(false)
     const formattedDate = formatDate(comment.created_at)
@@ -127,17 +228,51 @@ const TreeComment = ({
             details: replyDetails
         }
         setIsLoading(true)
-        submitReply({data})
+        submitReply({ data })
             .then(() => {
                 setReplyDetails("")
                 setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId] })
+                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId, limit] })
+                toast.success("Comment has been updated")
             })
             .catch((err) => {
                 toast.error(err.response.data.message)
             })
             .finally(() => {
                 setIsLoading(false)
+            })
+    }
+
+    const handleUpdateComment = () => {
+        if (updateDetails.length < 2) return;
+
+        const data: UpdateCommentType = {
+            id: comment.id,
+            details: updateDetails
+        }
+        setIsLoading(true)
+        updateComment({ data })
+            .then(() => {
+                setUpdateDetails(updateDetails)
+                setShowUpdateEditor(false)
+                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId, limit] })
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
+    }
+
+    const handleDeleteComment = () => {
+        deleteComment({ id: comment.id })
+            .then(() => {
+                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId, limit] })
+                toast.success("Comment has been deleted")
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
             })
     }
 
@@ -158,28 +293,73 @@ const TreeComment = ({
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 w-full">
                         <div className="flex gap-1 items-center">
-                            <div className="font-medium">{comment.author.name}</div>
+                            <div className="font-medium">{comment.author.name} {comment.id}</div>
                             <div className="text-base-content/70">
                                 <TimeAgo minPeriod={60} date={comment.created_at} /> at {parrseToNDigit(formattedDate.hour12, 2)}:{parrseToNDigit(formattedDate.minute, 2)} {formattedDate.period}
                             </div>
                         </div>
                         <ContextMenu.Root>
-                            <ContextMenu.Trigger>
-                                <div className="whitespace-pre-line">{comment.details}</div>
+                            <ContextMenu.Trigger disabled={showUpdateEditor || comment.deleted}>
+                                {showUpdateEditor ? (
+                                    <div className="w-full">
+                                        <TextareaAutosize
+                                            minRows={1}
+                                            className="textarea textarea-bordered w-full resize-none custom-scrollbar"
+                                            placeholder="Write a reply..."
+                                            value={updateDetails}
+                                            onChange={e => setUpdateDetails(e.target.value)}
+                                            disabled={isLoading}
+                                        />
+                                        <div className="flex gap-3 mt-1">
+                                            <button className="btn btn-info btn-sm" disabled={isLoading} onClick={handleUpdateComment}>
+                                                {isLoading && (
+                                                    <div className="loading h-5 w-5" />
+                                                )}
+                                                Update
+                                            </button>
+                                            <button className="btn btn-sm" onClick={() => setShowUpdateEditor(false)}>Close</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="whitespace-pre-line">
+                                        {comment.deleted ? (
+                                            <div className="border border-error/50 card py-1 px-3 w-fit text-sm bg-error/20 text-error">This comment has been deleted</div>
+                                        ) : comment.details}
+                                    </div>
+                                )}
                             </ContextMenu.Trigger>
                             <ContextMenu.Portal>
                                 <ContextMenu.Content className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" sideOffset={5} align="end">
-                                    <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info">
+                                    <ContextMenu.Item
+                                        className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info"
+                                        onClick={() => navigator.clipboard.writeText(comment.details)}
+                                    >
                                         <ClipboardIcon className="h-4 w-4" />
                                         Copy
                                     </ContextMenu.Item>
-                                    <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-primary">
+                                    <ContextMenu.Item
+                                        disabled={getLoggedInUserId() !== comment.author.id}
+                                        className={classNames({
+                                            "flex text-sm gap-3 items-center card flex-row p-2": true,
+                                            "cursor-not-allowed text-primary/50": getLoggedInUserId() !== comment.author.id,
+                                            "cursor-pointer hover:bg-base-300 text-primary": getLoggedInUserId() === comment.author.id
+                                        })}
+                                        onClick={() => setShowUpdateEditor(true)}
+                                    >
                                         <PencilIcon className="h-4 w-4" />
                                         Edit
                                     </ContextMenu.Item>
-                                    <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-error">
+                                    <ContextMenu.Item
+                                        disabled={getLoggedInUserId() !== comment.author.id}
+                                        className={classNames({
+                                            "flex text-sm gap-3 items-center card flex-row p-2": true,
+                                            "cursor-not-allowed text-error/50": getLoggedInUserId() !== comment.author.id,
+                                            "cursor-pointer hover:bg-base-300 text-error": getLoggedInUserId() === comment.author.id
+                                        })}
+                                        onClick={handleDeleteComment}
+                                    >
                                         <TrashIcon className="h-4 w-4" />
                                         Delete
                                     </ContextMenu.Item>
@@ -187,21 +367,25 @@ const TreeComment = ({
                             </ContextMenu.Portal>
                         </ContextMenu.Root>
                         <div className="flex gap-3 items-center mt-1">
-                            <button className="flex group-hover:text-info duration-100 text-sm font-medium items-center gap-2" onClick={showReply}>
-                                <ChatBubbleLeftIcon className="h-5 w-5" />
-                                Reply
-                            </button>
-                            {avatars.length > 0 && !showReplies && (
-                                <div className="flex gap-2 items-center">
-                                    {avatars.map((e, i) => (
-                                        <div className="h-5 w-5 card" key={i}>
-                                            <ImageLoader src={e} className="h-5 w-5 object-cover card" />
-                                        </div>
-                                    ))}
-                                    <button className="group-hover:text-info duration-100 text-sm font-medium" onClick={() => setShowReplies(true)}>
-                                        {comment.child_count} Replies
+                            {!showUpdateEditor && (
+                                <>
+                                    <button className="flex group-hover:text-info duration-100 text-sm font-medium items-center gap-2" onClick={showReply}>
+                                        <ChatBubbleLeftIcon className="h-5 w-5" />
+                                        Reply
                                     </button>
-                                </div>
+                                    {avatars.length > 0 && !showReplies && (
+                                        <div className="flex gap-2 items-center">
+                                            {avatars.map((e, i) => (
+                                                <div className="h-5 w-5 card" key={i}>
+                                                    <ImageLoader src={e} className="h-5 w-5 object-cover card" />
+                                                </div>
+                                            ))}
+                                            <button className="group-hover:text-info duration-100 text-sm font-medium" onClick={() => setShowReplies(true)}>
+                                                {comment.child_count} Replies
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>
@@ -216,7 +400,7 @@ const TreeComment = ({
                                     animate={{ y: 0 }}
                                     exit={{ y: -10 }}
                                 >
-                                    <ChildComment comment={e} />
+                                    <ChildComment comment={e} limit={limit} queryKey={queryKey} referenceId={referenceId} />
                                 </motion.div>
                             ))}
                         </div>
@@ -243,8 +427,8 @@ const TreeComment = ({
                                 <div>
                                     <TextareaAutosize
                                         ref={replyEditorRef}
-                                        rows={1}
-                                        className="textarea textarea-bordered w-full resize-none"
+                                        minRows={1}
+                                        className="textarea textarea-bordered w-full resize-none custom-scrollbar"
                                         placeholder="Write a reply..."
                                         value={replyDetails}
                                         onChange={e => setReplyDetails(e.target.value)}
@@ -280,7 +464,7 @@ const CommentList = ({
     comments: ParentCommentType[],
     limit: number,
     toogleLimit: () => void,
-    submitReply: ({data}:{data: AddCommentType}) => Promise<DataResponseType>,
+    submitReply: ({ data }: { data: AddCommentType }) => Promise<DataResponseType>,
     referenceId: number,
     queryKey: string
 }) => {
@@ -288,7 +472,15 @@ const CommentList = ({
         <section>
             <ul className="mt-5">
                 {comments.map((comment, i) => (
-                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} submitReply={submitReply} referenceId={referenceId} queryKey={queryKey} />
+                    <TreeComment
+                        comment={comment}
+                        key={comment.id}
+                        last={comments.length - 1 === i}
+                        submitReply={submitReply}
+                        referenceId={referenceId}
+                        queryKey={queryKey}
+                        limit={limit}
+                    />
                 ))}
             </ul>
 

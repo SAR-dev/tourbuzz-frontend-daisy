@@ -1,6 +1,6 @@
 import { DataResponseType } from "@src/types/base";
 import api from "./base";
-import { AddCommentType, ParentCommentType } from "@src/types/comment";
+import { AddCommentType, ParentCommentType, UpdateCommentType } from "@src/types/comment";
 
 export interface CommentListDataType {
     data: ParentCommentType[]
@@ -129,6 +129,28 @@ export const addCommentByPlaceId = ({ data }: { data: AddCommentType }): Promise
 export const addCommentByOrganizerId = ({ data }: { data: AddCommentType }): Promise<DataResponseType> => {
     return api
         .post(`/user/comments/organizer`, data)
+        .then((res) => {
+            return { data: res.data };
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export const updateComment = ({ data }: { data: UpdateCommentType }): Promise<DataResponseType> => {
+    return api
+        .put(`/user/comments`, data)
+        .then((res) => {
+            return { data: res.data };
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export const deleteComment = ({ id }: { id: number }): Promise<DataResponseType> => {
+    return api
+        .delete(`/user/comments/${id}`)
         .then((res) => {
             return { data: res.data };
         })

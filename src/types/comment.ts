@@ -34,3 +34,8 @@ export interface AddCommentType {
     parent_id: number
     details: string
 }
+
+export interface UpdateCommentType {
+    id: number
+    details: string
+}
