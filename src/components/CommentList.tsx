@@ -76,7 +76,7 @@ const TreeComment = ({
         setShowReplyEditor: (props: boolean) => void
     }) => void
 }) => {
-    const replyEditorRef = useRef<HTMLDivElement>(null);
+    const replyEditorRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState(false)
     const [replyDetails, setReplyDetails] = useState("")
     const [showReplyEditor, setShowReplyEditor] = useState(false)
@@ -88,7 +88,12 @@ const TreeComment = ({
     const { run } = useDebounceFn(
         () => {
             if (replyEditorRef.current) {
-                replyEditorRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+                const elementRect = replyEditorRef.current.getBoundingClientRect();
+                const absoluteElementTop = elementRect.top + window.scrollY;
+                const middle = absoluteElementTop - (window.innerHeight / 2);
+                window.scrollTo({ top: middle, behavior: "smooth" });
+
+                replyEditorRef.current.focus()
             }
         },
         {
@@ -184,7 +189,7 @@ const TreeComment = ({
                     </AnimatePresence>
                 )}
                 {showReplyEditor && (
-                    <div className="relative pl-16 mt-8" ref={replyEditorRef}>
+                    <div className="relative pl-16 mt-8">
                         <span
                             className="absolute left-8 top-7 h-[1.5px] w-16 bg-base-300 group-hover:bg-info/50"
                         />
@@ -203,6 +208,7 @@ const TreeComment = ({
                                 </div>
                                 <div>
                                     <TextareaAutosize
+                                        ref={replyEditorRef}
                                         rows={1}
                                         className="textarea textarea-bordered w-full resize-none"
                                         placeholder="Write a reply..."
