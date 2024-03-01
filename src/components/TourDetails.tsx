@@ -114,39 +114,6 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             })
     }
 
-    const handleReplySubmit = ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => {
-        if (!isLoggedIn()) {
-            setIsOpenSignIn(true)
-            return;
-        }
-        if (props.replyDetails.length < 2) return;
-
-        const data: AddCommentType = {
-            reference_id: tour.id,
-            parent_id: props.parent_id,
-            details: props.replyDetails
-        }
-        props.setLoading(true)
-        addCommentByTourId({ data })
-            .then(() => {
-                props.setReplyDetails("")
-                props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.TOUR, tour.id] })
-            })
-            .catch((err) => {
-                toast.error(err.response.data.message)
-            })
-            .finally(() => {
-                props.setLoading(false)
-            })
-    }
-
     const toogleLimit = () => {
         if(commentLimit === 0){
             setCommentLimit(constants.COMMENT_LIMIT.ARTICLE)
@@ -312,7 +279,14 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 </button>
                             </div>
                             {tourComments.data && (
-                                <CommentList comments={tourComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} submitReply={handleReplySubmit} />
+                                <CommentList 
+                                    comments={tourComments.data.data} 
+                                    limit={commentLimit} 
+                                    toogleLimit={toogleLimit} 
+                                    submitReply={addCommentByTourId} 
+                                    referenceId={tour.id} 
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.TOUR} 
+                                />
                             )}
                         </div>
                     </div>

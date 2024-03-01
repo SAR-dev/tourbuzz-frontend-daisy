@@ -77,40 +77,7 @@ const HotelDetails = ({ hotel }: { hotel: HotelType }) => {
                 setIsLoading(false)
             })
     }
-
-    const handleReplySubmit = ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => {
-        if (!isLoggedIn()) {
-            setIsOpenSignIn(true)
-            return;
-        }
-        if (props.replyDetails.length < 2) return;
-
-        const data: AddCommentType = {
-            reference_id: hotel.id,
-            parent_id: props.parent_id,
-            details: props.replyDetails
-        }
-        props.setLoading(true)
-        addCommentByHotelId({ data })
-            .then(() => {
-                props.setReplyDetails("")
-                props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.HOTEL, hotel.id] })
-            })
-            .catch((err) => {
-                toast.error(err.response.data.message)
-            })
-            .finally(() => {
-                props.setLoading(false)
-            })
-    }
-
+    
     const toogleLimit = () => {
         if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.HOTEL)
@@ -160,7 +127,14 @@ const HotelDetails = ({ hotel }: { hotel: HotelType }) => {
                                 </button>
                             </div>
                             {hotelComments.data && (
-                                <CommentList comments={hotelComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} submitReply={handleReplySubmit} />
+                                <CommentList 
+                                    comments={hotelComments.data.data} 
+                                    limit={commentLimit} 
+                                    toogleLimit={toogleLimit} 
+                                    submitReply={addCommentByHotelId} 
+                                    referenceId={hotel.id} 
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.HOTEL} 
+                                />
                             )}
                         </div>
                     </div>

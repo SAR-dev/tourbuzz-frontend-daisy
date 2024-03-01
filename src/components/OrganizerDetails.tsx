@@ -78,39 +78,6 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
             })
     }
 
-    const handleReplySubmit = ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => {
-        if (!isLoggedIn()) {
-            setIsOpenSignIn(true)
-            return;
-        }
-        if (props.replyDetails.length < 2) return;
-
-        const data: AddCommentType = {
-            reference_id: organizer.id,
-            parent_id: props.parent_id,
-            details: props.replyDetails
-        }
-        props.setLoading(true)
-        addCommentByOrganizerId({ data })
-            .then(() => {
-                props.setReplyDetails("")
-                props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.ORGANIZER, organizer.id] })
-            })
-            .catch((err) => {
-                toast.error(err.response.data.message)
-            })
-            .finally(() => {
-                props.setLoading(false)
-            })
-    }
-
     const toogleLimit = () => {
         if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.ORGANIZER)
@@ -158,7 +125,14 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                                 </button>
                             </div>
                             {organizerComments.data && (
-                                <CommentList comments={organizerComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} submitReply={handleReplySubmit} />
+                                <CommentList 
+                                    comments={organizerComments.data.data} 
+                                    limit={commentLimit} 
+                                    toogleLimit={toogleLimit} 
+                                    submitReply={addCommentByOrganizerId} 
+                                    referenceId={organizer.id} 
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.ORGANIZER} 
+                                />
                             )}
                         </div>
                     </div>

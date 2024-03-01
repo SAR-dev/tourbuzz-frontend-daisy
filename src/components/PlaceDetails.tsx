@@ -78,39 +78,6 @@ const PlaceDetails = ({ place }: { place: PlaceType }) => {
             })
     }
 
-    const handleReplySubmit = ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => {
-        if (!isLoggedIn()) {
-            setIsOpenSignIn(true)
-            return;
-        }
-        if (props.replyDetails.length < 2) return;
-
-        const data: AddCommentType = {
-            reference_id: place.id,
-            parent_id: props.parent_id,
-            details: props.replyDetails
-        }
-        props.setLoading(true)
-        addCommentByPlaceId({ data })
-            .then(() => {
-                props.setReplyDetails("")
-                props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.PLACE, place.id] })
-            })
-            .catch((err) => {
-                toast.error(err.response.data.message)
-            })
-            .finally(() => {
-                props.setLoading(false)
-            })
-    }
-
     const toogleLimit = () => {
         if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.PLACE)
@@ -162,7 +129,14 @@ const PlaceDetails = ({ place }: { place: PlaceType }) => {
                                 </button>
                             </div>
                             {placeComments.data && (
-                                <CommentList comments={placeComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} submitReply={handleReplySubmit} />
+                                <CommentList 
+                                    comments={placeComments.data.data} 
+                                    limit={commentLimit} 
+                                    toogleLimit={toogleLimit} 
+                                    submitReply={addCommentByPlaceId} 
+                                    referenceId={place.id} 
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.PLACE} 
+                                />
                             )}
                         </div>
                     </div>

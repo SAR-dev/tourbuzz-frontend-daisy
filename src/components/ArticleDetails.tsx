@@ -97,39 +97,6 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
             })
     }
 
-    const handleReplySubmit = ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => {
-        if (!isLoggedIn()) {
-            setIsOpenSignIn(true)
-            return;
-        }
-        if (props.replyDetails.length < 2) return;
-
-        const data: AddCommentType = {
-            reference_id: article.id,
-            parent_id: props.parent_id,
-            details: props.replyDetails
-        }
-        props.setLoading(true)
-        addCommentByArticleId({ data })
-            .then(() => {
-                props.setReplyDetails("")
-                props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.ARTICLE, article.id] })
-            })
-            .catch((err) => {
-                toast.error(err.response.data.message)
-            })
-            .finally(() => {
-                props.setLoading(false)
-            })
-    }
-
     const toogleLimit = () => {
         if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.ARTICLE)
@@ -190,7 +157,14 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                                 </button>
                             </div>
                             {articleComments.data && (
-                                <CommentList comments={articleComments.data.data} limit={commentLimit} toogleLimit={toogleLimit} submitReply={handleReplySubmit} />
+                                <CommentList 
+                                    comments={articleComments.data.data} 
+                                    limit={commentLimit} 
+                                    toogleLimit={toogleLimit} 
+                                    submitReply={addCommentByArticleId} 
+                                    referenceId={article.id} 
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.ARTICLE} 
+                                />
                             )}
                         </div>
                     </div>

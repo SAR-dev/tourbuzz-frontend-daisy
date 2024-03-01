@@ -1,6 +1,6 @@
 import { formatDate, parrseToNDigit } from "@src/functions/helpers"
 import { constants } from "@src/stores/constantStore"
-import { ChildCommentType, ParentCommentType } from "@src/types/comment"
+import { AddCommentType, ChildCommentType, ParentCommentType } from "@src/types/comment"
 import TimeAgo from 'react-timeago'
 import ImageLoader from "./ImageLoader"
 import { useMemo, useRef, useState } from "react"
@@ -10,9 +10,15 @@ import { AnimatePresence, motion } from "framer-motion"
 import TextareaAutosize from 'react-textarea-autosize';
 import * as ContextMenu from '@radix-ui/react-context-menu';
 import { ClipboardIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid"
+import { useAuthStore } from "@src/stores/authStore"
+import { useSignInModalStore } from "@src/stores/signInModalStore"
+import { useQueryClient } from "@tanstack/react-query"
+import { DataResponseType } from "@src/types/base"
+import toast from "react-hot-toast"
 
 const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     const formattedDate = formatDate(comment.created_at)
+
     return (
         <div className="relative pl-16">
             <span
@@ -64,18 +70,19 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
 const TreeComment = ({
     comment,
     last,
-    submitReply
+    submitReply,
+    referenceId,
+    queryKey
 }: {
     comment: ParentCommentType,
     last: boolean,
-    submitReply: ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => void
+    submitReply: ({data}:{data: AddCommentType}) => Promise<DataResponseType>,
+    referenceId: number,
+    queryKey: string
 }) => {
+    const queryClient = useQueryClient();
+    const { isLoggedIn } = useAuthStore()
+    const { setIsOpenSignIn } = useSignInModalStore();
     const replyEditorRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState(false)
     const [replyDetails, setReplyDetails] = useState("")
@@ -105,6 +112,33 @@ const TreeComment = ({
         setShowReplies(true)
         setShowReplyEditor(true)
         run()
+    }
+
+    const handleReplySubmit = () => {
+        if (!isLoggedIn()) {
+            setIsOpenSignIn(true)
+            return;
+        }
+        if (replyDetails.length < 2) return;
+
+        const data: AddCommentType = {
+            reference_id: referenceId,
+            parent_id: comment.id,
+            details: replyDetails
+        }
+        setIsLoading(true)
+        submitReply({data})
+            .then(() => {
+                setReplyDetails("")
+                setShowReplyEditor(false)
+                queryClient.invalidateQueries({ queryKey: [queryKey, referenceId] })
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     return (
@@ -217,7 +251,7 @@ const TreeComment = ({
                                         disabled={isLoading}
                                     />
                                     <div className="flex gap-3 mt-1">
-                                        <button className="btn btn-info btn-sm" disabled={isLoading} onClick={() => submitReply({ parent_id: comment.id, setLoading: setIsLoading, replyDetails, setReplyDetails, setShowReplyEditor })}>
+                                        <button className="btn btn-info btn-sm" disabled={isLoading} onClick={handleReplySubmit}>
                                             {isLoading && (
                                                 <div className="loading h-5 w-5" />
                                             )}
@@ -239,24 +273,22 @@ const CommentList = ({
     comments,
     limit,
     toogleLimit,
-    submitReply
+    submitReply,
+    referenceId,
+    queryKey
 }: {
     comments: ParentCommentType[],
     limit: number,
     toogleLimit: () => void,
-    submitReply: ({ ...props }: {
-        parent_id: number,
-        setLoading: (props: boolean) => void,
-        replyDetails: string,
-        setReplyDetails: (props: string) => void,
-        setShowReplyEditor: (props: boolean) => void
-    }) => void
+    submitReply: ({data}:{data: AddCommentType}) => Promise<DataResponseType>,
+    referenceId: number,
+    queryKey: string
 }) => {
     return (
         <section>
             <ul className="mt-5">
                 {comments.map((comment, i) => (
-                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} submitReply={submitReply} />
+                    <TreeComment comment={comment} key={comment.id} last={comments.length - 1 === i} submitReply={submitReply} referenceId={referenceId} queryKey={queryKey} />
                 ))}
             </ul>
 
