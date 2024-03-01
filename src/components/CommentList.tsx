@@ -8,6 +8,8 @@ import { ChatBubbleLeftIcon } from "@heroicons/react/24/outline"
 import { useDebounceFn } from "ahooks"
 import { AnimatePresence, motion } from "framer-motion"
 import TextareaAutosize from 'react-textarea-autosize';
+import * as ContextMenu from '@radix-ui/react-context-menu';
+import { ClipboardIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid"
 
 const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
     const formattedDate = formatDate(comment.created_at)
@@ -32,7 +34,27 @@ const ChildComment = ({ comment }: { comment: ChildCommentType }) => {
                             <TimeAgo minPeriod={60} date={comment.created_at} /> at {parrseToNDigit(formattedDate.hour12, 2)}:{parrseToNDigit(formattedDate.minute, 2)} {formattedDate.period}
                         </div>
                     </div>
-                    <div className="whitespace-pre-line">{comment.details}</div>
+                    <ContextMenu.Root>
+                        <ContextMenu.Trigger>
+                            <div className="whitespace-pre-line">{comment.details}</div>
+                        </ContextMenu.Trigger>
+                        <ContextMenu.Portal>
+                            <ContextMenu.Content className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" sideOffset={5} align="end">
+                                <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info">
+                                    <ClipboardIcon className="h-4 w-4" />
+                                    Copy
+                                </ContextMenu.Item>
+                                <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-primary">
+                                    <PencilIcon className="h-4 w-4" />
+                                    Edit
+                                </ContextMenu.Item>
+                                <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-error">
+                                    <TrashIcon className="h-4 w-4" />
+                                    Delete
+                                </ContextMenu.Item>
+                            </ContextMenu.Content>
+                        </ContextMenu.Portal>
+                    </ContextMenu.Root>
                 </div>
             </div>
         </div>
@@ -104,7 +126,27 @@ const TreeComment = ({
                                 <TimeAgo minPeriod={60} date={comment.created_at} /> at {parrseToNDigit(formattedDate.hour12, 2)}:{parrseToNDigit(formattedDate.minute, 2)} {formattedDate.period}
                             </div>
                         </div>
-                        <div className="whitespace-pre-line">{comment.details}</div>
+                        <ContextMenu.Root>
+                            <ContextMenu.Trigger>
+                                <div className="whitespace-pre-line">{comment.details}</div>
+                            </ContextMenu.Trigger>
+                            <ContextMenu.Portal>
+                                <ContextMenu.Content className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" sideOffset={5} align="end">
+                                    <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info">
+                                        <ClipboardIcon className="h-4 w-4" />
+                                        Copy
+                                    </ContextMenu.Item>
+                                    <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-primary">
+                                        <PencilIcon className="h-4 w-4" />
+                                        Edit
+                                    </ContextMenu.Item>
+                                    <ContextMenu.Item className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-error">
+                                        <TrashIcon className="h-4 w-4" />
+                                        Delete
+                                    </ContextMenu.Item>
+                                </ContextMenu.Content>
+                            </ContextMenu.Portal>
+                        </ContextMenu.Root>
                         <div className="flex gap-3 items-center mt-1">
                             <button className="flex text-info text-sm font-medium items-center gap-2" onClick={showReply}>
                                 <ChatBubbleLeftIcon className="h-5 w-5" />
