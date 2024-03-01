@@ -29,7 +29,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
     const { setIsOpenSignIn } = useSignInModalStore();
     const [commentLimit, setCommentLimit] = useState(constants.COMMENT_LIMIT.ARTICLE)
 
-    const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.ARTICLE_COMMENT_STORE_KEY + article.id, {
+    const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.COMMENT_STORE_KEY.ARTICLE + article.id, {
         defaultValue: ""
     })
     const [isLoading, setIsLoading] = useState(false)
@@ -40,7 +40,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
     })
 
     const articleComments = useQuery<CommentListDataType, Error>({
-        queryKey: ['article-comments', article.id, commentLimit],
+        queryKey: [constants.REACT_QUERY_KEY.COMMENT.ARTICLE, article.id, commentLimit],
         queryFn: () => getCommentsByArticleId({ id: article.id, limit: commentLimit })
     })
 
@@ -86,7 +86,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
         addCommentByArticleId({ data })
             .then(() => {
                 setCommentDetails("")
-                queryClient.invalidateQueries({ queryKey: ['article-comments', article.id] })
+                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.ARTICLE, article.id] })
                 run()
             })
             .catch((err) => {
@@ -120,7 +120,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
             .then(() => {
                 props.setReplyDetails("")
                 props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: ['article-comments', article.id] })
+                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.ARTICLE, article.id] })
             })
             .catch((err) => {
                 toast.error(err.response.data.message)
@@ -173,7 +173,7 @@ const ArticleDetails = ({ article }: { article: ArticleType }) => {
                             </div>
                             <div className="mb-6">
                                 <TextareaAutosize
-                                    rows={6}
+                                    minRows={6}
                                     className="textarea textarea-bordered w-full custom-scrollbar resize-none"
                                     placeholder="Share your thoughts..."
                                     value={commentDetails}

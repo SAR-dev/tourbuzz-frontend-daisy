@@ -1,7 +1,12 @@
 export const constants = {
     EMOJI_STORE_KEY: "emoji",
-    ARTICLE_COMMENT_STORE_KEY: "article_comment_",
-    TOUR_COMMENT_STORE_KEY: "tour_comment_",
+    COMMENT_STORE_KEY: {
+        ARTICLE: "article_comment_",
+        TOUR: "tour_comment_",
+        HOTEL: "hotel_comment_",
+        PLACE: "place_comment_",
+        ORGANIZER: "organizer_comment_",
+    },
     THEME_STORE_KEY: "theme",
     JWT_AUTH_KEY: "auth",
     EMOJI_HISTORY_KEY: "emoji_history",
@@ -26,5 +31,17 @@ export const constants = {
     COMMENT_LIMIT: {
         ARTICLE: 5,
         TOUR: 10,
+        HOTEL: 10,
+        PLACE: 10,
+        ORGANIZER: 10,
+    },
+    REACT_QUERY_KEY: {
+        COMMENT: {
+            ARTICLE: "article_comments",
+            TOUR: "tour_comments",
+            HOTEL: "hotel_comments",
+            PLACE: "place_comments",
+            ORGANIZER: "organizer_comments",
+        }
     }
 }

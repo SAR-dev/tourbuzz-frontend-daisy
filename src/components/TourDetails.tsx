@@ -23,7 +23,7 @@ import OrganizerVerification from "./OrganizerVerification";
 import { constants } from "@src/stores/constantStore";
 import { useAuthStore } from "@src/stores/authStore";
 import { useSignInModalStore } from "@src/stores/signInModalStore";
-import { CommentListDataType, addCommentByTourId, getCommentsByToureId } from "@src/api/comment";
+import { CommentListDataType, addCommentByTourId, getCommentsByTourId } from "@src/api/comment";
 import { useDebounceFn } from "ahooks";
 import useLocalStorageState from "use-local-storage-state";
 import { AddCommentType } from "@src/types/comment";
@@ -42,7 +42,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     const [showHighlights, setShowHighlights] = useState(false)
     const [showPlaces, setShowPlaces] = useState(false)
 
-    const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.TOUR_COMMENT_STORE_KEY + tour.id, {
+    const [commentDetails, setCommentDetails] = useLocalStorageState<string>(constants.COMMENT_STORE_KEY.TOUR + tour.id, {
         defaultValue: ""
     })
     const [isLoading, setIsLoading] = useState(false)
@@ -57,8 +57,8 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     })
 
     const tourComments = useQuery<CommentListDataType, Error>({
-        queryKey: ['tour-comments', tour.id, commentLimit],
-        queryFn: () => getCommentsByToureId({ id: tour.id, limit: commentLimit })
+        queryKey: [constants.REACT_QUERY_KEY.COMMENT.TOUR, tour.id, commentLimit],
+        queryFn: () => getCommentsByTourId({ id: tour.id, limit: commentLimit })
     })
 
     const reactionSummary = getTopEmojiReactionsWithSummary(tourReactions.data?.data ?? [], 12)
@@ -103,7 +103,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
         addCommentByTourId({ data })
             .then(() => {
                 setCommentDetails("")
-                queryClient.invalidateQueries({ queryKey: ['tour-comments', tour.id] })
+                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.TOUR, tour.id] })
                 run()
             })
             .catch((err) => {
@@ -137,7 +137,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             .then(() => {
                 props.setReplyDetails("")
                 props.setShowReplyEditor(false)
-                queryClient.invalidateQueries({ queryKey: ['tour-comments', tour.id] })
+                queryClient.invalidateQueries({ queryKey: [constants.REACT_QUERY_KEY.COMMENT.TOUR, tour.id] })
             })
             .catch((err) => {
                 toast.error(err.response.data.message)
@@ -295,7 +295,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                             </div>
                             <div className="mb-6">
                                 <TextareaAutosize
-                                    rows={6}
+                                    minRows={6}
                                     className="textarea textarea-bordered w-full custom-scrollbar resize-none"
                                     placeholder="Share your thoughts..."
                                     value={commentDetails}
