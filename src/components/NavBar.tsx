@@ -12,11 +12,11 @@ const NavBar = () => {
                     </div>
                     <div className="navbar-center flex">
                         <ul className="menu menu-horizontal px-1 gap-1 font-semibold">
-                            <li><a>Tours</a></li>
-                            <li><a>Organizers</a></li>
-                            <li><a>Hotels</a></li>
-                            <li><a>Places</a></li>
-                            <li><a>Articles</a></li>
+                            <li className="active:bg-base-300"><Link to="/tours">Tours</Link></li>
+                            <li className="active:bg-base-300"><Link to="/organizers">Organizers</Link></li>
+                            <li className="active:bg-base-300"><Link to="/hotels" >Hotels</Link></li>
+                            <li className="active:bg-base-300"><Link to="/places">Places</Link></li>
+                            <li className="active:bg-base-300"><Link to="/articles">Articles</Link></li>
                         </ul>
                     </div>
                     <div className="navbar-end gap-1">

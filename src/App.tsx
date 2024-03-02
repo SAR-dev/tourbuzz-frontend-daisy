@@ -16,6 +16,11 @@ import NotFound from "./pages/NotFound";
 import Place from "./pages/places/Place";
 import Organizer from "./pages/organizers/Organizer";
 import Hotel from "./pages/hotels/Hotel";
+import HotelList from "./pages/hotels/HotelList";
+import TourList from "./pages/tours/TourList";
+import ArticleList from "./pages/articles/ArticleList";
+import OrganizerList from "./pages/organizers/OrganizerList";
+import PlaceList from "./pages/places/PlaceList";
 
 const queryClient = new QueryClient()
 
@@ -42,20 +47,40 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
+    path: "/articles",
+    element: <ArticleList />,
+  },
+  {
     path: "/articles/:slug",
     element: <Article />,
+  },
+  {
+    path: "/tours",
+    element: <TourList />,
   },
   {
     path: "/tours/:slug",
     element: <Tour />,
   },
   {
+    path: "/places",
+    element: <PlaceList />,
+  },
+  {
     path: "/places/:id",
     element: <Place />,
   },
   {
+    path: "/hotels",
+    element: <HotelList />,
+  },
+  {
     path: "/hotels/:id",
     element: <Hotel />,
+  },
+  {
+    path: "/organizers",
+    element: <OrganizerList />,
   },
   {
     path: "/organizers/:username",

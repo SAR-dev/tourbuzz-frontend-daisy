@@ -142,3 +142,7 @@ export function trimStringToNChars(str: string, n: number): string {
         return str.slice(0, n) + '...';
     }
 }
+
+export function getSortedArray(inputArray: number[]) {
+    return Array.from(new Set(inputArray)).sort((a, b) => a - b);
+}

@@ -6,6 +6,7 @@ import { PlaceListDataType, getPopularPlaces } from "@src/api/place"
 import { TourListDataType, getUpcomingTours } from "@src/api/tour"
 import ArticleCard from "@src/components/ArticleCard"
 import HotelCard from "@src/components/HotelCard"
+import NoResultFound from "@src/components/NoResultFound"
 import OrganizerCard from "@src/components/OrganizerCard"
 import PlaceCard from "@src/components/PlaceCard"
 import Title from "@src/components/Title"
@@ -126,6 +127,9 @@ const Home = () => {
               <div className="mb-10">
                 <Title to="/tours">Upcoming Tours ✈️</Title>
               </div>
+              {upcomingTours.data.data.length === 0 && (
+                <NoResultFound subtitle="Currently there are no upcoming tours. Please come back later." />
+              )}
               <div className="grid grid-cols-1 gap-8">
                 {upcomingTours.data.data.map((tour, i) => (
                   <TourCard tour={tour} key={i} />
@@ -139,6 +143,9 @@ const Home = () => {
               <div className="mb-10">
                 <Title to="/hotels">Relaxation and Dining Destinations 🛏️</Title>
               </div>
+              {randomHotels.data.data.length === 0 && (
+                <NoResultFound />
+              )}
               <div className="grid grid-cols-4 gap-8">
                 {randomHotels.data.data.slice(0, getSliceSize({ size: randomHotels.data.data.length, multiple: 4 })).map((hotel, i) => (
                   <HotelCard hotel={hotel} key={i} />
@@ -152,6 +159,9 @@ const Home = () => {
               <div className="mb-10">
                 <Title to="/places">Where to next 🥳 ?</Title>
               </div>
+              {popularPlaces.data.data.length === 0 && (
+                <NoResultFound />
+              )}
               <div className="grid grid-cols-6 gap-8">
                 {popularPlaces.data.data.slice(0, getSliceSize({ size: popularPlaces.data.data.length, multiple: 6 })).map((place, i) => (
                   <PlaceCard place={place} key={i} />
@@ -165,6 +175,9 @@ const Home = () => {
               <div className="mb-10">
                 <Title to="/articles">Fresh ideas for fun 🤯</Title>
               </div>
+              {latestArticles.data.data.length === 0 && (
+                <NoResultFound />
+              )}
               <div className="grid grid-cols-3 gap-8">
                 {latestArticles.data.data.slice(0, getSliceSize({ size: latestArticles.data.data.length, multiple: 3 })).map((article, i) => (
                   <ArticleCard article={article} key={i} />
@@ -178,6 +191,9 @@ const Home = () => {
               <div className="mb-10">
                 <Title to="/organizers">Tour Organizers 👨‍🚀</Title>
               </div>
+              {randomOrganizers.data.data.length === 0 && (
+                <NoResultFound />
+              )}
               <div className="grid grid-cols-3 gap-8">
                 {randomOrganizers.data.data.slice(0, getSliceSize({ size: randomOrganizers.data.data.length, multiple: 3 })).map((organizer, i) => (
                   <OrganizerCard organizer={organizer} key={i} />

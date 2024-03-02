@@ -10,6 +10,18 @@ export interface TourDataType {
     data: TourType
 }
 
+export interface TourPaginatedDataType {
+    data: {
+        data: TourListType[]
+        page_no: number
+        page_size: number
+        has_prev: boolean
+        has_next: boolean
+        total_result: number
+        total_pages: number
+    }
+}
+
 export const getUpcomingTours = (): Promise<TourListDataType> => {
     return api
         .get("/guest/tours/upcoming")
@@ -57,6 +69,22 @@ export const getTourByHotelId = ({ id }: { id: number }): Promise<TourListDataTy
 export const getTourByOrganizerId = ({ id }: { id: number }): Promise<TourListDataType> => {
     return api
         .get(`/guest/tours/organizer/${id}`)
+        .then((res) => {
+            return { data: res.data };
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export const getTourList = ({ pageNo, pageSize }: { pageNo: number, pageSize: number }): Promise<TourPaginatedDataType> => {
+    return api
+        .get("/guest/tours", {
+            params: {
+                page_no: pageNo,
+                page_size: pageSize
+            }
+        })
         .then((res) => {
             return { data: res.data };
         })
