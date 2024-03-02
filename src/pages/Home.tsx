@@ -95,7 +95,7 @@ const Home = () => {
               <Title>Why choose Us 🤔 ?</Title>
               <div className="flex gap-5">
                 <input type="text" placeholder="Email" className="input input-bordered border-2 placeholder:opacity-50 w-72" />
-                <button className="btn">Get Invitation Link</button>
+                <button className="btn">Send Invitation Link</button>
               </div>
             </div>
             <div className="grid grid-cols-4 gap-8">
