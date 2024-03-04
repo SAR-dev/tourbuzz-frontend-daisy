@@ -1,6 +1,6 @@
 export interface DataResponseType {
-    data: unknown;
-    error?: unknown;
+    data: unknown
+    error?: unknown
 }
 
 export interface HotelType {
@@ -15,6 +15,8 @@ export interface HotelType {
     updated_at: Date
     district: DistrictType
     avatar: ImageType
+    admins: UserType[]
+    staffs: UserType[]
 }
 
 export interface DistrictType {
@@ -40,8 +42,8 @@ export interface ImageType {
     source_url: string
     thumbnail_url: string
     optimized_url: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
 }
 
 export interface AdType {
@@ -51,8 +53,8 @@ export interface AdType {
     link: string
     image_url: string
     active: boolean
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
 }
 
 export interface WriterType {
@@ -64,8 +66,8 @@ export interface WriterType {
     about: string
     contact_no: string
     website: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
     avatar: ImageType
 }
 
@@ -79,8 +81,8 @@ export interface ArticleType {
     summary: string
     md_desc: string
     image_ids: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
     writer: WriterType
     images: ImageType[]
 }
@@ -92,8 +94,8 @@ export interface UserType {
     name: string
     images_id: number
     last_logged_in: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
     avatar: ImageType | null
 }
 
@@ -108,9 +110,11 @@ export interface OrganizerType {
     verification: string
     social_link: string
     contact_no: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
     avatar: ImageType | null
+    admins: UserType[]
+    staffs: UserType[]
 }
 
 export interface EnquiryListType {
@@ -124,8 +128,8 @@ export interface EnquiryType {
     question: string
     answer?: string
     answered_at?: Date
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
     user: UserType
 }
 
@@ -138,36 +142,36 @@ export interface PlaceType {
     map_link: string
     description: string
     type: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
     district: DistrictType
     avatar: ImageType | null
 }
 
 export interface PackageType {
-    id: number;
-    status: string;
-    tours_id: number;
-    title: string;
+    id: number
+    status: string
+    tours_id: number
+    title: string
     included: string
     excluded: string
     conditions: string
-    price: number;
-    created_at: Date;
-    updated_at: Date;
+    price: number
+    created_at: Date
+    updated_at: Date
 }
 
 export interface TourLogType {
-    id: number;
-    status: string;
-    tours_id: number;
+    id: number
+    status: string
+    tours_id: number
     hotels_id: number
-    title: string;
-    description: string;
-    date: Date;
-    image_ids: string;
-    created_at: Date;
-    updated_at: Date;
+    title: string
+    description: string
+    date: Date
+    image_ids: string
+    created_at: Date
+    updated_at: Date
     images: ImageType[]
     places: PlaceType[]
     hotel: HotelType
@@ -194,8 +198,8 @@ export interface TourType {
     finish_at: Date
     last_sell_at: Date
     image_ids: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
 
     organizer: OrganizerType
     avatar: ImageType
@@ -211,6 +215,6 @@ export interface TypeOfTour {
     name: string
     slug: string
     details: string
-    created_at: Date;
-    updated_at: Date;
+    created_at: Date
+    updated_at: Date
 }

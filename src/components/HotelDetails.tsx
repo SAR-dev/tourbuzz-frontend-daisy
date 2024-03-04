@@ -77,7 +77,7 @@ const HotelDetails = ({ hotel }: { hotel: HotelType }) => {
                 setIsLoading(false)
             })
     }
-    
+
     const toogleLimit = () => {
         if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.HOTEL)
@@ -127,27 +127,48 @@ const HotelDetails = ({ hotel }: { hotel: HotelType }) => {
                                 </button>
                             </div>
                             {hotelComments.data && (
-                                <CommentList 
-                                    comments={hotelComments.data.data} 
-                                    limit={commentLimit} 
-                                    toogleLimit={toogleLimit} 
-                                    submitReply={addCommentByHotelId} 
-                                    referenceId={hotel.id} 
-                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.HOTEL} 
+                                <CommentList
+                                    comments={hotelComments.data.data}
+                                    limit={commentLimit}
+                                    toogleLimit={toogleLimit}
+                                    submitReply={addCommentByHotelId}
+                                    referenceId={hotel.id}
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.HOTEL}
                                 />
                             )}
                         </div>
                     </div>
                 </div>
                 <div className="col-span-1">
-                    <div>
-                        <div className="pb-5 mb-5 border-b border-base-300">
-                            <Title>Review</Title>
+                    <div className='grid grid-cols-1 gap-5'>
+                        <div>
+                            <div className="pb-5 mb-5 border-b border-base-300">
+                                <Title>Review</Title>
+                            </div>
+                            <div className='whitespace-pre-line'>
+                                {hotel.review}
+                            </div>
                         </div>
-                        <div className='whitespace-pre-line'>
-                            {hotel.review}
+                        <div>
+                            <div className="pb-5 mb-5 border-b border-base-300">
+                                <Title>Managers</Title>
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                                {hotel.admins.filter(c => c.name?.length > 0).map((e, i) => (
+                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20' key={i}>
+                                        <div className='font-medium'>{e.name}</div>
+                                        <div className='ml-auto card text-xs bg-primary/20 px-2 justify-center'>ADMIN</div>
+                                    </div>
+                                ))}
+                                {hotel.staffs.filter(c => c.name?.length > 0).map((e, i) => (
+                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20' key={i}>
+                                        <div className='font-medium'>{e.name}</div>
+                                        <div className='ml-auto card text-xs bg-secondary/20 px-2 justify-center'>STAFF</div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className="flex gap-5 mt-5">
+                        <div className="flex gap-5">
                             <a href={hotel.map_link} target='_blank' className="link">
                                 Visit Google Map
                             </a>

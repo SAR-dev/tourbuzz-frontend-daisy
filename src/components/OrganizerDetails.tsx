@@ -125,37 +125,59 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                                 </button>
                             </div>
                             {organizerComments.data && (
-                                <CommentList 
-                                    comments={organizerComments.data.data} 
-                                    limit={commentLimit} 
-                                    toogleLimit={toogleLimit} 
-                                    submitReply={addCommentByOrganizerId} 
-                                    referenceId={organizer.id} 
-                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.ORGANIZER} 
+                                <CommentList
+                                    comments={organizerComments.data.data}
+                                    limit={commentLimit}
+                                    toogleLimit={toogleLimit}
+                                    submitReply={addCommentByOrganizerId}
+                                    referenceId={organizer.id}
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.ORGANIZER}
                                 />
                             )}
                         </div>
                     </div>
                 </div>
                 <div className="col-span-1">
-                    <div>
-                        <div className="pb-5 mb-5 border-b border-base-300">
-                            <Title>Summary</Title>
-                        </div>
-                        <div className='whitespace-pre-line'>
-                            {organizer.description}
-                        </div>
-                        <div className="mt-5">
-                            <div className="flex flex-col gap-3">
-                                <div><b>Email: </b> {organizer.email}</div>
-                                <div><b>Contact No: </b> {organizer.contact_no}</div>
-                                <div><b>Verification: </b> {organizer.verification}</div>
-                                <a href={organizer.social_link} target='_blank' className="link">
-                                    Visit Social Site
-                                </a>
+                    <div className='grid grid-cols-1 gap-5'>
+                        <div>
+                            <div className="pb-5 mb-5 border-b border-base-300">
+                                <Title>Summary</Title>
+                            </div>
+                            <div className='whitespace-pre-line'>
+                                {organizer.description}
                             </div>
                         </div>
+                        <div className="flex flex-col gap-3">
+                            <div><b>Email: </b> {organizer.email}</div>
+                            <div><b>Contact No: </b> {organizer.contact_no}</div>
+                            <div><b>Verification: </b> {organizer.verification}</div>
+                        </div>
+                        <div>
+                            <div className="pb-5 mb-5 border-b border-base-300">
+                                <Title>Managers</Title>
+                            </div>
+                            <div className='flex flex-col gap-2'>
+                                {organizer.admins.filter(c => c.name?.length > 0).map((e, i) => (
+                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20' key={i}>
+                                        <div className='font-medium'>{e.name}</div>
+                                        <div className='ml-auto card text-xs bg-primary/20 px-2 justify-center'>ADMIN</div>
+                                    </div>
+                                ))}
+                                {organizer.staffs.filter(c => c.name?.length > 0).map((e, i) => (
+                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20' key={i}>
+                                        <div className='font-medium'>{e.name}</div>
+                                        <div className='ml-auto card text-xs bg-secondary/20 px-2 justify-center'>STAFF</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex gap-5">
+                            <a href={organizer.social_link} target='_blank' className="link">
+                                Visit Social Site
+                            </a>
+                        </div>
                     </div>
+
                 </div>
                 <div className="col-span-3">
                     <div className="pb-5 mb-5 border-b border-base-300">
