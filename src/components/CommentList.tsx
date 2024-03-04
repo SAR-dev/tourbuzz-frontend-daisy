@@ -13,7 +13,7 @@ import { ClipboardIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/solid"
 import { useAuthStore } from "@src/stores/authStore"
 import { useSignInModalStore } from "@src/stores/signInModalStore"
 import { useQueryClient } from "@tanstack/react-query"
-import { DataResponseType } from "@src/types/base"
+import { DataResponseType, UserType } from "@src/types/base"
 import toast from "react-hot-toast"
 import classNames from "classnames"
 import { deleteComment, updateComment } from "@src/api/comment"
@@ -22,12 +22,16 @@ const ChildComment = ({
     comment,
     limit,
     referenceId,
-    queryKey
+    queryKey,
+    admins,
+    staffs
 }: {
     comment: ChildCommentType,
     limit: number,
     referenceId: number,
     queryKey: string,
+    admins?: number[],
+    staffs?: number[]
 }) => {
     const queryClient = useQueryClient();
     const { getLoggedInUserId } = useAuthStore()
@@ -92,6 +96,12 @@ const ChildComment = ({
                         <div className="text-base-content/70">
                             <TimeAgo minPeriod={60} date={comment.created_at} /> at {parrseToNDigit(formattedDate.hour12, 2)}:{parrseToNDigit(formattedDate.minute, 2)} {formattedDate.period}
                         </div>
+                        {admins?.includes(comment.author.id) && (
+                            <div className='card text-xs bg-primary/20 px-2 justify-center'>ADMIN</div>
+                        )}
+                        {staffs?.includes(comment.author.id) && (
+                            <div className='card text-xs bg-secondary/20 px-2 justify-center'>STAFF</div>
+                        )}
                     </div>
                     <ContextMenu.Root>
                         <ContextMenu.Trigger disabled={showUpdateEditor || comment.deleted}>
@@ -167,14 +177,18 @@ const TreeComment = ({
     submitReply,
     referenceId,
     queryKey,
-    limit
+    limit,
+    admins,
+    staffs
 }: {
     comment: ParentCommentType,
     last: boolean,
     submitReply: ({ data }: { data: AddCommentType }) => Promise<DataResponseType>,
     referenceId: number,
     queryKey: string,
-    limit: number
+    limit: number,
+    admins?: number[],
+    staffs?: number[]
 }) => {
     const queryClient = useQueryClient();
     const { getLoggedInUserId } = useAuthStore()
@@ -295,10 +309,16 @@ const TreeComment = ({
                     </div>
                     <div className="flex flex-col gap-1 w-full">
                         <div className="flex gap-1 items-center">
-                            <div className="font-medium">{comment.author.name} {comment.id}</div>
+                            <div className="font-medium">{comment.author.name}</div>
                             <div className="text-base-content/70">
                                 <TimeAgo minPeriod={60} date={comment.created_at} /> at {parrseToNDigit(formattedDate.hour12, 2)}:{parrseToNDigit(formattedDate.minute, 2)} {formattedDate.period}
                             </div>
+                            {admins?.includes(comment.author.id) && (
+                                <div className='card text-xs bg-primary/20 px-2 justify-center'>ADMIN</div>
+                            )}
+                            {staffs?.includes(comment.author.id) && (
+                                <div className='card text-xs bg-secondary/20 px-2 justify-center'>STAFF</div>
+                            )}
                         </div>
                         <ContextMenu.Root>
                             <ContextMenu.Trigger disabled={showUpdateEditor || comment.deleted}>
@@ -400,7 +420,14 @@ const TreeComment = ({
                                     animate={{ y: 0 }}
                                     exit={{ y: -10 }}
                                 >
-                                    <ChildComment comment={e} limit={limit} queryKey={queryKey} referenceId={referenceId} />
+                                    <ChildComment
+                                        comment={e}
+                                        limit={limit}
+                                        queryKey={queryKey}
+                                        referenceId={referenceId}
+                                        admins={admins}
+                                        staffs={staffs}
+                                    />
                                 </motion.div>
                             ))}
                         </div>
@@ -459,14 +486,18 @@ const CommentList = ({
     toogleLimit,
     submitReply,
     referenceId,
-    queryKey
+    queryKey,
+    admins,
+    staffs
 }: {
     comments: ParentCommentType[],
     limit: number,
     toogleLimit: () => void,
     submitReply: ({ data }: { data: AddCommentType }) => Promise<DataResponseType>,
     referenceId: number,
-    queryKey: string
+    queryKey: string,
+    admins?: UserType[],
+    staffs?: UserType[]
 }) => {
     return (
         <section>
@@ -480,6 +511,8 @@ const CommentList = ({
                         referenceId={referenceId}
                         queryKey={queryKey}
                         limit={limit}
+                        admins={admins?.map(e => e.id)}
+                        staffs={staffs?.map(e => e.id)}
                     />
                 ))}
             </ul>

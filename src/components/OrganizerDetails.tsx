@@ -132,6 +132,8 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                                     submitReply={addCommentByOrganizerId}
                                     referenceId={organizer.id}
                                     queryKey={constants.REACT_QUERY_KEY.COMMENT.ORGANIZER}
+                                    admins={organizer.admins}
+                                    staffs={organizer.staffs}
                                 />
                             )}
                         </div>
@@ -158,13 +160,13 @@ const OrganizerDetails = ({ organizer }: { organizer: OrganizerType }) => {
                             </div>
                             <div className='flex flex-col gap-2'>
                                 {organizer.admins.filter(c => c.name?.length > 0).map((e, i) => (
-                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20' key={i}>
+                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20 items-center' key={i}>
                                         <div className='font-medium'>{e.name}</div>
                                         <div className='ml-auto card text-xs bg-primary/20 px-2 justify-center'>ADMIN</div>
                                     </div>
                                 ))}
                                 {organizer.staffs.filter(c => c.name?.length > 0).map((e, i) => (
-                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20' key={i}>
+                                    <div className='card border border-base-300 flex-row py-2 px-4 bg-info/20 items-center' key={i}>
                                         <div className='font-medium'>{e.name}</div>
                                         <div className='ml-auto card text-xs bg-secondary/20 px-2 justify-center'>STAFF</div>
                                     </div>

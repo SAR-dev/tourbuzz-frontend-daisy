@@ -286,6 +286,8 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     submitReply={addCommentByTourId} 
                                     referenceId={tour.id} 
                                     queryKey={constants.REACT_QUERY_KEY.COMMENT.TOUR} 
+                                    admins={tour.organizer.admins}
+                                    staffs={tour.organizer.staffs}
                                 />
                             )}
                         </div>
