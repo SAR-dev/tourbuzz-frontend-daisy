@@ -8,10 +8,10 @@ const MainToaster = () => {
             toastOptions={{
                 duration: 5000,
                 success: {
-                    className: "bg-base-100 text-success"
+                    className: "bg-success text-success-content"
                 },
                 error: {
-                    className: "bg-base-100 text-error"
+                    className: "bg-error text-error-content"
                 },
                 loading: {
                     className: "bg-base-100 text-base-content"
