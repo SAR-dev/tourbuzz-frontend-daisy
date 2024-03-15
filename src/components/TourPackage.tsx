@@ -4,7 +4,6 @@ import MarkdownRenderer from './MarkdownRenderer'
 import classNames from 'classnames'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import Modal from './Modal';
-import { WalletIcon } from '@heroicons/react/24/outline';
 import { parsePrice } from '@src/functions/helpers';
 
 const generateTicketDetails = ({ price }: { price: number }) => (`
@@ -23,7 +22,6 @@ const generateTicketDetails = ({ price }: { price: number }) => (`
 const TourPackage = ({ pac }: { pac: PackageType }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isChecked, setIsChecked] = useState(false)
 
     const handleOpenIndex = (index: number) => {
         setOpenIndex(index === openIndex ? null : index)
@@ -87,12 +85,8 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                         <ArrowLeftIcon className='h-5 w-5' />
                         Go Back
                     </button>
-                    <button className={classNames({
-                        "btn-accent btn": true,
-                        "btn-disabled": !isChecked
-                    })}>
-                        Proceed to Payment
-                        <WalletIcon className='h-5 w-5' />
+                    <button className="btn-accent btn">
+                        Purchase Ticket ({parsePrice(pac.price)} TK)
                     </button>
                 </div>
             }>
@@ -130,12 +124,6 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                                 <MarkdownRenderer md_text={generateTicketDetails({ price: pac.price })} />
                             </div>
                         </div>
-                    </div>
-                    <div className="form-control w-fit mt-3">
-                        <label className="label cursor-pointer">
-                            <input type="checkbox" checked={isChecked} onChange={e => setIsChecked(e.target.checked)} className="checkbox" />
-                            <span className="label-text ml-2">I have read the terms and conditions and I agree to pay <b>{parsePrice(pac.price)} TK</b> to purchase thic package.</span>
-                        </label>
                     </div>
                 </div>
             </Modal>
