@@ -1,4 +1,3 @@
-import { BookmarkIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/24/outline";
 import ImageLoader from "./ImageLoader";
 import { Link } from "react-router-dom";
 import { TourListType } from "@src/types/tour";

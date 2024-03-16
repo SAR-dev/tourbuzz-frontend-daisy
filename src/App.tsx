@@ -21,6 +21,7 @@ import TourList from "./pages/tours/TourList";
 import ArticleList from "./pages/articles/ArticleList";
 import OrganizerList from "./pages/organizers/OrganizerList";
 import PlaceList from "./pages/places/PlaceList";
+import PurchaseTourPackage from "./pages/purchase/PurchaseTourPackage";
 
 const queryClient = new QueryClient()
 
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
   {
     path: "/chat/enquiry",
     element: <Enquiry />
+  },
+  {
+    path: "/purchase/tour-package/:id",
+    element: <PurchaseTourPackage />
   },
   {
     path: "*",

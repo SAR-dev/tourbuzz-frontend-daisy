@@ -326,9 +326,9 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     selectedIndex={selectedIndex}
                                     setSelectedIndex={setSelectedIndex}
                                 />
-                                <button className="btn btn-accent w-full mt-2">
+                                <Link to={`/purchase/tour-package/${tour.packages[selectedIndex].id}`} className="btn btn-accent w-full mt-2">
                                     Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

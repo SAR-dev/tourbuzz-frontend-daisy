@@ -45,7 +45,6 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@tanstack/react-query-devtools": "^5.18.1",
-    "@types/human-number": "^1.0.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/react-modal-image": "^2.6.3",
