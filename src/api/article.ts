@@ -9,7 +9,7 @@ export interface ArticleDataType {
     data: ArticleType
 }
 
-export interface ArticlerPaginatedDataType {
+export interface ArticlePaginatedDataType {
     data: {
         data: ArticleType[]
         page_no: number
@@ -43,7 +43,7 @@ export const getArticleBySlug = ({ slug }: { slug: string }): Promise<ArticleDat
         });
 }
 
-export const getArticleList = ({ pageNo, pageSize }: { pageNo: number, pageSize: number }): Promise<ArticlerPaginatedDataType> => {
+export const getArticleList = ({ pageNo, pageSize }: { pageNo: number, pageSize: number }): Promise<ArticlePaginatedDataType> => {
     return api
         .get("/guest/articles", {
             params: {

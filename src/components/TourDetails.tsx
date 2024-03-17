@@ -7,7 +7,7 @@ import TabList from "@src/components/TabList"
 import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
 import { formatDate, getTopEmojiReactionsWithSummary, parrseToNDigit, parsePrice } from "@src/functions/helpers";
-import { TourType } from "@src/types/base";
+import { InvoiceCreateReq, TourType } from "@src/types/base";
 import classNames from "classnames";
 import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
@@ -29,6 +29,7 @@ import useLocalStorageState from "use-local-storage-state";
 import { AddCommentType } from "@src/types/comment";
 import CommentList from "./CommentList";
 import TextareaAutosize from 'react-textarea-autosize';
+import { bookInvoice } from "@src/api/package";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const queryClient = useQueryClient();
@@ -122,6 +123,20 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             setCommentLimit(0)
             run()
         }
+    }
+
+    const bookTicket = (id: number) => {
+        const data: InvoiceCreateReq = {
+            packages_id: id,
+            ticket_amount: 1
+        }
+        bookInvoice({ data })
+            .then(() => {
+                toast.success("Ticket has been booked.")
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+            })
     }
 
     return (
@@ -326,9 +341,9 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     selectedIndex={selectedIndex}
                                     setSelectedIndex={setSelectedIndex}
                                 />
-                                <Link to={`/purchase/tour-package/${tour.packages[selectedIndex].id}`} className="btn btn-accent w-full mt-2">
-                                    Purchase Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
-                                </Link>
+                                <button className="btn btn-accent w-full mt-2" onClick={() => bookTicket(tour.packages[selectedIndex].id)}>
+                                    Book Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
+                                </button>
                             </div>
                         </div>
                     </div>

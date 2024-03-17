@@ -1,4 +1,4 @@
-import { PackageType } from '@src/types/base'
+import { InvoiceCreateReq, PackageType } from '@src/types/base'
 import { useState } from 'react';
 import MarkdownRenderer from './MarkdownRenderer'
 import classNames from 'classnames'
@@ -6,16 +6,36 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import Modal from './Modal';
 import { parsePrice } from '@src/functions/helpers';
 import TourPackageDetails from './TourPackageDetails';
-import { Link } from 'react-router-dom';
+import { bookInvoice } from '@src/api/package';
+import toast from 'react-hot-toast';
 
 const TourPackage = ({ pac }: { pac: PackageType }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleOpenIndex = (index: number) => {
         setOpenIndex(index === openIndex ? null : index)
     }
-    
+
+    const bookTicket = () => {
+        const data: InvoiceCreateReq = {
+            packages_id: pac.id,
+            ticket_amount: 1
+        }
+        setIsLoading(true)
+        bookInvoice({ data })
+            .then(() => {
+                setIsLoading(false)
+                toast.success("Ticket has been booked.")
+                setIsModalOpen(false)
+            })
+            .catch((err) => {
+                setIsLoading(false)
+                toast.error(err.response.data.message)
+            })
+    }
+
     return (
         <div>
             <div className="join join-vertical w-full">
@@ -74,9 +94,12 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                         <ArrowLeftIcon className='h-5 w-5' />
                         Go Back
                     </button>
-                    <Link to={`/purchase/tour-package/${pac.id}`} className="btn-accent btn">
-                        Purchase Ticket ({parsePrice(pac.price)} TK)
-                    </Link>
+                    <button className={classNames({
+                        "btn-accent btn": true,
+                        "btn-disabled": isLoading
+                    })} onClick={bookTicket}>
+                        Book Ticket ({parsePrice(pac.price)} TK)
+                    </button>
                 </div>
             }>
                 <TourPackageDetails pac={pac} />

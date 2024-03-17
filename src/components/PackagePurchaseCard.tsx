@@ -1,4 +1,4 @@
-import { InvoiceCreateReq, InvoiceCreateRes, PackageType, TourType } from '@src/types/base'
+import { InvoiceCreateReq, PackageType, PaymentType, TourType } from '@src/types/base'
 import ImageLoader from './ImageLoader'
 import { formatDate } from '@src/functions/helpers';
 import { useState } from 'react';
@@ -6,16 +6,16 @@ import { parsePrice } from '@src/functions/helpers';
 import Modal from './Modal';
 import TourPackageDetails from './TourPackageDetails';
 import { Link } from 'react-router-dom';
-import { initializeInvoice } from '@src/api/bkash';
+import { getPaymentLink } from '@src/api/bkash';
 import toast from 'react-hot-toast';
 import useLocalStorageState from 'use-local-storage-state';
 import { constants } from '@src/stores/constantStore';
 
-const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_package: PackageType }) => {
+const PackagePurchaseCard = ({ tour, tour_package, payment }: { tour: TourType, tour_package: PackageType, payment: PaymentType }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [invoiced, setInvoiced] = useState(false)
-    const [invoiceRes, setInvoiceRes] = useLocalStorageState<InvoiceCreateRes | null>(constants.TOUR_TICKET_INVOICE_STORE_KEY + tour_package.id, {
-        defaultValue: null
+    const [paymentLink, setPaymentLink] = useLocalStorageState<string>(constants.TOUR_TICKET_INVOICE_STORE_KEY + tour_package.id, {
+        defaultValue: ""
     })
 
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -26,14 +26,14 @@ const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_pack
     const getInvoiceNo = () => {
         setIsLoading(true)
         const data: InvoiceCreateReq = {
-            packages_id: tour_package.id,
+            invoice_no: payment.invoice_no,
             ticket_amount: noOfTickets
         }
         setIsLoading(true)
-        initializeInvoice({ data })
+        getPaymentLink({ data })
             .then((res) => {
-                const data:InvoiceCreateRes = res.data as InvoiceCreateRes
-                setInvoiceRes(data)
+                const data: string = res.data as string
+                setPaymentLink(data)
                 setInvoiced(true)
             })
             .catch((err) => {
@@ -43,8 +43,8 @@ const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_pack
     }
 
     return (
-        <div className="card border border-base-300">
-            <div className='flex flex-row space-x-5 p-5'>
+        <div className="card border border-base-300 p-5">
+            <div className='flex flex-row space-x-5 mb-5'>
                 <div className="w-36 h-20">
                     <ImageLoader src={tour.avatar.thumbnail_url} className='h-20 w-36 card object-cover' />
                 </div>
@@ -54,7 +54,7 @@ const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_pack
                     <div>From <span className='font-medium'>{startAt.day} {startAt.month_name}, {startAt.year}</span> to <span className='font-medium'>{finishAt.day} {finishAt.month_name}, {finishAt.year}</span></div>
                 </div>
             </div>
-            <div className="flex p-5 border-t border-base-300">
+            <div className="flex">
                 <table className="w-full text-left w-full border border-base-300">
                     <thead className="text-xs uppercase bg-base-300">
                         <tr>
@@ -110,22 +110,25 @@ const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_pack
                 setIsOpen={setIsLoading}
                 title='Payment Processing'
                 maxWidth='30rem'
+                closeButton={invoiced}
             >
                 <div className='flex flex-col gap-3 p-5'>
-                    <div className='flex justify-center'>
-                        <div className="spinner h-10 w-10" />
-                    </div>
                     {!invoiced && (
-                        <div className='text-center text-xl'>
-                            You will be soon redirected to payment page.
-                        </div>
+                        <>
+                            <div className='flex justify-center'>
+                                <div className="spinner h-10 w-10" />
+                            </div>
+                            <div className='text-center text-xl'>
+                                You will be soon redirected to payment page.
+                            </div>
+                        </>
                     )}
                     {invoiced && (
                         <>
-                            <div className='text-center text-xl'>
-                                Click the button below to go to payment page
+                            <div className='text-center mb-5'>
+                                Click the button below to go to payment page. After your payment is completed please wait for a while for the payments to be reflected on our side.
                             </div>
-                            <a className="btn btn-accent" href={invoiceRes?.payment_link} target='_blank'>Payment Page</a>
+                            <a className="btn btn-accent" href={paymentLink} target='_blank'>Payment Page</a>
                         </>
                     )}
                 </div>

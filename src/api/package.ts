@@ -1,16 +1,9 @@
 import api from "./base";
-import { PackageType, TourType } from "@src/types/base";
+import { DataResponseType, InvoiceCreateReq } from "@src/types/base";
 
-export interface PackageDataType {
-    data: {
-        tour_package: PackageType
-        tour: TourType
-    }
-}
-
-export const getPackageById = ({ id }: { id: number }): Promise<PackageDataType> => {
+export const bookInvoice = ({ data }: { data: InvoiceCreateReq }): Promise<DataResponseType> => {
     return api
-        .get(`/user/packages/${id}`)
+        .post("/user/packages/book", data)
         .then((res) => {
             return { data: res.data };
         })

@@ -4,14 +4,14 @@ import NavLayout from "@src/layouts/NavLayout";
 import { useQuery } from "@tanstack/react-query";
 import NoResultFound from "@src/components/NoResultFound";
 import Title from "@src/components/Title";
-import { ArticlerPaginatedDataType, getArticleList } from "@src/api/article";
+import { ArticlePaginatedDataType, getArticleList } from "@src/api/article";
 import ArticleCard from "@src/components/ArticleCard";
 
 const ArticleList = () => {
     const [pageSize, setPageSize] = useState(9)
     const [pageNo, setPageNo] = useState(1)
 
-    const articleListData = useQuery<ArticlerPaginatedDataType, Error>({
+    const articleListData = useQuery<ArticlePaginatedDataType, Error>({
         queryKey: ['articles', pageNo, pageSize],
         queryFn: () => getArticleList({ pageNo, pageSize })
     })
