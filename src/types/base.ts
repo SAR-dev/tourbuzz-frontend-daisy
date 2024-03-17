@@ -157,6 +157,7 @@ export interface PackageType {
     excluded: string
     conditions: string
     price: number
+    threshold: number
     created_at: Date
     updated_at: Date
 }

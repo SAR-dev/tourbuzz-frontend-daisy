@@ -23,7 +23,7 @@ const TicketList = () => {
             <div className="flex flex-col gap-1 flex-1">
               <div className="title text-2xl font-semibold">Your Tickets</div>
               <div className="title">
-                Here are the tickets that you have booked or purchased.
+                Here are the tickets that you have booked or purchased. Grab your tickets before they are sold out.
               </div>
             </div>
           </div>
