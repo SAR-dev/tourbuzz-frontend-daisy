@@ -249,8 +249,3 @@ export interface TicketType {
         tour: TourType
     }
 }
-
-export interface InvoiceCreateReq {
-    invoice_no: string
-    ticket_amount: number
-}

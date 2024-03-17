@@ -1,4 +1,4 @@
-import { InvoiceCreateReq, PackageType } from '@src/types/base'
+import { PackageType } from '@src/types/base';
 import { useState } from 'react';
 import MarkdownRenderer from './MarkdownRenderer'
 import classNames from 'classnames'
@@ -7,9 +7,12 @@ import Modal from './Modal';
 import { parsePrice } from '@src/functions/helpers';
 import TourPackageDetails from './TourPackageDetails';
 import { bookInvoice } from '@src/api/package';
-import toast from 'react-hot-toast';
+import { BookCreateReq } from '@src/types/package';
+import { useNotification } from '@src/contexts/Notification';
+import { NotificationType } from '@src/enums/NotificationType';
 
 const TourPackage = ({ pac }: { pac: PackageType }) => {
+    const notification = useNotification()
     const [openIndex, setOpenIndex] = useState<number | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -19,7 +22,7 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
     }
 
     const bookTicket = () => {
-        const data: InvoiceCreateReq = {
+        const data: BookCreateReq = {
             packages_id: pac.id,
             ticket_amount: 1
         }
@@ -27,12 +30,20 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
         bookInvoice({ data })
             .then(() => {
                 setIsLoading(false)
-                toast.success("Ticket has been booked.")
                 setIsModalOpen(false)
+                notification.add({
+                    title: "Ticket Booked",
+                    message: "Your ticket has been booked. Go to cart to finish payment.",
+                    status: NotificationType.SUCCESS
+                })
             })
-            .catch((err) => {
+            .catch(() => {
                 setIsLoading(false)
-                toast.error(err.response.data.message)
+                notification.add({
+                    title: "Error Occured",
+                    message: "There was an error booking your ticket. Please try again",
+                    status: NotificationType.ERROR
+                })
             })
     }
 

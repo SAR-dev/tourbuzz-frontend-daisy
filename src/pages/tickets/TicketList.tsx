@@ -17,9 +17,21 @@ const TicketList = () => {
   return (
     <AuthNavLayout>
       <div className="container mx-auto px-10 pt-5 pb-16">
+        <section className='mb-5'>
+          <div className="bg-info/20 text-info-content p-10 card flex flex-row items-center gap-5">
+            <div className="text-6xl">📦</div>
+            <div className="flex flex-col gap-1 flex-1">
+              <div className="title text-2xl font-semibold">Your Tickets</div>
+              <div className="title">
+                Here are the tickets that you have booked or purchased.
+              </div>
+            </div>
+          </div>
+        </section>
         <table className="w-full text-left w-full border border-base-300">
-          <thead className="text-xs uppercase bg-base-300">
+          <thead className="text-xs uppercase bg-base-200">
             <tr>
+              <th></th>
               <th scope="col" className="p-3">
                 Invoice No
               </th>
@@ -42,7 +54,7 @@ const TicketList = () => {
                 Total Price
               </th>
               <th scope="col" className='p-3 w-52'>
-                Payment
+                Actions
               </th>
             </tr>
           </thead>

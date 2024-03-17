@@ -1,7 +1,8 @@
+import { BookCreateReq } from "@src/types/package";
 import api from "./base";
-import { DataResponseType, InvoiceCreateReq } from "@src/types/base";
+import { DataResponseType } from "@src/types/base";
 
-export const bookInvoice = ({ data }: { data: InvoiceCreateReq }): Promise<DataResponseType> => {
+export const bookInvoice = ({ data }: { data: BookCreateReq }): Promise<DataResponseType> => {
     return api
         .post("/user/packages/book", data)
         .then((res) => {

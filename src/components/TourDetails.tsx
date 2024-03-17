@@ -7,7 +7,7 @@ import TabList from "@src/components/TabList"
 import Title from "@src/components/Title"
 import TourPlacecard from "@src/components/TourPlacecard"
 import { formatDate, getTopEmojiReactionsWithSummary, parrseToNDigit, parsePrice } from "@src/functions/helpers";
-import { InvoiceCreateReq, TourType } from "@src/types/base";
+import { TourType } from "@src/types/base";
 import classNames from "classnames";
 import { useRef, useState } from "react"
 import ReactPlayer from "react-player"
@@ -30,11 +30,15 @@ import { AddCommentType } from "@src/types/comment";
 import CommentList from "./CommentList";
 import TextareaAutosize from 'react-textarea-autosize';
 import { bookInvoice } from "@src/api/package";
+import { BookCreateReq } from "@src/types/package";
+import { useNotification } from "@src/contexts/Notification";
+import { NotificationType } from "@src/enums/NotificationType";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const queryClient = useQueryClient();
     const { add } = useReaction()
     const commentsRef = useRef<HTMLDivElement>(null);
+    const notification = useNotification()
 
     const { isLoggedIn } = useAuthStore()
     const { setIsOpenSignIn } = useSignInModalStore();
@@ -126,16 +130,24 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     }
 
     const bookTicket = (id: number) => {
-        const data: InvoiceCreateReq = {
+        const data: BookCreateReq = {
             packages_id: id,
             ticket_amount: 1
         }
         bookInvoice({ data })
             .then(() => {
-                toast.success("Ticket has been booked.")
+                notification.add({
+                    title: "Ticket Booked",
+                    message: "Your ticket has been booked. Go to cart to finish payment.",
+                    status: NotificationType.SUCCESS
+                })
             })
-            .catch((err) => {
-                toast.error(err.response.data.message)
+            .catch(() => {
+                notification.add({
+                    title: "Error Occured",
+                    message: "There was an error booking your ticket. Please try again",
+                    status: NotificationType.ERROR
+                })
             })
     }
 

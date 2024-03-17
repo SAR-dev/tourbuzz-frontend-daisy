@@ -1,4 +1,4 @@
-import { InvoiceCreateReq, PackageType, PaymentType, TourType } from '@src/types/base'
+import { PackageType, PaymentType, TourType } from '@src/types/base'
 import ImageLoader from './ImageLoader'
 import { formatDate } from '@src/functions/helpers';
 import { useState } from 'react';
@@ -6,22 +6,31 @@ import { parsePrice } from '@src/functions/helpers';
 import Modal from './Modal';
 import TourPackageDetails from './TourPackageDetails';
 import { Link } from 'react-router-dom';
-import { getPaymentLink } from '@src/api/bkash';
-import toast from 'react-hot-toast';
+import { checkInvoice, getPaymentLink } from '@src/api/bkash';
 import useLocalStorageState from 'use-local-storage-state';
 import { constants } from '@src/stores/constantStore';
+import { InvoiceCreateReq } from '@src/types/package';
+import { ArrowPathIcon, TicketIcon, TrashIcon } from '@heroicons/react/24/outline';
+import classNames from 'classnames';
+import { useNotification } from '@src/contexts/Notification';
+import { NotificationType } from '@src/enums/NotificationType';
+import { useQueryClient } from '@tanstack/react-query';
 
-const PackagePurchaseCard = ({ 
-    tour, 
-    tour_package, 
+const PackagePurchaseCard = ({
+    tour,
+    tour_package,
     payment,
-    ticket_amount 
-}: { 
-    tour: TourType, 
-    tour_package: PackageType, 
+    ticket_amount
+}: {
+    tour: TourType,
+    tour_package: PackageType,
     payment: PaymentType,
-    ticket_amount: number 
+    ticket_amount: number
 }) => {
+    const notification = useNotification()
+    const queryClient = useQueryClient()
+
+    const [isChecking, setIsChecking] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [invoiced, setInvoiced] = useState(false)
     const [paymentLink, setPaymentLink] = useLocalStorageState<string>(constants.TOUR_TICKET_INVOICE_STORE_KEY + tour_package.id, {
@@ -34,7 +43,6 @@ const PackagePurchaseCard = ({
     const finishAt = formatDate(tour.finish_at);
 
     const getInvoiceNo = () => {
-        setIsLoading(true)
         const data: InvoiceCreateReq = {
             invoice_no: payment.invoice_no,
             ticket_amount: noOfTickets
@@ -46,24 +54,47 @@ const PackagePurchaseCard = ({
                 setPaymentLink(data)
                 setInvoiced(true)
             })
-            .catch((err) => {
-                toast.error(err.response.data.message)
+            .catch(() => {
+                notification.add({
+                    title: "Error Occured",
+                    message: "There was an error generating payment link. Please try again",
+                    status: NotificationType.ERROR
+                })
                 setIsLoading(false)
             })
     }
 
+    const checkInvoiceNo = () => {
+        setIsChecking(true)
+        checkInvoice({ invoice_no: payment.invoice_no })
+            .then(() => {
+                queryClient.invalidateQueries({queryKey: ["tickets"]})
+            })
+            .catch((err) => {
+                notification.add({
+                    title: "Error Occured",
+                    message: `${err.response.data.message} Please try again`,
+                    status: NotificationType.INFO
+                })
+            })
+            .finally(() => {
+                setIsChecking(false)
+            })
+    }
+
     return (
-        <tr className='border-t border-base-300'>
+        <tr className='border-t border-base-300 text-sm'>
+            <td className='px-3 border-r border-base-300'><TicketIcon className='h-5 w-5' /></td>
             <td className="p-3 font-medium">{payment.invoice_no}</td>
             <th scope="row">
-                <div className='flex flex-row space-x-5 p-2'>
+                <div className='flex flex-row space-x-5 p-3'>
                     <div className="w-36 h-20">
-                        <ImageLoader src={tour.avatar.thumbnail_url} className='h-20 w-36 card object-cover' />
+                        <ImageLoader src={tour.avatar.optimized_url} className='h-20 w-36 card object-cover' />
                     </div>
                     <div className="flex flex-col font-normal">
                         <Link to={`/tours/${tour.slug}`} className="font-medium hover:text-teal-500 duration-100">{tour.title}</Link>
-                        <div className='text-sm'>Organized By <Link to={`/organizers/${tour.organizer.username}`} className="link link-hover font-medium">{tour.organizer.name}</Link></div>
-                        <div className='text-sm'>From <span className='font-medium'>{startAt.day} {startAt.month_name}, {startAt.year}</span> to <span className='font-medium'>{finishAt.day} {finishAt.month_name}, {finishAt.year}</span></div>
+                        <div>Organized By <Link to={`/organizers/${tour.organizer.username}`} className="link link-hover font-medium">{tour.organizer.name}</Link></div>
+                        <div>From <span className='font-medium'>{startAt.day} {startAt.month_name}, {startAt.year}</span> to <span className='font-medium'>{finishAt.day} {finishAt.month_name}, {finishAt.year}</span></div>
                     </div>
                 </div>
             </th>
@@ -79,7 +110,24 @@ const PackagePurchaseCard = ({
             </td>
             <td className="p-3">{parsePrice(tour_package.price * noOfTickets)} TK</td>
             <td className="p-3">
-                <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Pay with Bkash</button>
+                {payment.completed ? (
+                    <div className="flex items-center space-x-2">
+                        <button className="btn btn-info btn-sm">Payment Completed</button>
+                    </div>
+                ) : (
+                    <div className="flex items-center space-x-2">
+                        <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Bkash Pay</button>
+                        <button className="btn btn-sm btn-outline btn-square btn-sm">
+                            <TrashIcon className='h-4 w-4' />
+                        </button>
+                        <button className="btn btn-sm btn-outline btn-square btn-sm" disabled={isChecking} onClick={checkInvoiceNo}>
+                            <ArrowPathIcon className={classNames({
+                                'h-4 w-4': true,
+                                'animate-spin': isChecking
+                            })} />
+                        </button>
+                    </div>
+                )}
             </td>
             <Modal
                 isOpen={isModalOpen}
@@ -101,10 +149,13 @@ const PackagePurchaseCard = ({
                     {!invoiced && (
                         <>
                             <div className='flex justify-center'>
-                                <div className="spinner h-10 w-10" />
+                                <div className="loader h-10 w-10" />
                             </div>
                             <div className='text-center text-xl'>
-                                You will be soon redirected to payment page.
+                                Please wait
+                            </div>
+                            <div className="text-center">
+                                You will be soon be able to go to payment page.
                             </div>
                         </>
                     )}
