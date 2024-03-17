@@ -1,4 +1,4 @@
-import { PackageType, TourType } from '@src/types/base'
+import { InvoiceCreateReq, InvoiceCreateRes, PackageType, TourType } from '@src/types/base'
 import ImageLoader from './ImageLoader'
 import { formatDate } from '@src/functions/helpers';
 import { useState } from 'react';
@@ -6,12 +6,41 @@ import { parsePrice } from '@src/functions/helpers';
 import Modal from './Modal';
 import TourPackageDetails from './TourPackageDetails';
 import { Link } from 'react-router-dom';
+import { initializeInvoice } from '@src/api/bkash';
+import toast from 'react-hot-toast';
+import useLocalStorageState from 'use-local-storage-state';
+import { constants } from '@src/stores/constantStore';
 
 const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_package: PackageType }) => {
+    const [isLoading, setIsLoading] = useState(false)
+    const [invoiced, setInvoiced] = useState(false)
+    const [invoiceRes, setInvoiceRes] = useLocalStorageState<InvoiceCreateRes | null>(constants.TOUR_TICKET_INVOICE_STORE_KEY + tour_package.id, {
+        defaultValue: null
+    })
+
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [noOfTickets, setNoOfTickets] = useState(1)
     const startAt = formatDate(tour.start_at);
     const finishAt = formatDate(tour.finish_at);
+
+    const getInvoiceNo = () => {
+        setIsLoading(true)
+        const data: InvoiceCreateReq = {
+            packages_id: tour_package.id,
+            ticket_amount: noOfTickets
+        }
+        setIsLoading(true)
+        initializeInvoice({ data })
+            .then((res) => {
+                const data:InvoiceCreateRes = res.data as InvoiceCreateRes
+                setInvoiceRes(data)
+                setInvoiced(true)
+            })
+            .catch((err) => {
+                toast.error(err.response.data.message)
+                setIsLoading(false)
+            })
+    }
 
     return (
         <div className="card border border-base-300">
@@ -61,20 +90,45 @@ const PackagePurchaseCard = ({ tour, tour_package }: { tour: TourType, tour_pack
                             </td>
                             <td className="px-6 py-4">{parsePrice(tour_package.price * noOfTickets)} TK</td>
                             <td className="px-6 py-4">
-                                <button className="btn btn-sm btn-accent">Pay with Bkash</button>
+                                <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Pay with Bkash</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <Modal 
-                isOpen={isModalOpen} 
-                setIsOpen={setIsModalOpen} 
-                title={`Package Details: ${tour_package.title}`} 
-                maxWidth='50rem' 
+            <Modal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                title={`Package Details: ${tour_package.title}`}
+                maxWidth='50rem'
                 closeButton
             >
                 <TourPackageDetails pac={tour_package} />
+            </Modal>
+            <Modal
+                isOpen={isLoading}
+                setIsOpen={setIsLoading}
+                title='Payment Processing'
+                maxWidth='30rem'
+            >
+                <div className='flex flex-col gap-3 p-5'>
+                    <div className='flex justify-center'>
+                        <div className="spinner h-10 w-10" />
+                    </div>
+                    {!invoiced && (
+                        <div className='text-center text-xl'>
+                            You will be soon redirected to payment page.
+                        </div>
+                    )}
+                    {invoiced && (
+                        <>
+                            <div className='text-center text-xl'>
+                                Click the button below to go to payment page
+                            </div>
+                            <a className="btn btn-accent" href={invoiceRes?.payment_link} target='_blank'>Payment Page</a>
+                        </>
+                    )}
+                </div>
             </Modal>
         </div>
     )

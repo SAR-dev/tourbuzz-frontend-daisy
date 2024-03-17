@@ -218,3 +218,13 @@ export interface TypeOfTour {
     created_at: Date
     updated_at: Date
 }
+
+export interface InvoiceCreateReq {
+    packages_id: number
+    ticket_amount: number
+}
+
+export interface InvoiceCreateRes {
+    invoice_no: string
+    payment_link: string
+}

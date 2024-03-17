@@ -1,5 +1,6 @@
 export const constants = {
     EMOJI_STORE_KEY: "emoji",
+    TOUR_TICKET_INVOICE_STORE_KEY: "tour_invoice_",
     COMMENT_STORE_KEY: {
         ARTICLE: "article_comment_",
         TOUR: "tour_comment_",
