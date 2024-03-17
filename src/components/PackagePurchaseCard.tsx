@@ -11,7 +11,17 @@ import toast from 'react-hot-toast';
 import useLocalStorageState from 'use-local-storage-state';
 import { constants } from '@src/stores/constantStore';
 
-const PackagePurchaseCard = ({ tour, tour_package, payment }: { tour: TourType, tour_package: PackageType, payment: PaymentType }) => {
+const PackagePurchaseCard = ({ 
+    tour, 
+    tour_package, 
+    payment,
+    ticket_amount 
+}: { 
+    tour: TourType, 
+    tour_package: PackageType, 
+    payment: PaymentType,
+    ticket_amount: number 
+}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [invoiced, setInvoiced] = useState(false)
     const [paymentLink, setPaymentLink] = useLocalStorageState<string>(constants.TOUR_TICKET_INVOICE_STORE_KEY + tour_package.id, {
@@ -19,7 +29,7 @@ const PackagePurchaseCard = ({ tour, tour_package, payment }: { tour: TourType, 
     })
 
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [noOfTickets, setNoOfTickets] = useState(1)
+    const [noOfTickets, setNoOfTickets] = useState(ticket_amount)
     const startAt = formatDate(tour.start_at);
     const finishAt = formatDate(tour.finish_at);
 
@@ -43,59 +53,34 @@ const PackagePurchaseCard = ({ tour, tour_package, payment }: { tour: TourType, 
     }
 
     return (
-        <div className="card border border-base-300 p-5">
-            <div className='flex flex-row space-x-5 mb-5'>
-                <div className="w-36 h-20">
-                    <ImageLoader src={tour.avatar.thumbnail_url} className='h-20 w-36 card object-cover' />
+        <tr className='border-t border-base-300'>
+            <td className="p-3 font-medium">{payment.invoice_no}</td>
+            <th scope="row">
+                <div className='flex flex-row space-x-5 p-2'>
+                    <div className="w-36 h-20">
+                        <ImageLoader src={tour.avatar.thumbnail_url} className='h-20 w-36 card object-cover' />
+                    </div>
+                    <div className="flex flex-col font-normal">
+                        <Link to={`/tours/${tour.slug}`} className="font-medium hover:text-teal-500 duration-100">{tour.title}</Link>
+                        <div className='text-sm'>Organized By <Link to={`/organizers/${tour.organizer.username}`} className="link link-hover font-medium">{tour.organizer.name}</Link></div>
+                        <div className='text-sm'>From <span className='font-medium'>{startAt.day} {startAt.month_name}, {startAt.year}</span> to <span className='font-medium'>{finishAt.day} {finishAt.month_name}, {finishAt.year}</span></div>
+                    </div>
                 </div>
-                <div className="flex flex-col">
-                    <Link to={`/tours/${tour.slug}`} className="title text-xl font-semibold hover:text-teal-500 duration-100">{tour.title}</Link>
-                    <div>Organized By <Link to={`/organizers/${tour.organizer.username}`} className="link link-hover font-medium">{tour.organizer.name}</Link></div>
-                    <div>From <span className='font-medium'>{startAt.day} {startAt.month_name}, {startAt.year}</span> to <span className='font-medium'>{finishAt.day} {finishAt.month_name}, {finishAt.year}</span></div>
-                </div>
-            </div>
-            <div className="flex">
-                <table className="w-full text-left w-full border border-base-300">
-                    <thead className="text-xs uppercase bg-base-300">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                                Package
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Details
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Unit Price
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                No of tickets
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Total Price
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row" className="px-6 py-4 font-medium">
-                                {tour_package.title}
-                            </th>
-                            <td className="px-6 py-4">
-                                <button className="btn btn-sm" onClick={() => setIsModalOpen(true)}>See Details</button>
-                            </td>
-                            <td className="px-6 py-4">{parsePrice(tour_package.price)} TK</td>
-                            <td className="px-6 py-4">
-                                <input type="number" value={noOfTickets} onChange={(e) => setNoOfTickets(Number(e.target.value))} className="input input-bordered w-20" />
-                            </td>
-                            <td className="px-6 py-4">{parsePrice(tour_package.price * noOfTickets)} TK</td>
-                            <td className="px-6 py-4">
-                                <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Pay with Bkash</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            </th>
+            <td className="p-3">
+                {tour_package.title}
+            </td>
+            <td className="p-3">
+                <button className="btn btn-sm" onClick={() => setIsModalOpen(true)}>See Details</button>
+            </td>
+            <td className="p-3">{parsePrice(tour_package.price)} TK</td>
+            <td className="p-3">
+                <input type="number" value={noOfTickets} onChange={(e) => setNoOfTickets(Number(e.target.value))} className="input input-bordered w-20" />
+            </td>
+            <td className="p-3">{parsePrice(tour_package.price * noOfTickets)} TK</td>
+            <td className="p-3">
+                <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Pay with Bkash</button>
+            </td>
             <Modal
                 isOpen={isModalOpen}
                 setIsOpen={setIsModalOpen}
@@ -133,7 +118,7 @@ const PackagePurchaseCard = ({ tour, tour_package, payment }: { tour: TourType, 
                     )}
                 </div>
             </Modal>
-        </div>
+        </tr>
     )
 }
 
