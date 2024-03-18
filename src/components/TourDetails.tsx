@@ -88,15 +88,15 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             }
         },
         {
-          wait: 500,
+            wait: 500,
         },
-      );
+    );
 
     const handleCommentSubmit = () => {
-        if(!isLoggedIn()){
+        if (!isLoggedIn()) {
             setIsOpenSignIn(true)
             return;
-          }
+        }
         if (commentDetails.length < 2) return;
 
         const data: AddCommentType = {
@@ -120,7 +120,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     }
 
     const toogleLimit = () => {
-        if(commentLimit === 0){
+        if (commentLimit === 0) {
             setCommentLimit(constants.COMMENT_LIMIT.ARTICLE)
             run()
         } else {
@@ -130,6 +130,10 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
     }
 
     const bookTicket = (id: number) => {
+        if (!isLoggedIn()) {
+            setIsOpenSignIn(true)
+            return;
+        }
         const data: BookCreateReq = {
             packages_id: id,
             ticket_amount: 1
@@ -299,20 +303,20 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 <button className="btn btn-info mt-1" disabled={isLoading} onClick={handleCommentSubmit}>
                                     {isLoading ? (
                                         <div className="loading h-5 w-5" />
-                                    ):(
+                                    ) : (
                                         <PlayIcon className='h-5 w-5' />
                                     )}
                                     Start new thread
                                 </button>
                             </div>
                             {tourComments.data && (
-                                <CommentList 
-                                    comments={tourComments.data.data} 
-                                    limit={commentLimit} 
-                                    toogleLimit={toogleLimit} 
-                                    submitReply={addCommentByTourId} 
-                                    referenceId={tour.id} 
-                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.TOUR} 
+                                <CommentList
+                                    comments={tourComments.data.data}
+                                    limit={commentLimit}
+                                    toogleLimit={toogleLimit}
+                                    submitReply={addCommentByTourId}
+                                    referenceId={tour.id}
+                                    queryKey={constants.REACT_QUERY_KEY.COMMENT.TOUR}
                                     admins={tour.organizer.admins}
                                     staffs={tour.organizer.staffs}
                                 />

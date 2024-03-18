@@ -248,5 +248,6 @@ export interface TicketType {
     booked_package: {
         tour_package: PackageType
         tour: TourType
+        ticket_sold: number
     }
 }

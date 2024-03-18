@@ -10,8 +10,12 @@ import { bookInvoice } from '@src/api/package';
 import { BookCreateReq } from '@src/types/package';
 import { useNotification } from '@src/contexts/Notification';
 import { NotificationType } from '@src/enums/NotificationType';
+import { useAuthStore } from '@src/stores/authStore';
+import { useSignInModalStore } from '@src/stores/signInModalStore';
 
 const TourPackage = ({ pac }: { pac: PackageType }) => {
+    const { isLoggedIn } = useAuthStore()
+    const { setIsOpenSignIn } = useSignInModalStore();
     const notification = useNotification()
     const [openIndex, setOpenIndex] = useState<number | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -22,6 +26,10 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
     }
 
     const bookTicket = () => {
+        if (!isLoggedIn()) {
+            setIsOpenSignIn(true)
+            return;
+        }
         const data: BookCreateReq = {
             packages_id: pac.id,
             ticket_amount: 1
