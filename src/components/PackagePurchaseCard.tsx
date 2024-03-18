@@ -9,24 +9,27 @@ import { Link } from 'react-router-dom';
 import { checkInvoice, getPaymentLink } from '@src/api/bkash';
 import useLocalStorageState from 'use-local-storage-state';
 import { constants } from '@src/stores/constantStore';
-import { InvoiceCreateReq } from '@src/types/package';
+import { BookCancelReq, InvoiceCreateReq } from '@src/types/package';
 import { ArrowPathIcon, TicketIcon, TrashIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
 import { useNotification } from '@src/contexts/Notification';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useQueryClient } from '@tanstack/react-query';
-import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { ArrowRightIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { cancelInvoice } from '@src/api/ticket';
 
 const PackagePurchaseCard = ({
     tour,
     tour_package,
     payment,
-    ticket_amount
+    ticket_amount,
+    remaining_tickets
 }: {
     tour: TourType,
     tour_package: PackageType,
     payment: PaymentType,
-    ticket_amount: number
+    ticket_amount: number,
+    remaining_tickets: number
 }) => {
     const notification = useNotification()
     const queryClient = useQueryClient()
@@ -70,12 +73,43 @@ const PackagePurchaseCard = ({
         checkInvoice({ invoice_no: payment.invoice_no })
             .then(() => {
                 queryClient.invalidateQueries({ queryKey: ["tickets"] })
+                notification.add({
+                    title: "Please Check",
+                    message: "Tickets have been updated. Please confirm.",
+                    status: NotificationType.SUCCESS
+                })
+            })
+            .catch((err) => {
+                notification.add({
+                    title: "Please try again",
+                    message: `${err.response.data.message}`,
+                    status: NotificationType.INFO
+                })
+            })
+            .finally(() => {
+                setIsChecking(false)
+            })
+    }
+
+    const cancelInvoiceNo = () => {
+        const data: BookCancelReq = {
+            invoice_no: payment.invoice_no
+        }
+        setIsChecking(true)
+        cancelInvoice({ data })
+            .then(() => {
+                queryClient.invalidateQueries({ queryKey: ["tickets"] })
+                notification.add({
+                    title: "Please Check",
+                    message: "Tickets have been updated. Please confirm.",
+                    status: NotificationType.SUCCESS
+                })
             })
             .catch((err) => {
                 notification.add({
                     title: "Error Occured",
-                    message: `${err.response.data.message} Please try again`,
-                    status: NotificationType.INFO
+                    message: err.data.message,
+                    status: NotificationType.ERROR
                 })
             })
             .finally(() => {
@@ -111,8 +145,8 @@ const PackagePurchaseCard = ({
                 <button className="btn btn-sm" onClick={() => setIsModalOpen(true)}>{tour_package.title}</button>
             </td>
             <td className="p-3 border-r border-base-300">{parsePrice(tour_package.price)} TK</td>
-            <td className="p-3 border-r border-base-300">
-                <div className="flex space-x-1 items-center">
+            <td className="p-3 border-r border-base-300 relative">
+                <div className="flex space-x-1 justify-center items-center">
                     {!payment.completed && (
                         <button className="btn btn-sm btn-square btn-ghost" onClick={dec}>
                             <MinusIcon className='h-5 w-5' />
@@ -127,17 +161,23 @@ const PackagePurchaseCard = ({
                         </button>
                     )}
                 </div>
+                <div className="absolute bottom-0 left-0 w-full text-center text-xs mb-3">{remaining_tickets} tickets left</div>
             </td>
             <td className="p-3 border-r border-base-300">{parsePrice(tour_package.price * noOfTickets)} TK</td>
             <td className="p-3">
                 {payment.completed ? (
                     <div className="flex items-center space-x-2">
-                        <button className="btn btn-info btn-sm">Payment Completed</button>
+                        <button className="btn btn-info btn-sm">
+                            Paid
+                        </button>
+                        <Link to={`/tickets/${payment.invoice_no}`} className="btn btn-sm btn-square btn-accent">
+                            <ArrowRightIcon className='h-4 w-4' />
+                        </Link>
                     </div>
                 ) : (
                     <div className="flex items-center space-x-2">
                         <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Bkash Pay</button>
-                        <button className="btn btn-sm btn-outline border-base-300 btn-square btn-sm">
+                        <button className="btn btn-sm btn-outline border-base-300 btn-square btn-sm" disabled={isChecking} onClick={cancelInvoiceNo}>
                             <TrashIcon className='h-4 w-4' />
                         </button>
                         <button className="btn btn-sm btn-outline border-base-300 btn-square btn-sm" disabled={isChecking} onClick={checkInvoiceNo}>

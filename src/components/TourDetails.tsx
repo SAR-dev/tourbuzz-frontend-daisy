@@ -29,10 +29,10 @@ import useLocalStorageState from "use-local-storage-state";
 import { AddCommentType } from "@src/types/comment";
 import CommentList from "./CommentList";
 import TextareaAutosize from 'react-textarea-autosize';
-import { bookInvoice } from "@src/api/package";
 import { BookCreateReq } from "@src/types/package";
 import { useNotification } from "@src/contexts/Notification";
 import { NotificationType } from "@src/enums/NotificationType";
+import { bookInvoice } from "@src/api/ticket";
 
 const TourDetails = ({ tour }: { tour: TourType }) => {
     const queryClient = useQueryClient();
@@ -145,6 +145,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                     message: "Your ticket has been booked. Go to cart to finish payment.",
                     status: NotificationType.SUCCESS
                 })
+                queryClient.invalidateQueries({ queryKey: ["tickets"] })
             })
             .catch(() => {
                 notification.add({

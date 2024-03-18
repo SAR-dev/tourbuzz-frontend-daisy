@@ -73,6 +73,7 @@ const TicketList = () => {
                   tour_package={ticket.booked_package.tour_package}
                   payment={ticket.payment}
                   ticket_amount={ticket.ticket_amount}
+                  remaining_tickets={ticket.booked_package.tour_package.threshold - ticket.booked_package.ticket_sold}
                   key={i}
                 />
               ))}

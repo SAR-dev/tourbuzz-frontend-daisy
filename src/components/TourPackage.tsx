@@ -6,14 +6,16 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/solid'
 import Modal from './Modal';
 import { parsePrice } from '@src/functions/helpers';
 import TourPackageDetails from './TourPackageDetails';
-import { bookInvoice } from '@src/api/package';
 import { BookCreateReq } from '@src/types/package';
 import { useNotification } from '@src/contexts/Notification';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useAuthStore } from '@src/stores/authStore';
 import { useSignInModalStore } from '@src/stores/signInModalStore';
+import { bookInvoice } from '@src/api/ticket';
+import { useQueryClient } from '@tanstack/react-query';
 
 const TourPackage = ({ pac }: { pac: PackageType }) => {
+    const queryClient = useQueryClient()
     const { isLoggedIn } = useAuthStore()
     const { setIsOpenSignIn } = useSignInModalStore();
     const notification = useNotification()
@@ -44,6 +46,7 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                     message: "Your ticket has been booked. Go to cart to finish payment.",
                     status: NotificationType.SUCCESS
                 })
+                queryClient.invalidateQueries({ queryKey: ["tickets"] })
             })
             .catch(() => {
                 setIsLoading(false)
