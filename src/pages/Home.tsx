@@ -203,7 +203,7 @@ const Home = () => {
           )}
 
           <section>
-            <div className="bg-info text-info-content p-10 card flex flex-row items-center gap-5">
+            <div className="border border-base-300 bg-info/20 p-10 card flex flex-row items-center gap-5">
               <div className="text-8xl">🤗</div>
               <div className="flex flex-col gap-1 flex-1">
                 <div className="title text-4xl font-semibold">Get In Touch with Us </div>
