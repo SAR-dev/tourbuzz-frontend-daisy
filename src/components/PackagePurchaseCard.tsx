@@ -68,7 +68,7 @@ const PackagePurchaseCard = ({
         setIsChecking(true)
         checkInvoice({ invoice_no: payment.invoice_no })
             .then(() => {
-                queryClient.invalidateQueries({queryKey: ["tickets"]})
+                queryClient.invalidateQueries({ queryKey: ["tickets"] })
             })
             .catch((err) => {
                 notification.add({
