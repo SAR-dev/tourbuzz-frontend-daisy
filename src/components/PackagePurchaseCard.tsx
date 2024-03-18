@@ -85,9 +85,9 @@ const PackagePurchaseCard = ({
     return (
         <tr className='border-t border-base-300 text-sm'>
             <td className='px-3 border-r border-base-300'><TicketIcon className='h-5 w-5' /></td>
-            <td className="p-3 font-medium">{payment.invoice_no}</td>
-            <th scope="row">
-                <div className='flex flex-row space-x-5 p-3'>
+            <td className="border-r border-base-300 p-3 font-medium">{payment.invoice_no}</td>
+            <td scope="row" className='border-r border-base-300'>
+                <div className='flex flex-row items-center space-x-5 p-3'>
                     <div className="w-36 h-20">
                         <ImageLoader src={tour.avatar.optimized_url} className='h-20 w-36 card object-cover' />
                     </div>
@@ -97,18 +97,15 @@ const PackagePurchaseCard = ({
                         <div>From <span className='font-medium'>{startAt.day} {startAt.month_name}, {startAt.year}</span> to <span className='font-medium'>{finishAt.day} {finishAt.month_name}, {finishAt.year}</span></div>
                     </div>
                 </div>
-            </th>
-            <td className="p-3">
-                {tour_package.title}
             </td>
-            <td className="p-3">
-                <button className="btn btn-sm" onClick={() => setIsModalOpen(true)}>See Details</button>
+            <td className="p-3 border-r border-base-300">
+                <button className="btn btn-sm" onClick={() => setIsModalOpen(true)}>{tour_package.title}</button>
             </td>
-            <td className="p-3">{parsePrice(tour_package.price)} TK</td>
-            <td className="p-3">
+            <td className="p-3 border-r border-base-300">{parsePrice(tour_package.price)} TK</td>
+            <td className="p-3 border-r border-base-300">
                 <input type="number" value={noOfTickets} onChange={(e) => setNoOfTickets(Number(e.target.value))} className="input input-bordered w-20" />
             </td>
-            <td className="p-3">{parsePrice(tour_package.price * noOfTickets)} TK</td>
+            <td className="p-3 border-r border-base-300">{parsePrice(tour_package.price * noOfTickets)} TK</td>
             <td className="p-3">
                 {payment.completed ? (
                     <div className="flex items-center space-x-2">

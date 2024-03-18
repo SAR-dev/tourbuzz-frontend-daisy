@@ -82,12 +82,12 @@ const TourCard = ({ tour }: { tour: TourListType }) => {
                                 </div>
                                 <div>
                                     <div className="mb-1">💯Free Cancellation😉</div>
-                                    <button className={classNames({
+                                    <Link to={`/tours/${tour.slug}`} className={classNames({
                                         "btn btn-primary w-full": true,
                                         "btn-disabled": tour.expired
                                     })}>
                                         Book Now 🐱
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

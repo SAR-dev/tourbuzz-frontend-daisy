@@ -45,9 +45,6 @@ const TicketList = () => {
                 <th scope="col" className="p-3">
                   Package
                 </th>
-                <th scope="col" className="p-3 w-36">
-                  Details
-                </th>
                 <th scope="col" className="p-3">
                   Unit Price
                 </th>
