@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import { useNotification } from '@src/contexts/Notification';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useQueryClient } from '@tanstack/react-query';
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/solid';
 
 const PackagePurchaseCard = ({
     tour,
@@ -82,6 +83,14 @@ const PackagePurchaseCard = ({
             })
     }
 
+    const inc = () => {
+        setNoOfTickets(noOfTickets + 1)
+    }
+    const dec = () => {
+        if (noOfTickets <= 1) return;
+        setNoOfTickets(noOfTickets - 1)
+    }
+
     return (
         <tr className='border-t border-base-300 text-sm'>
             <td className='px-3 border-r border-base-300'><TicketIcon className='h-5 w-5' /></td>
@@ -103,7 +112,21 @@ const PackagePurchaseCard = ({
             </td>
             <td className="p-3 border-r border-base-300">{parsePrice(tour_package.price)} TK</td>
             <td className="p-3 border-r border-base-300">
-                <input type="number" value={noOfTickets} onChange={(e) => setNoOfTickets(Number(e.target.value))} className="input input-bordered w-20" />
+                <div className="flex space-x-1 items-center">
+                    {!payment.completed && (
+                        <button className="btn btn-sm btn-square btn-ghost" onClick={dec}>
+                            <MinusIcon className='h-5 w-5' />
+                        </button>
+                    )}
+                    <div className="w-10 h-10 flex items-center justify-center text-sm border border-base-300 card">
+                        {noOfTickets}
+                    </div>
+                    {!payment.completed && (
+                        <button className="btn btn-sm btn-square btn-ghost" onClick={inc}>
+                            <PlusIcon className='h-5 w-5' />
+                        </button>
+                    )}
+                </div>
             </td>
             <td className="p-3 border-r border-base-300">{parsePrice(tour_package.price * noOfTickets)} TK</td>
             <td className="p-3">
@@ -114,10 +137,10 @@ const PackagePurchaseCard = ({
                 ) : (
                     <div className="flex items-center space-x-2">
                         <button className="btn btn-sm btn-accent" onClick={getInvoiceNo}>Bkash Pay</button>
-                        <button className="btn btn-sm btn-outline btn-square btn-sm">
+                        <button className="btn btn-sm btn-outline border-base-300 btn-square btn-sm">
                             <TrashIcon className='h-4 w-4' />
                         </button>
-                        <button className="btn btn-sm btn-outline btn-square btn-sm" disabled={isChecking} onClick={checkInvoiceNo}>
+                        <button className="btn btn-sm btn-outline border-base-300 btn-square btn-sm" disabled={isChecking} onClick={checkInvoiceNo}>
                             <ArrowPathIcon className={classNames({
                                 'h-4 w-4': true,
                                 'animate-spin': isChecking
