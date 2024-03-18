@@ -2,12 +2,15 @@ import { TicketListDataType, getTickets } from '@src/api/ticket';
 import ErrorPage from '@src/components/ErrorPage'
 import PackagePurchaseCard from '@src/components/PackagePurchaseCard';
 import AuthNavLayout from '@src/layouts/AuthNavLayout'
+import { useAuthStore } from '@src/stores/authStore';
 import { useQuery } from '@tanstack/react-query'
 
 const TicketList = () => {
+  const { isLoggedIn } = useAuthStore()
   const tickets = useQuery<TicketListDataType, Error>({
     queryKey: ['tickets'],
-    queryFn: () => getTickets()
+    queryFn: () => getTickets(),
+    enabled: isLoggedIn()
   })
 
   if (tickets.isError) {
@@ -28,48 +31,57 @@ const TicketList = () => {
             </div>
           </div>
         </section>
-        <table className="w-full text-left w-full border border-base-300">
-          <thead className="text-xs uppercase bg-base-200">
-            <tr>
-              <th></th>
-              <th scope="col" className="p-3">
-                Invoice No
-              </th>
-              <th scope="col" className="p-3">
-                Tour
-              </th>
-              <th scope="col" className="p-3">
-                Package
-              </th>
-              <th scope="col" className="p-3 w-36">
-                Details
-              </th>
-              <th scope="col" className="p-3">
-                Unit Price
-              </th>
-              <th scope="col" className="p-3">
-                No of tickets
-              </th>
-              <th scope="col" className="p-3">
-                Total Price
-              </th>
-              <th scope="col" className='p-3 w-52'>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {tickets.data?.data.map((ticket, i) => (
-              <PackagePurchaseCard
-                tour={ticket.booked_package.tour}
-                tour_package={ticket.booked_package.tour_package}
-                payment={ticket.payment}
-                ticket_amount={ticket.ticket_amount}
-                key={i}
-              />
-            ))}
-          </tbody>
-        </table>
+        {tickets.data && (
+          <table className="w-full text-left w-full border border-base-300">
+            <thead className="text-xs uppercase bg-base-200">
+              <tr>
+                <th></th>
+                <th scope="col" className="p-3">
+                  Invoice No
+                </th>
+                <th scope="col" className="p-3">
+                  Tour
+                </th>
+                <th scope="col" className="p-3">
+                  Package
+                </th>
+                <th scope="col" className="p-3 w-36">
+                  Details
+                </th>
+                <th scope="col" className="p-3">
+                  Unit Price
+                </th>
+                <th scope="col" className="p-3">
+                  No of tickets
+                </th>
+                <th scope="col" className="p-3">
+                  Total Price
+                </th>
+                <th scope="col" className='p-3 w-52'>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {tickets.data.data.length === 0 && (
+                <tr>
+                  <th colSpan={9}>
+                    <div className="p-5 text-center font-normal">You have not booked any tickets yet 🪐</div>
+                  </th>
+                </tr>
+              )}
+              {tickets.data.data.map((ticket, i) => (
+                <PackagePurchaseCard
+                  tour={ticket.booked_package.tour}
+                  tour_package={ticket.booked_package.tour_package}
+                  payment={ticket.payment}
+                  ticket_amount={ticket.ticket_amount}
+                  key={i}
+                />
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </AuthNavLayout>
   )
