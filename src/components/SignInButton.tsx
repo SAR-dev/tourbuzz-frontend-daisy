@@ -12,6 +12,7 @@ import { UserDataType, getLoggedInUser, updateLoggedInUser } from '@src/api/user
 import DropdownSelect from './DropDownSelect';
 import { useSignInModalStore } from '@src/stores/signInModalStore';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const SignInButton = () => {
     const queryClient = useQueryClient()
@@ -90,11 +91,7 @@ const SignInButton = () => {
                     const data: AuthTokenType = res.data as AuthTokenType;
                     setToken(data.accessToken)
                     setIsMailSent(true)
-                    notification.add({
-                        title: "Signed In",
-                        message: "You have signed in successfully. Enjoy 😎👌🔥 !!!",
-                        status: NotificationType.SUCCESS
-                    })
+                    toast.success("You have signed in successfully. Enjoy 😎👌🔥 !!!")
                 }
             })
             .finally(() => {
