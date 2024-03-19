@@ -21,7 +21,7 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
     const notification = useNotification()
     const [openIndex, setOpenIndex] = useState<number | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isBooking, setIsBooking] = useState(false)
 
     const handleOpenIndex = (index: number) => {
         setOpenIndex(index === openIndex ? null : index)
@@ -36,10 +36,9 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
             packages_id: pac.id,
             ticket_amount: 1
         }
-        setIsLoading(true)
+        setIsBooking(true)
         bookInvoice({ data })
             .then(() => {
-                setIsLoading(false)
                 setIsModalOpen(false)
                 notification.add({
                     title: "Ticket Booked",
@@ -49,12 +48,14 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                 queryClient.invalidateQueries({ queryKey: ["tickets"] })
             })
             .catch(() => {
-                setIsLoading(false)
                 notification.add({
                     title: "Error Occured",
                     message: "There was an error booking your ticket. Please try again",
                     status: NotificationType.ERROR
                 })
+            })
+            .finally(() => {
+                setIsBooking(false)
             })
     }
 
@@ -110,20 +111,30 @@ const TourPackage = ({ pac }: { pac: PackageType }) => {
                     <ArrowRightIcon className="h-5 w-5" />
                 </button>
             </div>
-            <Modal isOpen={isModalOpen} setIsOpen={setIsModalOpen} title={`Package Details: ${pac.title}`} maxWidth='50rem' closeButton footer={
-                <div className="flex items-center justify-between">
-                    <button className="btn bg-base-100" onClick={() => setIsModalOpen(false)}>
-                        <ArrowLeftIcon className='h-5 w-5' />
-                        Go Back
-                    </button>
-                    <button className={classNames({
-                        "btn-accent btn": true,
-                        "btn-disabled": isLoading
-                    })} onClick={bookTicket}>
-                        Book Ticket ({parsePrice(pac.price)} TK)
-                    </button>
-                </div>
-            }>
+            <Modal
+                isOpen={isModalOpen}
+                setIsOpen={setIsModalOpen}
+                title={`Package Details: ${pac.title}`}
+                maxWidth='50rem'
+                closeButton
+                footer={
+                    <div className="flex items-center justify-between">
+                        <button className="btn bg-base-100" onClick={() => setIsModalOpen(false)}>
+                            <ArrowLeftIcon className='h-5 w-5' />
+                            Go Back
+                        </button>
+                        <button
+                            className={classNames({
+                                "btn-accent btn": true,
+                                "btn-disabled": isBooking
+                            })}
+                            onClick={bookTicket}
+                            disabled={isBooking}
+                        >
+                            Book Ticket ({parsePrice(pac.price)} TK)
+                        </button>
+                    </div>
+                }>
                 <TourPackageDetails pac={pac} />
             </Modal>
         </div>

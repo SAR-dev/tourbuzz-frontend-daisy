@@ -51,6 +51,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
         defaultValue: ""
     })
     const [isLoading, setIsLoading] = useState(false)
+    const [isBooking, setIsBooking] = useState(false)
 
     const startDate = formatDate(tour.start_at)
     const finishDate = formatDate(tour.finish_at)
@@ -138,6 +139,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
             packages_id: id,
             ticket_amount: 1
         }
+        setIsBooking(true)
         bookInvoice({ data })
             .then(() => {
                 notification.add({
@@ -153,6 +155,9 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                     message: "There was an error booking your ticket. Please try again",
                     status: NotificationType.ERROR
                 })
+            })
+            .finally(() => {
+                setIsBooking(false)
             })
     }
 
@@ -358,7 +363,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                     selectedIndex={selectedIndex}
                                     setSelectedIndex={setSelectedIndex}
                                 />
-                                <button className="btn btn-accent w-full mt-2" onClick={() => bookTicket(tour.packages[selectedIndex].id)}>
+                                <button className="btn btn-accent w-full mt-2" onClick={() => bookTicket(tour.packages[selectedIndex].id)} disabled={isBooking}>
                                     Book Ticket ({parsePrice(tour.packages[selectedIndex].price)} TK)
                                 </button>
                             </div>
