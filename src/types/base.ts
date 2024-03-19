@@ -235,7 +235,14 @@ export interface PaymentType {
     updated_at: Date;
     user: UserType
 }
-
+export interface FileType {
+    id: number
+    filename: string
+    link: string
+    note: string
+    created_at: Date;
+    updated_at: Date;
+}
 
 export interface TicketType {
     id: number
@@ -246,6 +253,7 @@ export interface TicketType {
     created_at: Date
     updated_at: Date
     payment: PaymentType
+    files: FileType[]
     booked_package: {
         tour_package: PackageType
         tour: TourType
