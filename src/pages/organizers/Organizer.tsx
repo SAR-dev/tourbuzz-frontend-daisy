@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ErrorPage from "@src/components/ErrorPage";
 import { OrganizerDataType, getOrganizerByUsername } from "@src/api/organizer";
 import OrganizerDetails from "@src/components/OrganizerDetails";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const Organizer = () => {
     const { username = "" } = useParams();
@@ -14,6 +15,10 @@ const Organizer = () => {
 
     if (organizer.isError) {
         return <ErrorPage error={organizer.error} />
+    }
+
+    if(organizer.isLoading){
+        return <LoaderScreen />
     }
 
     return (

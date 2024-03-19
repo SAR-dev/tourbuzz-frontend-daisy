@@ -6,6 +6,8 @@ import NoResultFound from "@src/components/NoResultFound";
 import Title from "@src/components/Title";
 import { TourPaginatedDataType, getTourList } from "@src/api/tour";
 import TourCard from "@src/components/TourCard";
+import LoaderScreen from "@src/components/LoaderScreen";
+import ErrorPage from "@src/components/ErrorPage";
 
 const TourList = () => {
     const [pageSize, setPageSize] = useState(10)
@@ -16,7 +18,15 @@ const TourList = () => {
         queryFn: () => getTourList({ pageNo, pageSize })
     })
 
-    if (tourListData.isLoading || tourListData.error || !tourListData.data) return;
+    if(tourListData.isError){
+        return <ErrorPage error={tourListData.error} />
+    }
+
+    if(tourListData.isLoading){
+        return <LoaderScreen />
+    }
+
+    if (!tourListData.data) return;
 
     return (
         <NavLayout>

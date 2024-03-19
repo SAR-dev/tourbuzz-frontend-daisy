@@ -6,6 +6,8 @@ import NoResultFound from "@src/components/NoResultFound";
 import Title from "@src/components/Title";
 import { ArticlePaginatedDataType, getArticleList } from "@src/api/article";
 import ArticleCard from "@src/components/ArticleCard";
+import ErrorPage from "@src/components/ErrorPage";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const ArticleList = () => {
     const [pageSize, setPageSize] = useState(9)
@@ -16,7 +18,15 @@ const ArticleList = () => {
         queryFn: () => getArticleList({ pageNo, pageSize })
     })
 
-    if (articleListData.isLoading || articleListData.error || !articleListData.data) return;
+    if(articleListData.isError){
+        return <ErrorPage error={articleListData.error} />
+    }
+
+    if(articleListData.isLoading){
+        return <LoaderScreen />
+    }
+
+    if (!articleListData.data) return;
 
     return (
         <NavLayout>

@@ -1,6 +1,7 @@
 import { EnquiryListDataType, getUserEnquiries } from "@src/api/enquiry";
 import EnquiryDetails from "@src/components/EnquiryDetails";
 import ErrorPage from "@src/components/ErrorPage";
+import LoaderScreen from "@src/components/LoaderScreen";
 import NavLayout from "@src/layouts/NavLayout"
 import { useAuthStore } from "@src/stores/authStore";
 import { useSignInModalStore } from "@src/stores/signInModalStore";
@@ -26,6 +27,10 @@ const Enquiry = () => {
 
     if(enquiries.isError){
         return <ErrorPage error={enquiries.error} />
+    }
+
+    if(enquiries.isLoading){
+        return <LoaderScreen />
     }
     
     return (

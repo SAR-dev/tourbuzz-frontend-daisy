@@ -6,6 +6,8 @@ import NoResultFound from "@src/components/NoResultFound";
 import Title from "@src/components/Title";
 import { PlacePaginatedDataType, getPlaceList } from "@src/api/place";
 import PlaceCard from "@src/components/PlaceCard";
+import ErrorPage from "@src/components/ErrorPage";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const PlaceList = () => {
     const [pageSize, setPageSize] = useState(20)
@@ -16,7 +18,15 @@ const PlaceList = () => {
         queryFn: () => getPlaceList({ pageNo, pageSize })
     })
 
-    if (placeListData.isLoading || placeListData.error || !placeListData.data) return;
+    if(placeListData.isError){
+        return <ErrorPage error={placeListData.error} />
+    }
+
+    if(placeListData.isLoading){
+        return <LoaderScreen />
+    }
+
+    if (!placeListData.data) return;
 
     return (
         <NavLayout>

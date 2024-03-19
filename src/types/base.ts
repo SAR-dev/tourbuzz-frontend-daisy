@@ -233,6 +233,7 @@ export interface PaymentType {
     completed: boolean;
     created_at: Date;
     updated_at: Date;
+    user: UserType
 }
 
 

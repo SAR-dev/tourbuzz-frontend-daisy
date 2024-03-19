@@ -6,6 +6,8 @@ import NoResultFound from "@src/components/NoResultFound";
 import Title from "@src/components/Title";
 import { OrganizerPaginatedDataType, getOrganizerList } from "@src/api/organizer";
 import OrganizerCard from "@src/components/OrganizerCard";
+import ErrorPage from "@src/components/ErrorPage";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const OrganizerList = () => {
     const [pageSize, setPageSize] = useState(9)
@@ -16,7 +18,15 @@ const OrganizerList = () => {
         queryFn: () => getOrganizerList({ pageNo, pageSize })
     })
 
-    if (organizerListData.isLoading || organizerListData.error || !organizerListData.data) return;
+    if(organizerListData.isError){
+        return <ErrorPage error={organizerListData.error} />
+    }
+
+    if(organizerListData.isLoading){
+        return <LoaderScreen />
+    }
+
+    if (!organizerListData.data) return;
 
     return (
         <NavLayout>

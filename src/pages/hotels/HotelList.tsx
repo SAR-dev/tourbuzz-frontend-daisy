@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { HotelPaginatedDataType, getHotelList } from "@src/api/hotel";
 import NoResultFound from "@src/components/NoResultFound";
 import Title from "@src/components/Title";
+import ErrorPage from "@src/components/ErrorPage";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const HotelList = () => {
     const [pageSize, setPageSize] = useState(20)
@@ -16,7 +18,15 @@ const HotelList = () => {
         queryFn: () => getHotelList({ pageNo, pageSize })
     })
 
-    if (hotelListData.isLoading || hotelListData.error || !hotelListData.data) return;
+    if(hotelListData.isError){
+        return <ErrorPage error={hotelListData.error} />
+    }
+
+    if(hotelListData.isLoading){
+        return <LoaderScreen />
+    }
+
+    if (!hotelListData.data) return;
 
     return (
         <NavLayout>

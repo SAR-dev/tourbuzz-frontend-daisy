@@ -1,5 +1,6 @@
 import { TicketListDataType, getTickets } from '@src/api/ticket';
 import ErrorPage from '@src/components/ErrorPage'
+import LoaderScreen from '@src/components/LoaderScreen';
 import PackagePurchaseCard from '@src/components/PackagePurchaseCard';
 import AuthNavLayout from '@src/layouts/AuthNavLayout'
 import { useAuthStore } from '@src/stores/authStore';
@@ -15,6 +16,10 @@ const TicketList = () => {
 
   if (tickets.isError) {
     return <ErrorPage error={tickets.error} />
+  }
+
+  if (tickets.isLoading) {
+    return <LoaderScreen />
   }
 
   return (

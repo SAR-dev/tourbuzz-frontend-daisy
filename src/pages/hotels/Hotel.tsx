@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ErrorPage from "@src/components/ErrorPage";
 import { HotelDataType, getHotelById } from "@src/api/hotel";
 import HotelDetails from "@src/components/HotelDetails";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const Hotel = () => {
     const { id = "" } = useParams();
@@ -14,6 +15,10 @@ const Hotel = () => {
 
     if(hotel.isError){
         return <ErrorPage error={hotel.error} />
+    }
+
+    if(hotel.isLoading){
+        return <LoaderScreen />
     }
 
     return (

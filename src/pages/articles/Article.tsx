@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import ArticleDetails from "@src/components/ArticleDetails";
 import ErrorPage from "@src/components/ErrorPage";
+import LoaderScreen from "@src/components/LoaderScreen";
 
 const Article = () => {
     const { slug = "" } = useParams();
@@ -14,6 +15,10 @@ const Article = () => {
 
     if(article.isError){
         return <ErrorPage error={article.error} />
+    }
+
+    if(article.isLoading){
+        return <LoaderScreen />
     }
 
     return (
