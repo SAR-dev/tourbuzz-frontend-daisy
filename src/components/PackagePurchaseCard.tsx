@@ -1,4 +1,4 @@
-import { PackageType, PaymentType, TourType } from '@src/types/base'
+import { PackageType, PaymentType, TourShortType } from '@src/types/base';
 import ImageLoader from './ImageLoader'
 import { formatDate } from '@src/functions/helpers';
 import { ReactNode, useState } from 'react';
@@ -26,7 +26,7 @@ const PackagePurchaseCard = ({
     remaining_tickets,
     action
 }: {
-    tour: TourType,
+    tour: TourShortType,
     tour_package: PackageType,
     payment: PaymentType,
     ticket_amount: number,

@@ -130,7 +130,13 @@ const ChildComment = ({
                             )}
                         </ContextMenu.Trigger>
                         <ContextMenu.Portal>
-                            <ContextMenu.Content className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" sideOffset={5} align="end">
+                            <ContextMenu.Content 
+                                className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" 
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-expect-error
+                                sideOffset={5} 
+                                align="end"
+                            >
                                 <ContextMenu.Item
                                     className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info"
                                     onClick={() => navigator.clipboard.writeText(comment.details)}
@@ -351,7 +357,13 @@ const TreeComment = ({
                                 )}
                             </ContextMenu.Trigger>
                             <ContextMenu.Portal>
-                                <ContextMenu.Content className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" sideOffset={5} align="end">
+                                <ContextMenu.Content 
+                                    className="bg-base-100 shadow-lg border border-base-300 card w-48 p-3 flex-col" 
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-expect-error
+                                    sideOffset={5} 
+                                    align="end"
+                                >
                                     <ContextMenu.Item
                                         className="flex text-sm gap-3 items-center cursor-pointer hover:bg-base-300 card flex-row p-2 text-info"
                                         onClick={() => navigator.clipboard.writeText(comment.details)}

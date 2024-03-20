@@ -211,6 +211,23 @@ export interface TourType {
     places: PlaceType[]
 }
 
+export interface TourShortType {
+    id: number
+    title: string
+    slug: string
+    group_size: string
+    group_info: string
+    transports: string
+    start_at: Date
+    finish_at: Date
+    last_sell_at: Date
+    created_at: Date
+    updated_at: Date
+
+    organizer: OrganizerType
+    avatar: ImageType
+}
+
 export interface TypeOfTour {
     id: number
     name: string
@@ -256,7 +273,7 @@ export interface TicketType {
     files: FileType[]
     booked_package: {
         tour_package: PackageType
-        tour: TourType
+        tour: TourShortType
         ticket_sold: number
     }
 }
