@@ -1,6 +1,6 @@
 const Invoice = () => {
     return (
-        <div className="relative flex flex-col rounded-xl bg-white border w-[40rem] mx-auto">
+        <div className="relative flex flex-col rounded-xl bg-white border max-w-[40rem]">
             <div className="relative min-h-32 overflow-hidden rounded-t-xl bg-gray-900 text-center">
                 <figure className="absolute inset-x-0 bottom-0 -mb-px">
                     <svg
@@ -11,7 +11,7 @@ const Invoice = () => {
                         viewBox="0 0 1920 100.1"
                     >
                         <path
-                            fill="currentColor"
+                            fill="#fff"
                             className="fill-white"
                             d="M0,0c0,0,934.4,93.4,1920,0v100.1H0L0,0z"
                         />
@@ -23,7 +23,7 @@ const Invoice = () => {
                     📦
                 </span>
             </div>
-            <div className="overflow-y-auto p-4 sm:p-7">
+            <div className="overflow-y-auto p-7">
                 <div className="text-center">
                     <h3 className="text-lg font-semibold text-gray-800">
                         Invoice from Preline

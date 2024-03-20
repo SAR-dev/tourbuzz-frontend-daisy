@@ -1,8 +1,19 @@
 import { TicketType } from '@src/types/base'
 import PackagePurchaseCard from './PackagePurchaseCard'
 import { PrinterIcon } from '@heroicons/react/24/outline'
+import { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
+import Invoice from './Invoice';
 
 const TicketDetails = ({ ticket }: { ticket: TicketType }) => {
+    const componentRef = useRef<HTMLInputElement>(null);
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        removeAfterPrint: true,
+        documentTitle: "TourBuzz | Ticket"
+    });
+
     return (
         <div className="container mx-auto px-10 pt-5 pb-16">
             <table className="w-full text-left w-full border border-base-300">
@@ -40,7 +51,7 @@ const TicketDetails = ({ ticket }: { ticket: TicketType }) => {
                         ticket_amount={ticket.ticket_amount}
                         remaining_tickets={ticket.booked_package.tour_package.threshold - ticket.booked_package.ticket_sold}
                         action={
-                            <button className='btn btn-accent btn-sm'>
+                            <button className='btn btn-accent btn-sm' onClick={handlePrint}>
                                 <PrinterIcon className='h-4 w-4' />
                                 Print Invoice
                             </button>
@@ -48,7 +59,9 @@ const TicketDetails = ({ ticket }: { ticket: TicketType }) => {
                     />
                 </tbody>
             </table>
-
+            <div className="print p-5" ref={componentRef}>
+                <Invoice />
+            </div>
         </div>
     )
 }

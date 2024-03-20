@@ -217,3 +217,14 @@
   visibility: visible;
   min-height: fit-content;
 }
+
+/* Print */
+.print {
+  display: none;
+}
+
+@media print {
+  .print {
+    display: block;
+  }
+}
