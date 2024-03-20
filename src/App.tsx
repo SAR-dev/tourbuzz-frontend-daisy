@@ -22,6 +22,7 @@ import ArticleList from "./pages/articles/ArticleList";
 import OrganizerList from "./pages/organizers/OrganizerList";
 import PlaceList from "./pages/places/PlaceList";
 import TicketList from "./pages/tickets/TicketList";
+import Ticket from "./pages/tickets/Ticket";
 
 const queryClient = new QueryClient()
 
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
   {
     path: "/tickets",
     element: <TicketList />
+  },
+  {
+    path: "/tickets/:invoice_no",
+    element: <Ticket />
   },
   {
     path: "*",

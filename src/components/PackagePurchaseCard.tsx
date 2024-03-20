@@ -1,7 +1,7 @@
 import { PackageType, PaymentType, TourType } from '@src/types/base'
 import ImageLoader from './ImageLoader'
 import { formatDate } from '@src/functions/helpers';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { parsePrice } from '@src/functions/helpers';
 import Modal from './Modal';
 import TourPackageDetails from './TourPackageDetails';
@@ -23,13 +23,15 @@ const PackagePurchaseCard = ({
     tour_package,
     payment,
     ticket_amount,
-    remaining_tickets
+    remaining_tickets,
+    action
 }: {
     tour: TourType,
     tour_package: PackageType,
     payment: PaymentType,
     ticket_amount: number,
-    remaining_tickets: number
+    remaining_tickets: number,
+    action?: ReactNode
 }) => {
     const notification = useNotification()
     const queryClient = useQueryClient()
@@ -75,7 +77,7 @@ const PackagePurchaseCard = ({
                 queryClient.invalidateQueries({ queryKey: ["tickets"] })
                 notification.add({
                     title: "Please Check",
-                    message: "Tickets have been updated. Please confirm.",
+                    message: "Payment completed. Please wait for a while for the update.",
                     status: NotificationType.SUCCESS
                 })
             })
@@ -101,7 +103,7 @@ const PackagePurchaseCard = ({
                 queryClient.invalidateQueries({ queryKey: ["tickets"] })
                 notification.add({
                     title: "Please Check",
-                    message: "Tickets have been updated. Please confirm.",
+                    message: "Ticket cancelled. Please wait for a while for the update.",
                     status: NotificationType.SUCCESS
                 })
             })
@@ -127,7 +129,9 @@ const PackagePurchaseCard = ({
 
     return (
         <tr className='border-t border-base-300 text-sm'>
-            <td className='px-3 border-r border-base-300'><TicketIcon className='h-5 w-5' /></td>
+            <td className='px-3 border-r border-base-300'>
+                <TicketIcon className='h-5 w-5' />
+            </td>
             <td className="border-r border-base-300 p-3 font-medium">{payment.invoice_no}</td>
             <td scope="row" className='border-r border-base-300'>
                 <div className='flex flex-row items-center space-x-5 p-3'>
@@ -167,10 +171,12 @@ const PackagePurchaseCard = ({
             <td className="p-3">
                 {payment.completed ? (
                     <div className="flex items-center space-x-2">
-                        <Link to={`/tickets/${payment.invoice_no}`} className="btn btn-sm btn-accent">
-                            View Ticket
-                            <ArrowRightIcon className='h-4 w-4' />
-                        </Link>
+                        {action ?? (
+                            <Link to={`/tickets/${payment.invoice_no}`} className="btn btn-sm btn-accent">
+                                View Ticket
+                                <ArrowRightIcon className='h-4 w-4' />
+                            </Link>
+                        )}
                     </div>
                 ) : (
                     <div className="flex items-center space-x-2">

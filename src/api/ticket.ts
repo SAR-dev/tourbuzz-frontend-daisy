@@ -6,9 +6,24 @@ export interface TicketListDataType {
     data: TicketType[]
 }
 
+export interface TicketByInvoiceDataType {
+    data: TicketType
+}
+
 export const getTickets = (): Promise<TicketListDataType> => {
     return api
         .get("/user/tickets")
+        .then((res) => {
+            return { data: res.data };
+        })
+        .catch((err) => {
+            throw err;
+        });
+}
+
+export const getTicketByInvoice = ({invoice_no}:{invoice_no: string}): Promise<TicketByInvoiceDataType> => {
+    return api
+        .get(`/user/tickets/${invoice_no}`)
         .then((res) => {
             return { data: res.data };
         })
