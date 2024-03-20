@@ -1,4 +1,10 @@
-const Invoice = () => {
+import { formatDate, parsePrice } from "@src/functions/helpers"
+import { TicketType } from "@src/types/base"
+import QRCode from "react-qr-code";
+
+const Invoice = ({ ticket }: { ticket: TicketType }) => {
+    const paidAt = formatDate(ticket.payment.updated_at)
+
     return (
         <div className="relative flex flex-col rounded-xl bg-white border max-w-[40rem]">
             <div className="relative min-h-32 overflow-hidden rounded-t-xl bg-gray-900 text-center">
@@ -18,31 +24,31 @@ const Invoice = () => {
                     </svg>
                 </figure>
             </div>
-            <div className="relative z-10 -mt-12">
-                <span className="mx-auto flex size-[62px] items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm text-4xl">
-                    📦
+            <div className="relative z-10 -mt-20">
+                <span className="mx-auto flex size-[150px] items-center justify-center rounded-full border border-gray-200 bg-white text-gray-700 shadow-sm p-8">
+                    <QRCode value="http://localhost:3000/tickets/TBZ10000004" />
                 </span>
             </div>
             <div className="overflow-y-auto p-7">
                 <div className="text-center">
                     <h3 className="text-lg font-semibold text-gray-800">
-                        Invoice from Preline
+                        Invoice from TourBuzz
                     </h3>
-                    <p className="text-sm text-gray-500">Invoice #3682303</p>
+                    <p className="text-sm text-gray-500">Invoice #{ticket.payment.invoice_no}</p>
                 </div>
                 <div className="flex justify-between w-full mt-10">
                     <div>
                         <span className="block text-xs uppercase text-gray-500">
                             Amount paid:
                         </span>
-                        <span className="block text-sm font-medium text-gray-800">$316.8</span>
+                        <span className="block text-sm font-medium text-gray-800">{ticket.payment.payment_amount} {ticket.payment.currency}</span>
                     </div>
                     <div>
                         <span className="block text-xs uppercase text-gray-500">
                             Date paid:
                         </span>
                         <span className="block text-sm font-medium text-gray-800">
-                            April 22, 2020
+                            {paidAt.month_name} {paidAt.day}, {paidAt.year}
                         </span>
                     </div>
                     <div>
@@ -50,7 +56,7 @@ const Invoice = () => {
                             Payment method:
                         </span>
                         <span className="block text-sm font-medium text-gray-800">
-                            🗂️•••• 4242
+                            {ticket.payment.payment_type}
                         </span>
                     </div>
                 </div>
@@ -59,20 +65,26 @@ const Invoice = () => {
                     <ul className="mt-3 flex flex-col border text-sm text-gray-800">
                         <li className="inline-flex items-center gap-x-2 px-4 py-3">
                             <div className="flex w-full items-center justify-between">
-                                <span>Ticket Fee</span>
-                                <span>$264.00</span>
+                                <span>Ticket Price</span>
+                                <span>{parsePrice(ticket.booked_package.tour_package.price)} BDT</span>
                             </div>
                         </li>
-                        <li className="inline-flex items-center gap-x-2 border-t px-4 py-3">
+                        <li className="inline-flex items-center gap-x-2 px-4 py-3">
                             <div className="flex w-full items-center justify-between">
-                                <span>Tax fee</span>
-                                <span>$52.8</span>
+                                <span>No of Tickets</span>
+                                <span>{ticket.ticket_amount}</span>
+                            </div>
+                        </li>
+                        <li className="inline-flex items-center gap-x-2 px-4 py-3">
+                            <div className="flex w-full items-center justify-between">
+                                <span>Total Fee</span>
+                                <span>{parsePrice(ticket.ticket_amount * ticket.booked_package.tour_package.price)} BDT</span>
                             </div>
                         </li>
                         <li className="inline-flex items-center gap-x-2 border-t px-4 py-3 bg-gray-50 font-semibold">
                             <div className="flex w-full items-center justify-between">
                                 <span>Amount paid</span>
-                                <span>$316.8</span>
+                                <span>{parsePrice(ticket.payment.payment_amount)} {ticket.payment.currency}</span>
                             </div>
                         </li>
                     </ul>

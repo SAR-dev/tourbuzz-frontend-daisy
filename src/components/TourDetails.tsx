@@ -183,6 +183,7 @@ const TourDetails = ({ tour }: { tour: TourType }) => {
                                 </OrganizerVerification>
                             </div>
                         </div>
+                        
                         <div className="card h-[30rem] border border-gray-300 overflow-hidden">
                             <Carousel>
                                 {tour.video_link.length > 0 && (

@@ -23,8 +23,7 @@ const PackagePurchaseCard = ({
     tour_package,
     payment,
     ticket_amount,
-    remaining_tickets,
-    action
+    remaining_tickets
 }: {
     tour: TourShortType,
     tour_package: PackageType,
@@ -171,12 +170,10 @@ const PackagePurchaseCard = ({
             <td className="p-3">
                 {payment.completed ? (
                     <div className="flex items-center space-x-2">
-                        {action ?? (
-                            <Link to={`/tickets/${payment.invoice_no}`} className="btn btn-sm btn-accent">
-                                View Ticket
-                                <ArrowRightIcon className='h-4 w-4' />
-                            </Link>
-                        )}
+                        <Link to={`/tickets/${payment.invoice_no}`} className="btn btn-sm btn-accent">
+                            View Ticket
+                            <ArrowRightIcon className='h-4 w-4' />
+                        </Link>
                     </div>
                 ) : (
                     <div className="flex items-center space-x-2">
