@@ -1,3 +1,5 @@
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import ProductCard from '@src/components/ProductCard'
 import { NavbarType } from '@src/enums/NavbarType'
 import NavLayout from '@src/layouts/NavLayout'
 
@@ -8,7 +10,7 @@ function ShopHome() {
                 <div className="container mx-auto px-10 flex justify-between bg-gradient-to-r from-teal-700 to-yellow-200">
                     <div className="h-auto flex items-center max-w-[40rem]">
                         <div className='text-white'>
-                            <div className="py-1 px-3 card bg-white text-black w-fit mb-3">🤗 20% off on all Products</div>
+                            <div className="py-1 px-3 card bg-teal-200/50 shadow text-black w-fit mb-3">🤗 20% off on all Products</div>
                             <div className="text-4xl title font-semibold">Welcome To TourBuzz</div>
                             <div className="text-xl mt-3 font-normal">
                                 Aoi Sakura Mart is the most pocket friendly Online Shop.
@@ -21,33 +23,38 @@ function ShopHome() {
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto px-10">
-                <div className="grid grid-cols-1 py-16 gap-16">
-                    {/* right best sellers */}
-                    {/* left products with categories tab */}
-                    {/* series */}
-                    {/* brand */}
-                    <section>
-                        {/* new arrivals */}
-                    </section>
-                    <section>
-                        {/* most popular */}
-                    </section>
-                    <section>
-                        {/* categories */}
-                    </section>
-                    <section>
-                        {/* cat 1 */}
-                    </section>
-                    <section>
-                        {/* cat 2 */}
-                    </section>
-                    <section>
-                        {/* cat 3 */}
-                    </section>
-                    <section>
-                        {/* cat 4 */}
-                    </section>
+            <div className="container mx-auto px-10 pt-5 pb-16">
+                <div className="grid grid-cols-3 gap-8">
+                    <div className="col-span-2">
+                        <div className="grid grid-cols-1 gap-8">
+                            <div className="p-3 card border border-base-300">
+                                <div className="flex join">
+                                    <button className="btn no-animation border-base-300 flex-1 join-item">👗 Dress</button>
+                                    <button className="btn no-animation border-base-300 flex-1 join-item btn-active btn-neutral">📖 Books</button>
+                                    <button className="btn no-animation border-base-300 flex-1 join-item">🎨 Arts</button>
+                                    <button className="btn no-animation border-base-300 flex-1 join-item">✍ Articles</button>
+                                    <button className="btn no-animation border-base-300 flex-1 join-item">📔 Magazine</button>
+                                    <button className="btn no-animation border-base-300 flex-1 join-item">⛩️ Cultural</button>
+                                    <button className="btn no-animation border-base-300 join-item btn-square">
+                                        <ArrowRightIcon className='h-5 w-5' />
+                                    </button>
+                                </div>
+                                <div className="grid grid-cols-3 gap-5 pt-3">
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                    <ProductCard />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="col-span-1"></div>
                 </div>
             </div>
         </NavLayout>
@@ -55,3 +62,29 @@ function ShopHome() {
 }
 
 export default ShopHome
+
+// {/* right best sellers */}
+// {/* left products with categories tab */}
+// {/* series */}
+// {/* brand */}
+// <section>
+//     {/* new arrivals */}
+// </section>
+// <section>
+//     {/* most popular */}
+// </section>
+// <section>
+//     {/* categories */}
+// </section>
+// <section>
+//     {/* cat 1 */}
+// </section>
+// <section>
+//     {/* cat 2 */}
+// </section>
+// <section>
+//     {/* cat 3 */}
+// </section>
+// <section>
+//     {/* cat 4 */}
+// </section>
