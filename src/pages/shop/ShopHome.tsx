@@ -1,4 +1,5 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import { CheckCircleIcon } from '@heroicons/react/24/solid'
 import ProductCard from '@src/components/ProductCard'
 import { NavbarType } from '@src/enums/NavbarType'
 import NavLayout from '@src/layouts/NavLayout'
@@ -24,37 +25,33 @@ function ShopHome() {
                 </div>
             </div>
             <div className="container mx-auto px-10 pt-5 pb-16">
-                <div className="grid grid-cols-3 gap-8">
-                    <div className="col-span-2">
-                        <div className="grid grid-cols-1 gap-8">
-                            <div className="p-3 card border border-base-300">
-                                <div className="flex join">
-                                    <button className="btn no-animation border-base-300 flex-1 join-item">👗 Dress</button>
-                                    <button className="btn no-animation border-base-300 flex-1 join-item btn-active btn-neutral">📖 Books</button>
-                                    <button className="btn no-animation border-base-300 flex-1 join-item">🎨 Arts</button>
-                                    <button className="btn no-animation border-base-300 flex-1 join-item">✍ Articles</button>
-                                    <button className="btn no-animation border-base-300 flex-1 join-item">📔 Magazine</button>
-                                    <button className="btn no-animation border-base-300 flex-1 join-item">⛩️ Cultural</button>
-                                    <button className="btn no-animation border-base-300 join-item btn-square">
-                                        <ArrowRightIcon className='h-5 w-5' />
-                                    </button>
-                                </div>
-                                <div className="grid grid-cols-3 gap-5 pt-3">
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                    <ProductCard />
-                                </div>
-                            </div>
+                <div className="grid grid-cols-1 gap-8">
 
+                    <div>
+                        <div className="flex join">
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item relative overflow-hidden">
+                                <div className="h-4 w-4 rounded-full bg-info" />
+                                Dress
+                                <div className="absolute bottom-0 h-1 w-full bg-accent" />
+                            </button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Books</button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Arts</button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Articles</button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Magazine</button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Cultural</button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Arts</button>
+                            <button className="btn btn-ghost no-animation border-base-300 flex-1 join-item">Articles</button>
+                            <button className="btn btn-ghost no-animation border-base-300 join-item btn-square">
+                                <ArrowRightIcon className='h-5 w-5' />
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-6 gap-5 pt-3">
+                            {[...Array(12)].map((e, i) => (
+                                <ProductCard key={i} />
+                            ))}
                         </div>
                     </div>
-                    <div className="col-span-1"></div>
+
                 </div>
             </div>
         </NavLayout>
