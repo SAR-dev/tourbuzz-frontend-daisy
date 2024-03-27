@@ -32,13 +32,13 @@ const NavBar = ({ type = NavbarType.MIX }: { type?: NavbarType }) => {
                             </ul>
                         )}
                         {type === NavbarType.MIX && (
-                            <ul className="menu menu-horizontal px-1 gap-1 font-semibold">
-                                <li className="active:bg-base-300"><Link to="/shop">Shop</Link></li>
-                                <li className="active:bg-base-300"><Link to="/tours">Tours</Link></li>
-                                <li className="active:bg-base-300"><Link to="/organizers">Organizers</Link></li>
-                                <li className="active:bg-base-300"><Link to="/hotels" >Hotels</Link></li>
-                                <li className="active:bg-base-300"><Link to="/places">Places</Link></li>
-                                <li className="active:bg-base-300"><Link to="/articles">Articles</Link></li>
+                            <ul className="flex px-1 gap-1 font-semibold">
+                                <li className="btn btn-sm h-10 btn-ghost text-yellow-200 bg-red-500 hover:text-base-content"><Link to="/shop">Shop</Link></li>
+                                <li className="btn btn-sm h-10 btn-ghost"><Link to="/tours">Tours</Link></li>
+                                <li className="btn btn-sm h-10 btn-ghost"><Link to="/organizers">Organizers</Link></li>
+                                <li className="btn btn-sm h-10 btn-ghost"><Link to="/hotels" >Hotels</Link></li>
+                                <li className="btn btn-sm h-10 btn-ghost"><Link to="/places">Places</Link></li>
+                                <li className="btn btn-sm h-10 btn-ghost"><Link to="/articles">Articles</Link></li>
                             </ul>
                         )}
                     </div>

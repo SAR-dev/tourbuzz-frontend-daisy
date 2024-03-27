@@ -1,7 +1,7 @@
 import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import ImageLoader from "./ImageLoader";
 
-const ProductCard = () => {
+const ProductCardMin = () => {
     return (
         <div className="group card p-3 border border-base-300 bg-base-100 text-base-content hover:bg-base-content hover:text-base-100 duration-300">
             <div className="overflow-hidden">
@@ -43,4 +43,4 @@ const ProductCard = () => {
     )
 }
 
-export default ProductCard
+export default ProductCardMin
