@@ -7,6 +7,7 @@ import Title from '@src/components/Title';
 import { NavbarType } from '@src/enums/NavbarType'
 import NavLayout from '@src/layouts/NavLayout'
 import { constants } from '@src/stores/constantStore';
+import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 function ShopHome() {
@@ -94,6 +95,22 @@ function ShopHome() {
                     </div>
                     <div className='card flex flex-col gap-5'>
                         <Title>
+                            <MegaphoneIcon className='h-8 w-8 mr-2' />
+                            Brands
+                        </Title>
+                        <div className="grid grid-cols-4 border-b border-r border-base-300 divide-x divide-y divide-base-300">
+                            {[...Array(8)].map((_, i) => (
+                                <div className={classNames({
+                                    "flex h-32 w-full justify-center items-center hover:bg-base-200 duration-200": true,
+                                    "border-l border-t border-base-300": i === 0
+                                })} key={i}>
+                                    <ImageLoader src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" className='h-20' />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className='card flex flex-col gap-5'>
+                        <Title>
                             <RssIcon className='h-8 w-8 mr-2' />
                             Newly Arrived
                         </Title>
@@ -139,7 +156,6 @@ function ShopHome() {
                             </div>
                         </div>
                     </section>
-                    {/* popular brands */}
                 </div>
             </div>
         </NavLayout>
