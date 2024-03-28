@@ -15,7 +15,7 @@ const ProductCardMax = () => {
     
     return (
         <div className="group p-3 overflow-hidden card bg-base-200 border border-base-300 relative">
-            <div className="absolute w-full h-32 bg-neutral group-hover:bg-accent duration-300 top-0 left-0 z-[1]" />
+            <div className="absolute w-full h-32 bg-neutral group-hover:bg-accent duration-200 top-0 left-0 z-[1]" />
             <div className="absolute right-0 top-0 m-3 z-[2]">
                 <Ranker bg="#ebba34" color="#ffffff" />
             </div>
@@ -24,11 +24,11 @@ const ProductCardMax = () => {
                     <div className="h-48 w-40 card overflow-hidden">
                         <ImageLoader
                             src="https://i.postimg.cc/dVVVj9By/image.png"
-                            className="h-48 w-40 object-cover group-hover:scale-110 group-hover:rotate-6 duration-300"
+                            className="h-48 w-40 object-cover group-hover:scale-110 group-hover:rotate-6 duration-200"
                         />
                     </div>
                     <div className="absolute top-0 left-0 m-3">
-                        <div className="flex space-x-3 -translate-x-40 group-hover:translate-x-0 duration-300">
+                        <div className="flex space-x-3 -translate-x-40 group-hover:translate-x-0 duration-200">
                             <div className="bg-black text-white py-1 px-2 card">
                                 - 39%
                             </div>
@@ -36,7 +36,7 @@ const ProductCardMax = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 w-full">
-                    <div className="flex flex-col gap-1 py-3 px-5 text-neutral-content group-hover:text-accent-content duration-300 h-32">
+                    <div className="flex flex-col gap-1 py-3 px-5 text-neutral-content group-hover:text-accent-content duration-200 h-32">
                         <div className="flex justify-between">
                             <div className="text-xl font-medium">Riot Beverage</div>
                         </div>
