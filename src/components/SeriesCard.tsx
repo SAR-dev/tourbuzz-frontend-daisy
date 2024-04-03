@@ -4,7 +4,7 @@ const SeriesCard = () => {
     return (
         <div className="relative h-72 group card overflow-hidden">
             <ImageLoader
-                src='https://pics.filmaffinity.com/kono_subarashii_sekai_ni_bakuen_o-314700935-large.jpg'
+                src='https://i.ibb.co/4FMrPw8/image.png'
                 className='h-72 w-full object-cover'
             />
             <div className="absolute bottom-0 left-0 w-full p-3 bg-gradient-to-t from-black via-black/80 to-black/20 h-16 group-hover:h-72 opacity-0 group-hover:opacity-100 duration-200 flex justify-center items-center">
