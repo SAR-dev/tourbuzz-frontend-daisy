@@ -7,7 +7,7 @@ const ProductCardMax = () => {
         <div className="relative">
             <StarIcon className="h-12 w-12" style={{color: bg}} />
             <div 
-                className="absolute top-0 left-0 flex w-full h-full flex justify-center items-center font-semibold"
+                className="absolute top-0 left-0 flex w-full h-full justify-center items-center font-semibold"
                 style={{color}}
             >1</div>
         </div>
@@ -15,7 +15,7 @@ const ProductCardMax = () => {
     
     return (
         <div className="group p-3 overflow-hidden card bg-base-200 border border-base-300 relative">
-            <div className="absolute w-full h-32 bg-neutral group-hover:bg-accent duration-200 top-0 left-0 z-[1]" />
+            <div className="absolute w-full h-32 bg-base-100 group-hover:bg-accent duration-200 top-0 left-0 z-[1]" />
             <div className="absolute right-0 top-0 m-3 z-[2]">
                 <Ranker bg="#ebba34" color="#ffffff" />
             </div>
@@ -36,7 +36,7 @@ const ProductCardMax = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 w-full">
-                    <div className="flex flex-col gap-1 py-3 px-5 text-neutral-content group-hover:text-accent-content duration-200 h-32">
+                    <div className="flex flex-col gap-1 py-3 px-5 text-base-content group-hover:text-accent-content duration-200 h-32">
                         <div className="flex justify-between">
                             <div className="text-xl font-medium">Riot Beverage</div>
                         </div>

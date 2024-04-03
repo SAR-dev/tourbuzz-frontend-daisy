@@ -13,8 +13,8 @@ import { Link } from 'react-router-dom';
 function ShopHome() {
     return (
         <NavLayout type={NavbarType.SHOP}>
-            <div className="h-[30rem] relative mt-5">
-                <div className="card group overflow-hidden flex flex-row container mx-auto px-10 flex justify-between bg-gradient-to-r from-teal-700 to-yellow-200">
+            <div className="h-[30rem] relative">
+                <div className="group overflow-hidden flex flex-row container mx-auto px-10 justify-between bg-gradient-to-r from-teal-700 to-yellow-200">
                     <div className="h-auto flex items-center max-w-[40rem]">
                         <div className='text-white group-hover:scale-110 origin-top-left duration-300'>
                             <div className="py-1 px-3 card bg-teal-200/50 shadow text-black w-fit mb-3">🤗 20% off on all Products</div>
@@ -30,7 +30,7 @@ function ShopHome() {
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto pt-8 pb-16">
+            <div className="container mx-auto pt-8 pb-16 px-10">
                 <div className="grid grid-cols-1 gap-12">
                     <div className='card flex flex-col gap-5'>
                         <Title>
