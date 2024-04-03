@@ -135,6 +135,18 @@ function ShopHome() {
                             ))}
                         </div>
                     </div>
+                    <div className='card flex flex-col gap-5'>
+                        <div className='card justify-center items-center w-full bg-accent/20 p-5'>
+                            <div>
+                                <Title>Continue Browsing...</Title>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-6 gap-5">
+                            {[...Array(12)].map((_, i) => (
+                                <ProductCardMin key={i} />
+                            ))}
+                        </div>
+                    </div>
                     <section>
                         <div className="border border-base-300 bg-info/20 p-10 card flex flex-row items-center gap-5">
                             <div className="text-8xl">🤗</div>

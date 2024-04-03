@@ -32,9 +32,12 @@ const ProductCardMin = () => {
                 </div>
                 <div className="flex flex-col gap-1 mt-2">
                     <div className="font-medium">Riot Beverage</div>
-                    <div className="flex w-full items-center space-x-2">
-                        <div className="title font-bold">3000 BDT</div>
-                        <div className="text-xs line-through">3500 BDT</div>
+                    <div className="flex w-full items-center">
+                        <div className="title font-bold text-red-500">3000 BDT</div>
+                        <div className="text-xs line-through ml-2">3500 BDT</div>
+                        <div className="ml-auto text-xs">
+                            +30 P
+                        </div>
                     </div>
                 </div>
             </div>

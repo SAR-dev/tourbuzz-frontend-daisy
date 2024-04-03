@@ -3,21 +3,20 @@ import ImageLoader from "./ImageLoader";
 import { StarIcon } from "@heroicons/react/24/solid";
 
 const ProductCardMax = () => {
-    const Ranker = ({bg, color}:{bg: string, color: string}) => (
+    const Ranker = () => (
         <div className="relative">
-            <StarIcon className="h-12 w-12" style={{color: bg}} />
-            <div 
-                className="absolute top-0 left-0 flex w-full h-full justify-center items-center font-semibold"
-                style={{color}}
+            <StarIcon className="h-12 w-12 text-yellow-500 group-hover:text-accent-content" />
+            <div
+                className="absolute top-0 left-0 flex w-full h-full justify-center items-center font-semibold text-white group-hover:text-accent"
             >1</div>
         </div>
     )
-    
+
     return (
         <div className="group p-3 overflow-hidden card bg-base-200 border border-base-300 relative">
             <div className="absolute w-full h-32 bg-base-100 group-hover:bg-accent duration-200 top-0 left-0 z-[1]" />
             <div className="absolute right-0 top-0 m-3 z-[2]">
-                <Ranker bg="#ebba34" color="#ffffff" />
+                <Ranker />
             </div>
             <div className="flex overflow-hidden z-[2]">
                 <div className="relative">
@@ -29,7 +28,7 @@ const ProductCardMax = () => {
                     </div>
                     <div className="absolute top-0 left-0 m-3">
                         <div className="flex space-x-3 -translate-x-40 group-hover:translate-x-0 duration-200">
-                            <div className="bg-black text-white py-1 px-2 card">
+                            <div className="bg-black text-white py-1 px-2 card shadow-lg">
                                 - 39%
                             </div>
                         </div>
@@ -41,10 +40,12 @@ const ProductCardMax = () => {
                             <div className="text-xl font-medium">Riot Beverage</div>
                         </div>
                         <div className="flex w-full items-center space-x-2">
-                            <div className="title font-bold">3000 BDT</div>
+                            <div className="bg-red-500 text-white group-hover:bg-accent-content group-hover:text-accent h-6 px-2 w-fit text-sm flex items-center font-medium">3000 BDT</div>
                             <div className="text-xs line-through">3500 BDT</div>
                         </div>
-                        <div className="bg-neutral-content text-neutral group-hover:bg-accent-content group-hover:text-accent h-6 px-2 w-fit text-sm flex items-center font-medium">IN STOCK</div>
+                        <div className="text-sm text-base-content/80">
+                            Save 300 BDT & Get 30 Points
+                        </div>
                     </div>
                     <div className="px-3">
                         <div className="flex">
@@ -58,8 +59,8 @@ const ProductCardMax = () => {
                                 <HeartIcon className="h-5 w-5" />
                             </button>
                         </div>
-                        <div className="mt-2 text-sm text-base-content/80">
-                            30 units were bought by 12 people
+                        <div className="text-sm text-base-content/80 mt-1">
+                            30+ bought past month
                         </div>
                     </div>
                 </div>
