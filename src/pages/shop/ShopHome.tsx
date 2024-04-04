@@ -1,5 +1,6 @@
-import { ArrowRightIcon, ArrowTrendingUpIcon, ChatBubbleLeftRightIcon, FireIcon, MegaphoneIcon, PaperAirplaneIcon, RssIcon, TagIcon } from '@heroicons/react/24/outline';
+import { ArrowRightIcon, ArrowTrendingUpIcon, BellAlertIcon, ChatBubbleLeftRightIcon, FireIcon, MegaphoneIcon, PaperAirplaneIcon, RssIcon, TagIcon } from '@heroicons/react/24/outline';
 import ImageLoader from '@src/components/ImageLoader';
+import ProductCardFull from '@src/components/ProductCardFull';
 import ProductCardMax from '@src/components/ProductCardMax';
 import ProductCardMin from '@src/components/ProductCardMin'
 import SeriesCard from '@src/components/SeriesCard';
@@ -26,12 +27,21 @@ function ShopHome() {
                         </div>
                     </div>
                     <div className="h-[30rem]">
-                        <ImageLoader src="https://i.postimg.cc/vTKnJ7Zz/key3-1.webp" className='h-[30rem] group-hover:scale-110 group-hover:rotate-6 duration-300' />
+                        <ImageLoader disableZoom src="https://i.postimg.cc/vTKnJ7Zz/key3-1.webp" className='h-[30rem] group-hover:scale-110 group-hover:rotate-6 duration-300' />
                     </div>
                 </div>
             </div>
             <div className="container mx-auto pt-8 pb-16 px-10">
                 <div className="grid grid-cols-1 gap-12">
+                <div className='card flex flex-col gap-5'>
+                        <Title>
+                            <BellAlertIcon className='h-8 w-8 mr-2' />
+                            This Week's Steal
+                        </Title>
+                        <div className="w-full">
+                            <ProductCardFull />
+                        </div>
+                    </div>
                     <div className='card flex flex-col gap-5'>
                         <Title>
                             <ArrowTrendingUpIcon className='h-8 w-8 mr-2' />

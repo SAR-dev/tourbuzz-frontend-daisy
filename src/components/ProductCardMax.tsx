@@ -49,13 +49,13 @@ const ProductCardMax = () => {
                     </div>
                     <div className="pl-3">
                         <div className="flex gap-1">
-                            <button className="btn flex-1 min-h-10 h-10 btn-neutral btn-outline border-base-300 bg-base-100">
+                            <button className="btn flex-1 min-h-10 h-10 btn-outline border-base-300 bg-base-100">
                                 Buy Now
                             </button>
-                            <button className="btn flex-1 min-h-10 h-10 btn-neutral btn-outline border-base-300 bg-base-100">
+                            <button className="btn flex-1 min-h-10 h-10 btn-outline border-base-300 bg-base-100">
                                 Add to Bag
                             </button>
-                            <button className="btn min-h-10 h-10 btn-neutral btn-square btn-outline border-base-300 bg-base-100">
+                            <button className="btn min-h-10 h-10 btn-square btn-outline border-base-300 bg-base-100">
                                 <HeartIcon className="h-5 w-5" />
                             </button>
                         </div>
