@@ -136,7 +136,7 @@ function ShopHome() {
                         </div>
                     </div>
                     <div className='card flex flex-col gap-5'>
-                        <div className='card justify-center items-center w-full bg-accent/20 p-5'>
+                        <div className='card justify-center items-center w-full mb-5'>
                             <div>
                                 <Title>Continue Browsing...</Title>
                             </div>
