@@ -1,13 +1,16 @@
 import { ShoppingCartIcon } from '@heroicons/react/24/outline'
 import { TicketListDataType, getTickets } from '@src/api/ticket'
+import { useAuthStore } from '@src/stores/authStore'
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 const CartButton = () => {
+    const { isLoggedIn } = useAuthStore()
     const tickets = useQuery<TicketListDataType, Error>({
         queryKey: ['tickets'],
-        queryFn: () => getTickets()
+        queryFn: () => getTickets(),
+        enabled: isLoggedIn()
     })
 
     const count = useMemo(
