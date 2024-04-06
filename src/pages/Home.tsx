@@ -68,11 +68,11 @@ const Home = () => {
 
   return (
     <NavLayout>
-      <div className="h-[30rem] relative">
+      <div className="w-full aspect-[3/1] relative">
         <img
           src="https://www.japan-guide.com/g17/home_1712_fujisan.jpg"
           alt=""
-          className="h-[30rem] w-full object-cover object-center"
+          className="w-full aspect-[3/1] object-cover object-center"
         />
         <div className="absolute top-0 left-0 h-fill w-full">
           <div className="container mx-auto px-10 flex flex-col w-full h-fill justify-center">
