@@ -33,7 +33,7 @@ const ProductCardMin = () => {
                 <div className="flex flex-col gap-1 mt-2">
                     <div className="font-medium">Riot Beverage</div>
                     <div className="flex w-full items-center">
-                        <div className="title font-bold text-error">3000 BDT</div>
+                        <div className="title font-bold text-error group-hover:text-accent duration-200">3000 BDT</div>
                         <div className="text-xs line-through ml-2">3500 BDT</div>
                         <div className="ml-auto text-xs">
                             +30 P

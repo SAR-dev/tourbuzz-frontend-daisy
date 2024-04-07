@@ -33,10 +33,7 @@ const NavBar = ({ type = NavbarType.MIX }: { type?: NavbarType }) => {
                         )}
                         {type === NavbarType.MIX && (
                             <ul className="flex px-1 gap-1 font-semibold">
-                                <Link to="/shop" className="btn btn-sm btn-ghost relative">
-                                    Shop
-                                    <span className="absolute top-0 right-0 text-3xl -mt-4 -mr-4 animate-bounce">☄️</span>
-                                </Link>
+                                <Link to="/shop" className="btn btn-sm btn-ghost">Shop</Link>
                                 <Link to="/tours" className="btn btn-sm btn-ghost">Tours</Link>
                                 <Link to="/organizers" className="btn btn-sm btn-ghost">Organizers</Link>
                                 <Link to="/hotels" className="btn btn-sm btn-ghost">Hotels</Link>
