@@ -1,4 +1,6 @@
 export const constants = {
+    EMAIL_PATTERN_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    AUTH_KEY_SIZE: 8,
     EMOJI_STORE_KEY: "emoji",
     TOUR_TICKET_INVOICE_STORE_KEY: "tour_invoice_",
     COMMENT_STORE_KEY: {

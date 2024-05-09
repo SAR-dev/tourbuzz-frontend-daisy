@@ -28,7 +28,7 @@ export const verifyToken = ({ magic_token }: { magic_token: string }): Promise<D
 export const verifyKey = ({ email, magic_key }: { email: string, magic_key: string }): Promise<DataResponseType> => {
     const data = { email, magic_key }
     return api
-        .post("/auth/user-sign-in-token", data)
+        .post("/auth/user-sign-in-key", data)
         .then((res) => {
             return { data: res.data };
         })

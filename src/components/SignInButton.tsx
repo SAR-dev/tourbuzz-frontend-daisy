@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from './Modal'
-import { sendMagicLink, verifyToken } from '@src/api/auth'
+import { sendMagicLink, verifyKey } from '@src/api/auth'
 import { constants } from '@src/stores/constantStore';
 import { NotificationType } from '@src/enums/NotificationType';
 import { useNotification } from '../contexts/Notification';
@@ -26,7 +26,9 @@ const SignInButton = () => {
     const [nameNotSet, setNameNotSet] = useState(false)
 
     const [email, setEmail] = useState("");
-    const [magicToken, setMagicToken] = useState("")
+    const [magicKeys, setMagicKeys] = useState<string[]>([...Array(constants.AUTH_KEY_SIZE)].map(() => ""))
+    const inputRefs = useRef<Array<HTMLInputElement | null>>(Array(constants.AUTH_KEY_SIZE).fill(null));
+
     const [name, setName] = useState("")
 
     const user = useQuery<UserDataType, Error>({
@@ -77,9 +79,11 @@ const SignInButton = () => {
             })
     }
 
-    const handleMagicTokenSubmit = () => {
+    const handleMagicKeySubmit = () => {
+        if (magicKeys.length < constants.AUTH_KEY_SIZE) return;
         setIsLoading(true);
-        verifyToken({ magic_token: magicToken })
+
+        verifyKey({ email, magic_key: magicKeys.join("") })
             .then((res) => {
                 if (res.error) {
                     notification.add({
@@ -154,6 +158,32 @@ const SignInButton = () => {
         }
     }
 
+    const goOpen = () => {
+        setIsOpenSignIn(true)
+        setEmail("")
+        setMagicKeys([...Array(constants.AUTH_KEY_SIZE)].map(() => ""))
+        setIsMailSent(false)
+    }
+
+    const goNext = () => {
+        setMagicKeys([...Array(constants.AUTH_KEY_SIZE)].map(() => ""))
+        setIsMailSent(true)
+    }
+
+    useEffect(() => {
+        if (magicKeys.filter(e => e != "").length == constants.AUTH_KEY_SIZE) handleMagicKeySubmit()
+    }, [magicKeys])
+
+    const isValidEmail = (email: string) => {
+        return constants.EMAIL_PATTERN_REGEX.test(email);
+    };
+
+    const handleKeyChange = (i: number, value: string) => {
+        setMagicKeys(magicKeys.map((e, index) => i === index ? value.slice(-1).toLocaleUpperCase() : e))
+        const next = value === "" ? i - 1 : i + 1
+        if (inputRefs.current[next]) inputRefs.current[next].focus();
+    }
+
     if (isLoggedIn()) {
         return (
             <div>
@@ -176,7 +206,8 @@ const SignInButton = () => {
                             {isLoading && (
                                 <div className="loading h-5 w-5" />
                             )}
-                            Submit</button>
+                            Submit
+                        </button>
                     </div>
                 </Modal>
             </div>
@@ -184,7 +215,7 @@ const SignInButton = () => {
     } else {
         return (
             <div>
-                <button className="btn" onClick={() => setIsOpenSignIn(true)}>Sign In</button>
+                <button className="btn" onClick={goOpen}>Sign In</button>
                 <Modal title="Sign In to continue" closeButton onClose={handleClose} isOpen={isOpenSignIn} setIsOpen={setIsOpenSignIn} maxWidth='25rem'>
                     {!isMailSent && (
                         <div className="flex flex-col gap-3 pt-5 pb-10">
@@ -197,9 +228,9 @@ const SignInButton = () => {
                                     {isLoading && (
                                         <div className="loading h-5 w-5" />
                                     )}
-                                    Get Magic Token
+                                    Get Sign-In Mail
                                 </button>
-                                <button className="btn btn-info btn-square" disabled={isLoading} onClick={() => setIsMailSent(true)}>
+                                <button className="btn btn-info btn-square" disabled={isLoading || !isValidEmail(email)} onClick={goNext}>
                                     <ChevronRightIcon className='h-5 w-5' />
                                 </button>
                             </div>
@@ -207,7 +238,20 @@ const SignInButton = () => {
                     )}
                     {isMailSent && (
                         <div className="flex flex-col gap-3 pt-5 pb-10">
-                            <input type="password" placeholder="Magic Token" className="input input-bordered w-full" disabled={isLoading} value={magicToken} onChange={e => setMagicToken(e.target.value)} />
+                            {/* <input type="password" placeholder="Magic Key" className="input input-bordered w-full" disabled={isLoading} value={magicKeys} onChange={e => setMagicKeys(e.target.value)} /> */}
+                            <div className="flex gap-1.5">
+                                {[...Array(constants.AUTH_KEY_SIZE)].map((_, i) => (
+                                    <input
+                                        type="text"
+                                        className='input input-bordered w-10 px-1 text-center'
+                                        onChange={e => handleKeyChange(i, e.target.value)}
+                                        onKeyDown={e => {if (e.key == "Backspace") handleKeyChange(i, "")}}
+                                        value={magicKeys[i]}
+                                        ref={el => inputRefs.current[i] = el}
+                                        key={i}
+                                    />
+                                ))}
+                            </div>
                             <div className="text-xs text-base-content/75">
                                 Do not share this magic token with anyone. Keep it secret.
                             </div>
@@ -215,11 +259,11 @@ const SignInButton = () => {
                                 <button className="btn btn-info btn-square" disabled={isLoading} onClick={() => setIsMailSent(false)}>
                                     <ChevronLeftIcon className='h-5 w-5' />
                                 </button>
-                                <button className="btn btn-info flex-1" disabled={isLoading} onClick={handleMagicTokenSubmit}>
+                                <button className="btn btn-info flex-1" disabled={isLoading} onClick={handleMagicKeySubmit}>
                                     {isLoading && (
                                         <div className="loading h-5 w-5" />
                                     )}
-                                    Submit Token
+                                    Submit Key
                                 </button>
                             </div>
                         </div>
