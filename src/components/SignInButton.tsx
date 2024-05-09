@@ -184,6 +184,13 @@ const SignInButton = () => {
         if (inputRefs.current[next]) inputRefs.current[next].focus();
     }
 
+    const handlePasteData = (value: string) => {
+        const values = value.split("")
+        setMagicKeys(values)
+        const next = values.length
+        if (inputRefs.current[next]) inputRefs.current[next].focus();
+    }
+
     if (isLoggedIn()) {
         return (
             <div>
@@ -238,13 +245,14 @@ const SignInButton = () => {
                     )}
                     {isMailSent && (
                         <div className="flex flex-col gap-3 pt-5 pb-10">
-                            <div className="flex gap-1.5">
+                            <div className="flex gap-1.5" onPaste={e => handlePasteData((e.clipboardData.getData("Text")))}>
                                 {[...Array(constants.AUTH_KEY_SIZE)].map((_, i) => (
                                     <input
                                         type="text"
                                         className='input input-bordered w-10 px-1 text-center'
                                         onChange={e => handleKeyChange(i, e.target.value)}
                                         onKeyDown={e => {if (["Backspace", "Delete"].includes(e.key)) handleKeyChange(i, "")}}
+                                        onPaste={e => e.preventDefault()}
                                         value={magicKeys[i]}
                                         ref={el => inputRefs.current[i] = el}
                                         key={i}
