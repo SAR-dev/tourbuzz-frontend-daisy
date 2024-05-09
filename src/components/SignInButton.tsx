@@ -238,14 +238,13 @@ const SignInButton = () => {
                     )}
                     {isMailSent && (
                         <div className="flex flex-col gap-3 pt-5 pb-10">
-                            {/* <input type="password" placeholder="Magic Key" className="input input-bordered w-full" disabled={isLoading} value={magicKeys} onChange={e => setMagicKeys(e.target.value)} /> */}
                             <div className="flex gap-1.5">
                                 {[...Array(constants.AUTH_KEY_SIZE)].map((_, i) => (
                                     <input
                                         type="text"
                                         className='input input-bordered w-10 px-1 text-center'
                                         onChange={e => handleKeyChange(i, e.target.value)}
-                                        onKeyDown={e => {if (e.key == "Backspace") handleKeyChange(i, "")}}
+                                        onKeyDown={e => {if (["Backspace", "Delete"].includes(e.key)) handleKeyChange(i, "")}}
                                         value={magicKeys[i]}
                                         ref={el => inputRefs.current[i] = el}
                                         key={i}
