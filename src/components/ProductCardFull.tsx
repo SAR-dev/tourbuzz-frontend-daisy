@@ -1,10 +1,11 @@
 import { HeartIcon, ShoppingBagIcon, WalletIcon } from "@heroicons/react/24/outline";
 import ImageLoader from "./ImageLoader";
+import { TagIcon } from "@heroicons/react/24/solid";
 
 const ProductCardFull = () => {
 
     return (
-        <div className="group overflow-hidden card flex-row divide-x bg-warning/10 divide-warning/30 border border-warning/30 relative">
+        <div className="group overflow-hidden card flex-row divide-x divide-base-content/25 border border-base-content/25 relative">
             <div className="flex-1 p-8">
                 <div className="flex flex-col h-full">
                     <div className="mb-5">
@@ -18,22 +19,17 @@ const ProductCardFull = () => {
                         series xxxHOLiC.
                     </div>
                     <div className="flex flex-col gap-2 mb-5">
-                        <div className="flex w-full items-center space-x-5">
-                            <div className="bg-error text-white h-10 px-5 w-fit text-xl flex items-center font-semibold">3000 BDT</div>
-                            <div className="text-xl line-through">3500 BDT</div>
+                        <div className="flex w-full items-center space-x-3">
+                            <div className="text-2xl font-bold text-error">BDT 3000</div>
+                            <div className="text-2xl font-bold line-through opacity-50">BDT 3000</div>
                         </div>
-                        <div className="text-base-content/80">
-                            🤩 Save 300 BDT 🎁 Get 30 Points
+                        <div className="text-base-content/80 flex items-center gap-1">
+                            <TagIcon className="h-4 w-4" /> Save TK 300 and get 30 Points
                         </div>
-                    </div>
-                    <div className="flex-flex-col gap-2">
-                        <div><b>Manufaturer: </b>GyomuDB Japan</div>
-                        <div><b>Series: </b>Solaris</div>
-                        <div><b>Category: </b>Gift</div>
                     </div>
                     <div className="flex h-fill items-end">
                         <div className="flex gap-1">
-                            <button className="btn btn-accent">
+                            <button className="btn btn-neutral">
                                 <WalletIcon className="h-5 w-5" />
                                 Buy Now
                             </button>
@@ -55,13 +51,6 @@ const ProductCardFull = () => {
                         src="https://i.postimg.cc/0jTNbN06/image.png"
                         className="h-[30rem] w-full object-cover group-hover:scale-110 duration-200"
                     />
-                    <div className="absolute bottom-0 left-0 w-full flex justify-center flex gap-3 p-3 translate-y-20 group-hover:translate-y-0 duration-200">
-                        {[...Array(6)].map((_, i) => (
-                            <button className="h-10 w-16 card cursor-pointer ring-2 ring-white hover:ring-info ring-offset-2 bg-transparent duration-200" key={i}>
-                                <img className="card h-full w-full object-cover" src="https://i.postimg.cc/0jTNbN06/image.png" alt="" />
-                            </button>
-                        ))}
-                    </div>
                 </div>
             </div>
         </div>

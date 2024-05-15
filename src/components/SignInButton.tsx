@@ -93,7 +93,7 @@ const SignInButton = () => {
                     })
                 } else {
                     const data: AuthTokenType = res.data as AuthTokenType;
-                    setToken(data.accessToken)
+                    setToken(data.access_token)
                     setIsMailSent(true)
                     toast.success("You have signed in successfully. Enjoy 😎👌🔥 !!!")
                 }
@@ -235,7 +235,7 @@ const SignInButton = () => {
                                     {isLoading && (
                                         <div className="loading h-5 w-5" />
                                     )}
-                                    Get Sign-In Mail
+                                    Send OTP
                                 </button>
                                 <button className="btn btn-info btn-square" disabled={isLoading || !isValidEmail(email)} onClick={goNext}>
                                     <ChevronRightIcon className='h-5 w-5' />

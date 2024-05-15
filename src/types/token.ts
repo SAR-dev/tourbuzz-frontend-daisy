@@ -1,4 +1,4 @@
 export interface AuthTokenType {
-    accessToken: string
-    accessTokenHeader: string
+    access_token: string
+    access_token_header: string
 }
