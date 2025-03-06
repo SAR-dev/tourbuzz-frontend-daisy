@@ -181,14 +181,20 @@ const SignInButton = () => {
     const handleKeyChange = (i: number, value: string) => {
         setMagicKeys(magicKeys.map((e, index) => i === index ? value.slice(-1).toLocaleUpperCase() : e))
         const next = value === "" ? i - 1 : i + 1
-        if (inputRefs.current[next]) inputRefs.current[next].focus();
+        const cur = inputRefs.current[next]
+        if (cur) {
+            cur.focus();
+        }
     }
 
     const handlePasteData = (value: string) => {
         const values = value.split("")
         setMagicKeys(values)
         const next = values.length
-        if (inputRefs.current[next]) inputRefs.current[next].focus();
+        const cur = inputRefs.current[next]
+        if (cur) {
+            cur.focus();
+        }
     }
 
     if (isLoggedIn()) {
