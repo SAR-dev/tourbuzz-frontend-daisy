@@ -1,22 +1,14 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import classNames from 'classnames';
-import { Children, RefObject, cloneElement, createRef, useEffect, useState, ReactNode } from 'react';
+import { Children, cloneElement, createRef, useRef, useState, ReactNode } from 'react';
 
-const Carousel = ({ children, smallButton }: { children: ReactNode, smallButton?: boolean }) => {
-    const [itemRefs, setItemRefs] = useState<RefObject<HTMLDivElement>[]>([]);
+const Carousel = ({ children, smallButton }: { children: ReactNode; smallButton?: boolean }) => {
+    const itemsCount = Children.count(children);
+    const itemRefs = useRef(Array(itemsCount).fill(null).map(() => createRef<HTMLDivElement>()));
     const [activeIndex, setActiveIndex] = useState(0);
 
-    useEffect(() => {
-        setItemRefs((prevRefs) => {
-            const newRefs: RefObject<HTMLDivElement>[] = Array(Children.count(children))
-                .fill(null)
-                .map((_, i) => prevRefs[i] || createRef<HTMLDivElement>());
-            return newRefs;
-        });
-    }, [children]);
-
     const scrollToIndex = (index: number) => {
-        itemRefs[index]?.current?.scrollIntoView({
+        itemRefs.current[index]?.current?.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
             inline: 'center',
@@ -25,46 +17,47 @@ const Carousel = ({ children, smallButton }: { children: ReactNode, smallButton?
     };
 
     const goNext = () => {
-        if (activeIndex > Children.count(children) - 2) return;
-        scrollToIndex(activeIndex + 1)
-    }
+        if (activeIndex < itemsCount - 1) {
+            scrollToIndex(activeIndex + 1);
+        }
+    };
 
     const goPrev = () => {
-        if (activeIndex == 0) return;
-        scrollToIndex(activeIndex - 1)
-    }
+        if (activeIndex > 0) {
+            scrollToIndex(activeIndex - 1);
+        }
+    };
 
     return (
         <div className="relative group h-full">
-            <div className="carousel w-full h-full">
+            <div className="carousel w-full h-full flex overflow-x-auto no-scrollbar">
                 {Children.map(children, (child, i) => {
+                    if (!child || typeof child !== 'object' || !('key' in child)) return null;
                     return cloneElement(child as React.ReactElement, {
-                        key: i,
-                        ref: itemRefs[i],
-                        index: i + 1,
+                        ref: itemRefs.current[i], // Attach ref safely
                     });
                 })}
             </div>
             <div className="absolute top-0 right-0 h-full flex items-center">
                 <button
-                    className={classNames({
-                        'btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2': true,
-                        'btn-sm': smallButton
-                    })}
+                    className={classNames(
+                        'btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2',
+                        { 'btn-sm': smallButton }
+                    )}
                     onClick={goNext}
                 >
-                    <ChevronRightIcon className='h-5 w-5' />
+                    <ChevronRightIcon className="h-5 w-5" />
                 </button>
             </div>
             <div className="absolute top-0 left-0 h-full flex items-center">
                 <button
-                    className={classNames({
-                        'btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2': true,
-                        'btn-sm': smallButton
-                    })}
+                    className={classNames(
+                        'btn btn-square opacity-0 group-hover:opacity-100 duration-100 rounded-full m-2',
+                        { 'btn-sm': smallButton }
+                    )}
                     onClick={goPrev}
                 >
-                    <ChevronLeftIcon className='h-5 w-5' />
+                    <ChevronLeftIcon className="h-5 w-5" />
                 </button>
             </div>
         </div>
